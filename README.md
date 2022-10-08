@@ -1,4 +1,4 @@
-# BEERHappy
+# BEerHAPPY
 
 Repository del progetto BEERHappy, e-commerce riguardante la vendita di birre artigianali.
 
