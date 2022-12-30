@@ -9,15 +9,33 @@
 <html>
 <head>
     <title>profilo</title>
+
+    <style>
+        .messageEmailError{
+            display: none;
+        }
+    </style>
+
 </head>
 <body>
     <h1>registrati</h1>
     <form method="post" action="RegistrazioneServlet">
-        <input type="text" name="nome" placeholder="nome">  <br>
-        <input type="text" name="cognome" placeholder="cognome">    <br>
-        <input type="email" name="e-mail" placeholder="e-mail">  <br>
-        <input type="password" name="password" placeholder="password"> <br>
-        <input type="password" name="rePassword" placeholder="conferma password">   <br>
+        <labe>Nome</labe>   <br>
+        <input type="text" name="nome" required>  <br>
+        <p class="messageEmailError">email gia presente</p>
+
+        <labe>Cognome</labe>    <br>
+        <input type="text" name="cognome" required>    <br>
+
+        <labe>Email</labe>  <br>
+        <input type="email" name="e-mail" required>  <br>
+
+        <labe>Password</labe>   <br>
+        <input type="password" name="password" required> <br>
+
+        <labe>Conferma Password</labe>  <br>
+        <input type="password" name="rePassword" required>   <br>
+
         <input type="submit">
     </form>
 

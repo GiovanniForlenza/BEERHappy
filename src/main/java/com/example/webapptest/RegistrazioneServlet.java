@@ -15,19 +15,32 @@ public class RegistrazioneServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 		ModelSecurity modelSecurity = new ModelSecurity();
-
 		Utente utente = new Utente();
+		boolean flag = false;
+
 		utente.setNome(request.getParameter("nome"));
         utente.setCognome(request.getParameter("cognome"));
         utente.setEmail(request.getParameter("e-mail"));
         utente.setPassword(request.getParameter("password"));
 
 		try {
-			modelSecurity.addUser(utente);
-		}catch (SQLException e){
+			flag = modelSecurity.controlloEmailRegistrazione(utente);
+		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 
-		response.sendRedirect("http://localhost:8080/webAppTest_war/homePage.jsp");
+			if(flag) {
+				try {
+					modelSecurity.addUser(utente);
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+				response.sendRedirect("http://localhost:8080/webAppTest_war/homePage.jsp");
+			}
+			else {
+				System.out.println("Error email already present");
+				response.sendRedirect("http://localhost:8080/webAppTest_war/profilo.jsp");
+			}
+
 	}
 }

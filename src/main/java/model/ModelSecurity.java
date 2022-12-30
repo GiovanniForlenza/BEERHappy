@@ -63,7 +63,7 @@ public class ModelSecurity implements Security{
 			}
 
 			System.out.println(resultSet.toString());
-			return controllo(utente, email, password);
+			return controlloUtente(utente, email, password);
 		}finally {
 			try {
 				if(preparedStatement != null)
@@ -74,7 +74,39 @@ public class ModelSecurity implements Security{
 		}
 	}
 
-	public boolean controllo (Utente utente, String email, String password){
+	public boolean controlloEmailRegistrazione(Utente utente) throws SQLException{
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		String query = "SELECT * FROM utente WHERE email = ?";
+		try{
+			connection = DriverManagerConnectionPool.getConnection();
+			preparedStatement = connection.prepareStatement(query);
+			preparedStatement.setString(1, utente.getEmail());
+
+			ResultSet resultSet = preparedStatement.executeQuery();
+
+			String email = null;
+
+			while (resultSet.next())
+				email = resultSet.getString("email");
+
+			if(utente.getEmail().equals(email)){
+				return false;
+			}
+			else {
+				return true;
+			}
+		}finally {
+			try {
+				if(preparedStatement != null)
+					preparedStatement.close();
+			}finally {
+				DriverManagerConnectionPool.releaseConnection(connection);
+			}
+		}
+	}
+
+	public boolean controlloUtente (Utente utente, String email, String password){
 
 		if(utente.getEmail() == null || utente.getPassword() == null) {
 			return false;
