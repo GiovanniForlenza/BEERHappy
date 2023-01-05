@@ -36,6 +36,7 @@ public class RegistrazioneServlet extends HttpServlet {
 					e.printStackTrace();
 				}
 				request.getSession().setAttribute("utente", utente);
+				request.getSession().setAttribute("accesso",true);
 				response.sendRedirect("http://localhost:8080/webAppTest_war/homePageStore.jsp");
 			}
 			else {

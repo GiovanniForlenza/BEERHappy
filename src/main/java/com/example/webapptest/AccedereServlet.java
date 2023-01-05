@@ -29,6 +29,7 @@ public class AccedereServlet extends HttpServlet {
 			else {
 				utente = modelSecurity.getUtente();
 				request.getSession().setAttribute("utente", utente);
+				request.getSession().setAttribute("accesso", true);
 				response.sendRedirect("http://localhost:8080/webAppTest_war/homePageStore.jsp");
 			}
 		}catch (SQLException e){

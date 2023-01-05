@@ -1,6 +1,5 @@
 package com.example.webapptest;
 
-import entity.Prodotto;
 import jakarta.servlet.*;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
@@ -19,15 +18,16 @@ public class RichiestaBirreServlet extends HttpServlet {
 
 		try {
 			request.removeAttribute("birre");
-
 			request.setAttribute("birre", model.doRetrieveAll());
 
+			Boolean flag = (Boolean) request.getSession().getAttribute("accesso");
+			if(flag != null){
+				redirectedPage = "/homePageStore.jsp";
+			}
 		} catch(SQLException e) {
 			System.out.println("Error: "+ e.getMessage());
 			request.setAttribute("error", e.getMessage());
 		}
-
-		//response.sendRedirect(redirectedPage);
 
 		RequestDispatcher dispatcher = this.getServletContext().getRequestDispatcher(redirectedPage);
 		dispatcher.forward(request, response);
