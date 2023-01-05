@@ -35,7 +35,8 @@ public class RegistrazioneServlet extends HttpServlet {
 				} catch (SQLException e) {
 					e.printStackTrace();
 				}
-				response.sendRedirect("http://localhost:8080/webAppTest_war/homePage.jsp");
+				request.getSession().setAttribute("utente", utente);
+				response.sendRedirect("http://localhost:8080/webAppTest_war/homePageStore.jsp");
 			}
 			else {
 				System.out.println("Error email already present");

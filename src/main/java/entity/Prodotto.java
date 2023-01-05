@@ -5,10 +5,12 @@ public class Prodotto {
     String prezzo;
     String birrificio;
     int quantitaDisp;
-    int formato; // 33cl
+    String formato; // 33cl
     String descrizione;
 
-    public Prodotto(String nome, String prezzo, String birrificio, int quantitaDisp, int formato, String descrizione) {
+    public Prodotto(){}
+
+    public Prodotto(String nome, String prezzo, String birrificio, int quantitaDisp, String formato, String descrizione) {
         this.nome = nome;
         this.prezzo = prezzo;
         this.birrificio = birrificio;
@@ -49,11 +51,11 @@ public class Prodotto {
         this.quantitaDisp = quantitaDisp;
     }
 
-    public int getFormato() {
+    public String getFormato() {
         return formato;
     }
 
-    public void setFormato(int formato) {
+    public void setFormato(String formato) {
         this.formato = formato;
     }
 

@@ -1,13 +1,17 @@
 package model;
 
+import entity.Prodotto;
 import entity.Utente;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Collection;
+import java.util.LinkedList;
 
 public class ModelSecurity implements Security{
+	Utente utente = new Utente();
 
 	@Override
 	public void addUser(Utente utente) throws SQLException {
@@ -105,13 +109,62 @@ public class ModelSecurity implements Security{
 			}
 		}
 	}
-
 	public boolean controlloUtente (Utente utente, String email, String password){
 
 		if(utente.getEmail() == null || utente.getPassword() == null) {
 			return false;
-		}else {
+		}else if(utente.getEmail().equals(email) && utente.getPassword().equals(password)){
+			setUtente(utente);
 			return true;
-		}
+		}else
+			return false;
 	}
+
+	public Utente getUtente(){
+		return utente;
+	}
+
+	public void setUtente(Utente utente){
+		this.utente = utente;
+	}
+
+	public Collection<Prodotto> doRetrieveAll() throws SQLException {
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+
+		Collection<Prodotto> customers = new LinkedList<Prodotto>();
+
+		String selectSQL = "SELECT * FROM beer";
+
+
+		try {
+			connection = DriverManagerConnectionPool.getConnection();
+			preparedStatement = connection.prepareStatement(selectSQL);
+
+			System.out.println("doRetrieveAll:" + preparedStatement.toString());
+			ResultSet rs = preparedStatement.executeQuery();
+
+			while(rs.next()) {
+				Prodotto bean = new Prodotto();
+
+				bean.setNome(rs.getString("nome"));
+				bean.setBirrificio(rs.getString("birrificio"));
+				bean.setDescrizione(rs.getString("descrizione"));
+				bean.setFormato(rs.getString("formato"));
+				bean.setQuantitaDisp(rs.getInt("quantita"));
+				bean.setPrezzo(rs.getString("prezzo"));
+				customers.add(bean);
+			}
+		} finally {
+			try {
+				if(preparedStatement != null)
+					preparedStatement.close();
+			} finally {
+				DriverManagerConnectionPool.releaseConnection(connection);
+			}
+		}
+
+		return customers;
+	}
+
 }
