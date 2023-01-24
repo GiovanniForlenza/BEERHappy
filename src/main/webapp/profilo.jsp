@@ -1,0 +1,98 @@
+<%@ page import="entity.Utente" %>
+<%@ page import="entity.Indirizzo" %>
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="com.example.webapptest.RimozioneIndirizzoServlet" %><%--
+  Created by IntelliJ IDEA.
+  User: for_g
+  Date: 05/01/2023
+  Time: 12:19
+  To change this template use File | Settings | File Templates.
+--%>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%
+  // Check user credentials
+  Boolean flag = (Boolean) session.getAttribute("accesso");
+  if ((flag == null) || (!flag.booleanValue()))
+  {
+    response.sendRedirect("accesso.jsp");
+    return;
+  }
+
+  Utente utente = (Utente) session.getAttribute("utente");
+
+
+%>
+<html>
+<head>
+	<title>Profile PAGE</title>
+</head>
+<body>
+<!--
+	<form method="post" action="EliminazioneServlet">
+		<input type="submit" value="elimina account">
+	</form>
+-->
+	<form method="post" name="nomeCognome">
+		<p>nome: <input  name="nome" disabled="true" value="<%= utente.getNome() %>"> </p>
+		<p>cognome: <input name="cognome" disabled="true" value="<%= utente.getCognome()%>"></p>
+		<p>email: <input disabled value="<%= utente.getEmail()%>"></p>
+		<input type="button" id="button" value="modifica dati" onclick="enable();">	<br> <br>
+	</form>
+
+	<script type="text/javascript">
+        function enable() {
+            let btn = document.getElementById("button");
+
+            document.nomeCognome.nome.disabled = false;
+            document.nomeCognome.cognome.disabled = false;
+
+            btn.value = "salva";
+            btn.onclick = () => {
+                btn.value = "modifica dati";
+                document.nomeCognome.nome.disabled = true;
+                document.nomeCognome.cognome.disabled = true;
+                //save data end refresh page
+            };
+        }
+	</script>
+
+	<form action="">
+		<input type="button" id="cambiopassword" value="Cambia password">
+	</form>
+
+	<form action="aggiuntaIndirizzo.jsp" >
+		<h3>Indirizzi</h3>
+		<input type="submit" id="addAddress" value="Aggiungi indirizzo">
+	</form>
+
+	<%
+		if(utente.getIndirizzi() != null){
+			if(utente.getIndirizzi().size() > 0){
+				for(int i = 0; i < utente.getIndirizzi().size(); i++){
+	%>
+
+	<p>citta: <%= utente.getIndirizzi().get(i).getCitta()%></p>
+	<p>cap: <%= utente.getIndirizzi().get(i).getCap()%></p>
+	<p>via: <%= utente.getIndirizzi().get(i).getVia()%></p>
+	<p>telefono: <%= utente.getIndirizzi().get(i).getTelefono()%></p>
+	<br>
+
+	<a href="<%= response.encodeURL("RimozioneIndirizzoServlet?citta="+
+	utente.getIndirizzi().get(i).getCitta() + "&via="+ utente.getIndirizzi().get(i).getVia())%>">x</a>
+
+	<%
+				}
+			}
+		}
+		else {
+	%>
+
+	<p>nessun indirizzo presente</p>
+
+	<%
+		}
+	%>
+
+
+</body>
+</html>
