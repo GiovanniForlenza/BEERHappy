@@ -4,15 +4,25 @@ public class Carta {
     String dataScadenza;
     int cvv; //sono 3 cifre
     String intestatario;
+    int cartaID;
 
     public Carta(){
 
     }
-    public Carta(String nCata, String dataScadenza, int cvv, String intestatario) {
+    public Carta(String nCata, String dataScadenza, int cvv, String intestatario, int cartaID) {
         this.nCata = nCata;
         this.dataScadenza = dataScadenza;
         this.cvv = cvv;
         this.intestatario = intestatario;
+        this.cartaID =cartaID;
+    }
+
+    public int getId() {
+        return cartaID;
+    }
+
+    public void setId(int cardID) {
+        this.cartaID = cardID;
     }
 
     public String getnCata() {
@@ -47,6 +57,7 @@ public class Carta {
         this.intestatario = intestatario;
     }
 
+
     @Override
     public String toString() {
         return "Carta{" +
@@ -54,6 +65,7 @@ public class Carta {
                 ", dataScadenza='" + dataScadenza + '\'' +
                 ", cvv=" + cvv +
                 ", intestatario='" + intestatario + '\'' +
+                ", cartaID=" + cartaID +
                 '}';
     }
 }

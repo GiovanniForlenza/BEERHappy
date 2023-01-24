@@ -60,39 +60,69 @@
 		<input type="button" id="cambiopassword" value="Cambia password">
 	</form>
 
-	<form action="aggiuntaIndirizzo.jsp" >
-		<h3>Indirizzi</h3>
-		<input type="submit" id="addAddress" value="Aggiungi indirizzo">
-	</form>
+<form action="aggiuntaIndirizzo.jsp" >
+	<h3>Indirizzi</h3>
+	<input type="submit" id="addAddress" value="Aggiungi indirizzo">
+</form>
 
-	<%
-		if(utente.getIndirizzi() != null){
-			if(utente.getIndirizzi().size() > 0){
-				for(int i = 0; i < utente.getIndirizzi().size(); i++){
-	%>
+<%
+	if(utente.getIndirizzi() != null){
+		if(utente.getIndirizzi().size() > 0){
+			for(int i = 0; i < utente.getIndirizzi().size(); i++){
+%>
 
-	<p>citta: <%= utente.getIndirizzi().get(i).getCitta()%></p>
-	<p>cap: <%= utente.getIndirizzi().get(i).getCap()%></p>
-	<p>via: <%= utente.getIndirizzi().get(i).getVia()%></p>
-	<p>telefono: <%= utente.getIndirizzi().get(i).getTelefono()%></p>
-	<br>
+<p>citta: <%= utente.getIndirizzi().get(i).getCitta()%></p>
+<p>cap: <%= utente.getIndirizzi().get(i).getCap()%></p>
+<p>via: <%= utente.getIndirizzi().get(i).getVia()%></p>
+<p>telefono: <%= utente.getIndirizzi().get(i).getTelefono()%></p>
+<br>
 
-	<a href="<%= response.encodeURL("RimozioneIndirizzoServlet?citta="+
-	utente.getIndirizzi().get(i).getCitta() + "&via="+ utente.getIndirizzi().get(i).getVia())%>">x</a>
+<a href="<%= response.encodeURL("RimozioneIndirizzoServlet?indirizzoID="+
+	utente.getIndirizzi().get(i).getID() + "")%>">x</a>
 
-	<%
-				}
-			}
+<%
 		}
-		else {
-	%>
+	}
+}
+else {
+%>
 
-	<p>nessun indirizzo presente</p>
+<p>nessun indirizzo presente</p>
 
-	<%
+<%
+	}
+%>
+//QUI PARTONO LE CARTE
+<form action="aggiuntaCarta.jsp" >
+	<h3>Carte</h3>
+	<input type="submit" id="addCarta" value="Aggiungi carta">
+</form>
+
+<%
+	if(utente.getCarte() != null){
+		if(utente.getCarte().size() > 0){
+			for(int i = 0; i < utente.getCarte().size(); i++){
+%>
+
+<p>titolare: <%= utente.getCarte().get(i).getIntestatario()%></p>
+<p>numero carta: <%= utente.getCarte().get(i).getnCata()%></p>
+<p>scadenza: <%= utente.getCarte().get(i).getDataScadenza()%></p>
+<br>
+
+<a href="<%= response.encodeURL("RimozioneCartaServlet?cartaID="+
+	utente.getCarte().get(i).getId()+"")%>">x</a>
+
+<%
 		}
-	%>
+	}
+} else {
+%>
 
+<p>nessuna carta presente</p>
+
+<%
+	}
+%>
 
 </body>
 </html>

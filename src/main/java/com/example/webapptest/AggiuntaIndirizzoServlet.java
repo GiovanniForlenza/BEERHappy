@@ -2,9 +2,12 @@ package com.example.webapptest;
 
 import entity.Indirizzo;
 import entity.Utente;
-import jakarta.servlet.*;
-import jakarta.servlet.http.*;
-import jakarta.servlet.annotation.*;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import model.AddressModel;
 import model.ModelSecurity;
 
 import java.io.IOException;
@@ -17,23 +20,23 @@ public class AggiuntaIndirizzoServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		ModelSecurity modelSecurity = new ModelSecurity();
 		Indirizzo indirizzo = new Indirizzo();
-
 		indirizzo.setCitta(request.getParameter("citta"));
 		indirizzo.setVia(request.getParameter("via"));
-		//indirizzo.setCivico(request.getParameter("civico"));
+		indirizzo.setCivico(Integer.parseInt(request.getParameter("civico")));
 		indirizzo.setCap(request.getParameter("cap"));
 		indirizzo.setTelefono(request.getParameter("telefono"));
+
 
 
 		Utente utente = (Utente) request.getSession().getAttribute("utente");
 
 		try{
-			modelSecurity.aggiuntaIndirizzo(indirizzo,utente);
-			response.sendRedirect("http://localhost:8080/webAppTest_war/profilo.jsp");
-
+			AddressModel am=new AddressModel();
+			indirizzo=am.aggiuntaIndirizzo(indirizzo,utente);
 			utente.addIndirizzo(indirizzo);
 			request.removeAttribute("utente");
 			request.setAttribute("utente", utente);
+			response.sendRedirect("http://localhost:8080/webAppTest_war/profilo.jsp");
 		}catch(SQLException e){
 			e.printStackTrace();
 		}

@@ -1,10 +1,13 @@
 package com.example.webapptest;
 
-import entity.Indirizzo;
 import entity.Utente;
-import jakarta.servlet.*;
-import jakarta.servlet.http.*;
-import jakarta.servlet.annotation.*;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import model.AddressModel;
+import model.CardModel;
 import model.ModelSecurity;
 
 import java.io.IOException;
@@ -14,7 +17,9 @@ import java.sql.SQLException;
 public class AccedereServlet extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		ModelSecurity modelSecurity = new ModelSecurity();
+		AddressModel am= new AddressModel();
+		CardModel cm=new CardModel();
+		ModelSecurity ms= new ModelSecurity();
 		Utente utente;
 
 		String mail, password;
@@ -24,15 +29,16 @@ public class AccedereServlet extends HttpServlet {
 		password = request.getParameter("password");
 
 		try {
-			flag = modelSecurity.controlloAccesso(mail, password);
+			flag = ms.controlloAccesso(mail, password);
 			System.out.println("Valore di ritorno: " + flag);
 			if(flag == false)
 				response.sendRedirect("http://localhost:8080/webAppTest_war/accesso.jsp");
 			else {
-				utente = modelSecurity.getUtente();
+				utente = ms.getUtente();
 				request.getSession().setAttribute("accesso", true);
 
-				utente.setIndirizzi(modelSecurity.recuperoIndirizzo());
+				utente.setIndirizzi(am.recuperoIndirizzo(utente));
+				utente.setCarte(cm.recuperoCarte(utente));
 				request.getSession().setAttribute("utente", utente);
 				response.sendRedirect("http://localhost:8080/webAppTest_war/homePageStore.jsp");
 			}

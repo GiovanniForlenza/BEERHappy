@@ -1,9 +1,6 @@
 package entity;
 
-import jakarta.persistence.criteria.CriteriaBuilder;
-
 import java.util.ArrayList;
-import java.util.List;
 
 public class Utente {
 
@@ -75,21 +72,32 @@ public class Utente {
 		this.indirizzi.add(indirizzo);
 
     }
-
-    public void remove(Indirizzo indirizzo) {
-        for(int i=0; i < indirizzi.size(); i++) {
-            if (indirizzi.get(i).equals(indirizzo)){
-                this.indirizzi.remove(indirizzi.get(i));
+    public void removeIndirizzo(int indirizzoID){
+        for(int i=0; i<indirizzi.size(); i++){
+            if(indirizzi.get(i).getID()==indirizzoID){
+                indirizzi.remove(i);
+                System.out.println("IndirizzoRimosso");
             }
         }
 
     }
 
-    public void printIndirizzi(){
-        for(int i=0; i < indirizzi.size(); i++)
-            System.out.println(indirizzi.get(i).toString());
+    public void removeCarta(int cartaID){
+        for(int i=0; i<carte.size(); i++){
+            if(carte.get(i).getId()==cartaID){
+                carte.remove(i);
+                System.out.println("IndirizzoRimosso");
+            }
+        }
     }
 
+    public void addCarta(Carta carta) {
+        if (this.carte == null)
+            this.carte = new ArrayList<>();
+
+        this.carte.add(carta);
+
+    }
     public Carrello getCarrello() {
         return carrello;
     }
@@ -109,6 +117,4 @@ public class Utente {
                 ", carrello=" + carrello +
                 '}';
     }
-
-
 }

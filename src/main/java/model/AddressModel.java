@@ -1,35 +1,33 @@
 package model;
 
 import entity.Indirizzo;
+import entity.Utente;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 public class AddressModel {
 
-	public Indirizzo doRetrieveByKey(String citta, String via) throws SQLException {
+	public Indirizzo doRetrieveByKey(String code) throws SQLException {
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 
 		Indirizzo bean = new Indirizzo();
 
-		String selectSQL = "SELECT * FROM indirizzo WHERE citta = ? and via = ?";
+		String selectSQL = "SELECT * FROM indirizzo WHERE id = ?";
 
 		try {
 			connection = DriverManagerConnectionPool.getConnection();
 			preparedStatement = connection.prepareStatement(selectSQL);
-
-			preparedStatement.setString(1,citta);
-			preparedStatement.setString(2,via);
-			//preparedStatement.setInt(1, Integer.parseInt(code));
+			preparedStatement.setInt(1, Integer.parseInt(code));
 
 			System.out.println("doRetrieveByKey: "+ preparedStatement.toString());
 			ResultSet rs = preparedStatement.executeQuery();
 
 			while(rs.next()) {
-				bean.setId(rs.getInt("indirizzoID"));
 				bean.setCitta(rs.getString("citta"));
 				bean.setTelefono(rs.getString("telefono"));
 				bean.setVia(rs.getString("via"));
@@ -48,7 +46,7 @@ public class AddressModel {
 
 		return bean;
 	}
-	public void doDelete(Indirizzo address) throws SQLException {
+	public void doDelete(int indirizzoID) throws SQLException {
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 
@@ -57,7 +55,8 @@ public class AddressModel {
 		try {
 			connection = DriverManagerConnectionPool.getConnection();
 			preparedStatement = connection.prepareStatement(deleteSQL);
-			preparedStatement.setInt(1, address.getId());
+
+			preparedStatement.setInt(1, indirizzoID);
 			System.out.println("doDelete: "+ preparedStatement.toString());
 			preparedStatement.executeUpdate();
 
@@ -72,6 +71,79 @@ public class AddressModel {
 			}
 		}
 
+	}
+	public ArrayList<Indirizzo> recuperoIndirizzo(Utente utente) throws SQLException{
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		String query = "select * from indirizzo where email = ?";
+		ArrayList<Indirizzo> address = new ArrayList<Indirizzo>();
+
+		try{
+			connection = DriverManagerConnectionPool.getConnection();
+			preparedStatement = connection.prepareStatement(query);
+			preparedStatement.setString(1, utente.getEmail());
+			System.out.println("Recovery address:" + preparedStatement.toString());
+			ResultSet resultSet = preparedStatement.executeQuery();
+
+			while(resultSet.next())
+			{
+				Indirizzo indirizzo= new Indirizzo();
+				indirizzo.setID(resultSet.getInt("indirizzoID"));
+				indirizzo.setVia(resultSet.getString("via") +"  "+ resultSet.getString("civico"));
+				indirizzo.setCitta(resultSet.getString("citta"));
+				indirizzo.setTelefono(resultSet.getString("telefono"));
+				indirizzo.setCivico(resultSet.getInt("civico"));
+				indirizzo.setCap(resultSet.getString("cap"));
+
+				address.add(indirizzo);
+			}
+
+			return address;
+
+		}finally {
+			try {
+				if(preparedStatement != null)
+					preparedStatement.close();
+			} finally {
+				DriverManagerConnectionPool.releaseConnection(connection);
+			}
+		}
+	}
+
+	public Indirizzo aggiuntaIndirizzo(Indirizzo indirizzo, Utente utente) throws SQLException {
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		String insertSQL = "INSERT INTO indirizzo" + "(via, civico, citta, telefono, cap, email) values (?,?,?,?,?,?)";
+
+
+		try {
+			connection = DriverManagerConnectionPool.getConnection();
+			preparedStatement = connection.prepareStatement(insertSQL);
+			preparedStatement.setString(1, indirizzo.getVia());
+			preparedStatement.setInt(2, indirizzo.getCivico());
+			preparedStatement.setString(3, indirizzo.getCitta());
+			preparedStatement.setString(4, indirizzo.getTelefono());
+			preparedStatement.setString(5, indirizzo.getCap());
+			preparedStatement.setString(6, utente.getEmail());
+
+
+
+			preparedStatement.executeUpdate();
+			ResultSet rs=preparedStatement.getGeneratedKeys();
+			rs.next();
+			indirizzo.setID(rs.getInt(1));
+			System.out.println("Insert Query update");
+			System.out.print("L'id del nuovo indirizzo è: "+indirizzo.getID());
+			connection.commit();
+		}finally {
+			try {
+				if(preparedStatement != null)
+					preparedStatement.close();
+			}finally {
+				DriverManagerConnectionPool.releaseConnection(connection);
+				return indirizzo;
+			}
+		}
 	}
 
 }

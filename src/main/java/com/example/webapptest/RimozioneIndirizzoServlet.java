@@ -1,10 +1,11 @@
 package com.example.webapptest;
 
-import entity.Indirizzo;
 import entity.Utente;
-import jakarta.servlet.*;
-import jakarta.servlet.http.*;
-import jakarta.servlet.annotation.*;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import model.AddressModel;
 
 import java.io.IOException;
@@ -15,27 +16,23 @@ public class RimozioneIndirizzoServlet extends HttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		String citta = req.getParameter("citta");
-		String via = req.getParameter("via");
-
-		AddressModel am = new AddressModel();
-		Indirizzo indirizzo;
-
+		String s=req.getParameter("indirizzoID");
+		System.out.println(s);
+		int indirizzoID;
+		System.out.println(s);
+		indirizzoID=Integer.parseInt(s);
+		AddressModel am=new AddressModel();
 		try {
-			indirizzo = am.doRetrieveByKey(citta, via);
-			System.out.println("aooo"+indirizzo);
-			Utente utente = (Utente) req.getSession().getAttribute("utente");
-			utente.remove(indirizzo);
-
-			am.doDelete(indirizzo);
-			req.removeAttribute("utente");
-			req.setAttribute("utente", utente);
-			resp.sendRedirect("http://localhost:8080/webAppTest_war/profilo.jsp");
-
-
-		} catch (SQLException e) {
+			am.doDelete(indirizzoID);
+		}catch (SQLException e){
 			e.printStackTrace();
 		}
+		Utente utente=(Utente)req.getSession().getAttribute("utente");
+		utente.removeIndirizzo(indirizzoID);
+		req.removeAttribute("utente");
+		req.setAttribute("utente", utente);
+
+		resp.sendRedirect("http://localhost:8080/webAppTest_war/profilo.jsp");
 
 	}
 

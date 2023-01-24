@@ -2,18 +2,38 @@ package entity;
 
 public class Indirizzo {
     String citta;
+    int civico;
     String via;
     String cap;
     String telefono;
     int id;
 
-    public Indirizzo (){
+    public Indirizzo(){
     }
-    public Indirizzo(String citta, String via, String cap, String telefono, int id) {
+
+    public int getCivico() {
+        return civico;
+    }
+
+    public void setCivico(int civico) {
+        this.civico = civico;
+    }
+
+    public Indirizzo(String citta, String via, int civico, String cap, String telefono, int id) {
         this.citta = citta;
         this.via = via;
         this.cap = cap;
+        this.civico=civico;
         this.telefono = telefono;
+
+        this.id=id;
+    }
+
+    public int getID() {
+        return id;
+    }
+
+    public void setID(int id) {
         this.id = id;
     }
 
@@ -47,14 +67,6 @@ public class Indirizzo {
 
     public void setTelefono(String telefono) {
         this.telefono = telefono;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     @Override
