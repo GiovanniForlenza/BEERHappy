@@ -4,7 +4,7 @@
 <%@ page import="entity.Prodotto" %>
 <%@ page import="java.util.Iterator" %><%--
   Created by IntelliJ IDEA.
-  User: for_g
+  User: jhon
   Date: 02/01/2023
   Time: 18:25
   To change this template use File | Settings | File Templates.

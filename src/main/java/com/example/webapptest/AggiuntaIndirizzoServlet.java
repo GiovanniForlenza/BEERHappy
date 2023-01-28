@@ -18,7 +18,6 @@ public class AggiuntaIndirizzoServlet extends HttpServlet {
 
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		ModelSecurity modelSecurity = new ModelSecurity();
 		Indirizzo indirizzo = new Indirizzo();
 		indirizzo.setCitta(request.getParameter("citta"));
 		indirizzo.setVia(request.getParameter("via"));
@@ -31,7 +30,7 @@ public class AggiuntaIndirizzoServlet extends HttpServlet {
 		Utente utente = (Utente) request.getSession().getAttribute("utente");
 
 		try{
-			AddressModel am=new AddressModel();
+			AddressModel am = new AddressModel();
 			indirizzo=am.aggiuntaIndirizzo(indirizzo,utente);
 			utente.addIndirizzo(indirizzo);
 			request.removeAttribute("utente");

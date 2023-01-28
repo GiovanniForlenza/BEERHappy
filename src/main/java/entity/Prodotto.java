@@ -1,5 +1,7 @@
 package entity;
 
+import java.util.Objects;
+
 public class Prodotto {
     String nome;
     String prezzo;
@@ -7,6 +9,7 @@ public class Prodotto {
     int quantitaDisp;
     String formato; // 33cl
     String descrizione;
+    int quantita;
 
     public Prodotto(){}
 
@@ -17,6 +20,7 @@ public class Prodotto {
         this.quantitaDisp = quantitaDisp;
         this.formato = formato;
         this.descrizione = descrizione;
+        this.quantita = 0;
     }
 
     public String getNome() {
@@ -67,6 +71,25 @@ public class Prodotto {
         this.descrizione = descrizione;
     }
 
+    public int getQuantita() {
+        return quantita;
+    }
+
+    public void setQuantita(int quantita) {
+        this.quantita = quantita;
+    }
+
+    public int aggiornaQuantita(int quantita){
+        if(this.quantitaDisp >= quantita)
+            quantitaDisp = quantitaDisp - quantita;
+
+        return quantitaDisp;
+    }
+
+    public void aggiungiQuantita(int quantita){
+        quantitaDisp = quantitaDisp + quantita;
+    }
+
     @Override
     public String toString() {
         return "Prodotto{" +
@@ -78,4 +101,13 @@ public class Prodotto {
                 ", descrizione='" + descrizione + '\'' +
                 '}';
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Prodotto)) return false;
+        Prodotto prodotto = (Prodotto) o;
+        return Objects.equals(nome, prodotto.nome) && Objects.equals(prezzo, prodotto.prezzo) && Objects.equals(birrificio, prodotto.birrificio) && Objects.equals(formato, prodotto.formato) && Objects.equals(descrizione, prodotto.descrizione);
+    }
+
 }

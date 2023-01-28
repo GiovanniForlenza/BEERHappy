@@ -1,6 +1,6 @@
 <%--
   Created by IntelliJ IDEA.
-  User: for_g
+  User: jhon
   Date: 21/12/2022
   Time: 11:55
   To change this template use File | Settings | File Templates.
@@ -11,7 +11,7 @@
     <title>Catalogo</title>
 </head>
 <body>
-    <h2>Ctalogo</h2>    <br>
+    <h2>Catalogo</h2>    <br>
     <h3>PRODOTTI</h3>
     <%@ include file="beerCollection.jsp" %>
 </body>

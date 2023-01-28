@@ -17,13 +17,13 @@ import java.sql.SQLException;
 public class AccedereServlet extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		AddressModel am= new AddressModel();
-		CardModel cm=new CardModel();
+		AddressModel am = new AddressModel();
+		CardModel cm = new CardModel();
 		ModelSecurity ms= new ModelSecurity();
 		Utente utente;
 
 		String mail, password;
-		boolean flag = false;
+		boolean flag;
 
 		mail = request.getParameter("e-mail");
 		password = request.getParameter("password");
