@@ -1,5 +1,4 @@
 package com.example.webapptest;
-
 import entity.Utente;
 import entity.UtenteBO;
 import jakarta.servlet.ServletException;
@@ -23,12 +22,12 @@ public class AccedereServlet extends HttpServlet {
 		ModelSecurity ms = new ModelSecurity();
 		Utente utente;
 		UtenteBO utenteBO;
-
 		String email, password;
 
 
 		email = request.getParameter("e-mail");
 		password = request.getParameter("password");
+		System.out.println("email: "+email+" password: "+password);
 
 		try {
 			if ((utenteBO = ms.loginAmministratore(email, password)) != null) {

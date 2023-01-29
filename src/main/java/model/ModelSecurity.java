@@ -48,14 +48,14 @@ public class ModelSecurity implements Security {
 		PreparedStatement preparedStatement = null;
 		String query = "SELECT * FROM utente WHERE email = ? AND password = ?";
 		Utente utente = null;
-
+		ResultSet resultSet;
 		try {
 			connection = DriverManagerConnectionPool.getConnection();
 			preparedStatement = connection.prepareStatement(query);
 			preparedStatement.setString(1, email);
 			preparedStatement.setString(2, password);
 
-			ResultSet resultSet = preparedStatement.executeQuery();
+			resultSet = preparedStatement.executeQuery();
 
 			if (resultSet.next()) {
 				utente=new Utente();
@@ -63,7 +63,6 @@ public class ModelSecurity implements Security {
 				utente.setCognome(resultSet.getString("cognome"));
 				utente.setEmail(resultSet.getString("email"));
 				utente.setPassword(resultSet.getString("password"));
-				return utente;
 			}
 			if (preparedStatement != null)
 				preparedStatement.close();
@@ -245,12 +244,11 @@ public class ModelSecurity implements Security {
 		return randomString;
 	}
 	public UtenteBO loginAmministratore(String email, String password) throws SQLException {
-		UtenteBO utenteBO = new UtenteBO();
 		Connection connection = null;
-		PreparedStatement preparedStatement = null;
+		PreparedStatement preparedStatement=null;
 		String query = "SELECT * FROM utenteBO WHERE email = ? AND password = ?";
-		UtenteBO utente = new UtenteBO();
-		ResultSet rs=null;
+		UtenteBO utenteBO = null;
+		ResultSet rs;
 
 		try {
 			connection = DriverManagerConnectionPool.getConnection();
@@ -258,15 +256,20 @@ public class ModelSecurity implements Security {
 			preparedStatement.setString(1, email);
 			preparedStatement.setString(2, password);
 			rs = preparedStatement.executeQuery();
-		} catch (SQLException e) {
 
+			if (rs.next()) {
+				System.out.println("Qua ci arriva");
+				utenteBO=new UtenteBO();
+				utenteBO.setEmail(rs.getString("email"));
+				utenteBO.setPassword(rs.getString("password"));
+				utenteBO.setRuolo(rs.getInt("ruolo"));
+			}
+			if (preparedStatement != null)
+				preparedStatement.close();
+		} finally {
+			DriverManagerConnectionPool.releaseConnection(connection);
 		}
-		if(rs.next()){
-			utente.setEmail(rs.getString("email"));
-			utente.setEmail(rs.getString("password"));
-			utente.setRuolo(rs.getInt("ruolo"));
-			return utente;
-		}else return null;
+		return  utenteBO;
 	}
 
 	public boolean cercaUtenteBO(String email) throws SQLException {
@@ -303,9 +306,11 @@ public class ModelSecurity implements Security {
 				preparedStatement.setString(2, email);
 
 				preparedStatement.executeUpdate();
-			} finally {
+
 				if (preparedStatement != null)
 					preparedStatement.close();
+				DriverManagerConnectionPool.releaseConnection(connection);
+			} finally {
 				DriverManagerConnectionPool.releaseConnection(connection);
 			}
 		}

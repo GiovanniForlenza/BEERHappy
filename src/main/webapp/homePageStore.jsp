@@ -12,7 +12,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
 	// Check user credentials
-	Boolean flag = (Boolean) session.getAttribute("accesso");
+	Boolean flag = (Boolean) session.getAttribute("accessoUtente");
 	if ((flag == null) || (!flag.booleanValue()))
 	{
 		response.sendRedirect("accesso.jsp");
