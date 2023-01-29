@@ -24,7 +24,7 @@ public class CartModel {
 			preparedStatement.setString(3, prodotto.getDescrizione());
 			preparedStatement.setString(4, prodotto.getFormato());
 			preparedStatement.setInt(5, prodotto.getQuantitaDisp());
-			preparedStatement.setString(6, prodotto.getPrezzo());
+			preparedStatement.setDouble(6, prodotto.getPrezzo());
 			preparedStatement.setString(7, "");
 			preparedStatement.setString(8, prodotto.getNome());
 			preparedStatement.setString(9, prodotto.getBirrificio());

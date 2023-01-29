@@ -1,18 +1,18 @@
 package model;
 
-import entity.Indirizzo;
 import entity.Prodotto;
 import entity.Utente;
+import entity.UtenteBO;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.LinkedList;
+import java.util.Random;
 
-public class ModelSecurity implements Security{
+public class ModelSecurity implements Security {
 	Utente utente = new Utente();
 
 	@Override
@@ -29,28 +29,27 @@ public class ModelSecurity implements Security{
 			preparedStatement.setString(3, utente.getEmail());
 			preparedStatement.setString(4, utente.getPassword());
 
+
 			preparedStatement.executeUpdate();
 			System.out.println("Insert Query update");
 			connection.commit();
-		}finally {
+		} finally {
 			try {
-				if(preparedStatement != null)
+				if (preparedStatement != null)
 					preparedStatement.close();
-			}finally {
+			} finally {
 				DriverManagerConnectionPool.releaseConnection(connection);
 			}
 		}
 	}
 
-	@Override
-	public boolean controlloAccesso (String email, String password) throws SQLException{
+	public Utente loginUtente(String email, String password) throws SQLException {
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 		String query = "SELECT * FROM utente WHERE email = ? AND password = ?";
-		Utente utente = new Utente();
+		Utente utente = null;
 
-
-		try{
+		try {
 			connection = DriverManagerConnectionPool.getConnection();
 			preparedStatement = connection.prepareStatement(query);
 			preparedStatement.setString(1, email);
@@ -58,31 +57,27 @@ public class ModelSecurity implements Security{
 
 			ResultSet resultSet = preparedStatement.executeQuery();
 
-			while (resultSet.next()) {
-
+			if (resultSet.next()) {
+				utente=new Utente();
 				utente.setNome(resultSet.getString("nome"));
 				utente.setCognome(resultSet.getString("cognome"));
 				utente.setEmail(resultSet.getString("email"));
 				utente.setPassword(resultSet.getString("password"));
+				return utente;
 			}
-
-			System.out.println(resultSet.toString());
-			return controlloUtente(utente, email, password);
+			if (preparedStatement != null)
+				preparedStatement.close();
 		}finally {
-			try {
-				if(preparedStatement != null)
-					preparedStatement.close();
-			}finally {
-				DriverManagerConnectionPool.releaseConnection(connection);
-			}
+			DriverManagerConnectionPool.releaseConnection(connection);
 		}
+		return utente;
 	}
 
-	public boolean controlloEmailRegistrazione(Utente utente) throws SQLException{
+	public boolean controlloEmailRegistrazione(Utente utente) throws SQLException {
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 		String query = "SELECT * FROM utente WHERE email = ?";
-		try{
+		try {
 			connection = DriverManagerConnectionPool.getConnection();
 			preparedStatement = connection.prepareStatement(query);
 			preparedStatement.setString(1, utente.getEmail());
@@ -94,37 +89,26 @@ public class ModelSecurity implements Security{
 			while (resultSet.next())
 				email = resultSet.getString("email");
 
-			if(utente.getEmail().equals(email)){
+			if (utente.getEmail().equals(email)) {
 				return false;
-			}
-			else {
+			} else {
 				return true;
 			}
-		}finally {
+		} finally {
 			try {
-				if(preparedStatement != null)
+				if (preparedStatement != null)
 					preparedStatement.close();
-			}finally {
+			} finally {
 				DriverManagerConnectionPool.releaseConnection(connection);
 			}
 		}
 	}
-	public boolean controlloUtente (Utente utente, String email, String password){
 
-		if(utente.getEmail() == null || utente.getPassword() == null) {
-			return false;
-		}else if(utente.getEmail().equals(email) && utente.getPassword().equals(password)){
-			setUtente(utente);
-			return true;
-		}else
-			return false;
-	}
-
-	public Utente getUtente(){
+	public Utente getUtente() {
 		return utente;
 	}
 
-	public void setUtente(Utente utente){
+	public void setUtente(Utente utente) {
 		this.utente = utente;
 	}
 
@@ -144,7 +128,7 @@ public class ModelSecurity implements Security{
 			System.out.println("doRetrieveAll:" + preparedStatement.toString());
 			ResultSet rs = preparedStatement.executeQuery();
 
-			while(rs.next()) {
+			while (rs.next()) {
 				Prodotto bean = new Prodotto();
 
 				bean.setNome(rs.getString("nome"));
@@ -152,12 +136,12 @@ public class ModelSecurity implements Security{
 				bean.setDescrizione(rs.getString("descrizione"));
 				bean.setFormato(rs.getString("formato"));
 				bean.setQuantitaDisp(rs.getInt("quantita"));
-				bean.setPrezzo(rs.getString("prezzo"));
+				bean.setPrezzo(rs.getDouble("prezzo"));
 				customers.add(bean);
 			}
 		} finally {
 			try {
-				if(preparedStatement != null)
+				if (preparedStatement != null)
 					preparedStatement.close();
 			} finally {
 				DriverManagerConnectionPool.releaseConnection(connection);
@@ -167,12 +151,13 @@ public class ModelSecurity implements Security{
 		return customers;
 	}
 
-	public void removeUser (Utente utente) throws SQLException {
+	public void removeUser(Utente utente) throws SQLException {
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
-		String query = "DELETE FROM utente WHERE email = ?";
+		System.out.println("Qui ci arrivo");
+		String query = "delete from utente WHERE email = ?";
 
-		try{
+		try {
 			connection = DriverManagerConnectionPool.getConnection();
 			preparedStatement = connection.prepareStatement(query);
 
@@ -183,82 +168,147 @@ public class ModelSecurity implements Security{
 			connection.commit();
 
 
-		}finally {
+		} finally {
 			try {
-				if(preparedStatement != null)
+				if (preparedStatement != null)
 					preparedStatement.close();
 			} finally {
 				DriverManagerConnectionPool.releaseConnection(connection);
 			}
 		}
+
 	}
 
-	public ArrayList<Indirizzo> recuperoIndirizzo() throws SQLException{
+	public boolean cercaUtente(String email) throws SQLException {
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
-		String query = "select * from indirizzo where email = ?";
-		ArrayList<Indirizzo> address = new ArrayList<Indirizzo>();
-
-		try{
+		String query = "select * from utente WHERE email = ?";
+		boolean trovato=false;
+		try {
 			connection = DriverManagerConnectionPool.getConnection();
 			preparedStatement = connection.prepareStatement(query);
-			preparedStatement.setString(1, utente.getEmail());
-			System.out.println("Recovery address:" + preparedStatement.toString());
-			ResultSet resultSet = preparedStatement.executeQuery();
+			preparedStatement.setString(1, email);
+			ResultSet rs = preparedStatement.executeQuery();
+			if (rs.next())
+				trovato=true;
+			if (preparedStatement != null)
+				preparedStatement.close();
+		} finally {
+			DriverManagerConnectionPool.releaseConnection(connection);
+		}
+		return trovato;
+	}
+	public String recuperoPassword(String email) throws SQLException {
+		String passwordMomentanea=null;
+		if(cercaUtente(email)){
+			System.out.println("L'e-mail la trova:"+email);
 
-			while(resultSet.next())
-			{
-				Indirizzo indirizzo= new Indirizzo();
-				indirizzo.setId(resultSet.getInt("indirizzoID"));
-				indirizzo.setVia(resultSet.getString("via"));
-				indirizzo.setCitta(resultSet.getString("citta"));
-				indirizzo.setTelefono(resultSet.getString("telefono"));
-				indirizzo.setCap(resultSet.getString("cap"));
-
-				address.add(indirizzo);
-			}
-
-			return address;
-
-		}finally {
+			Connection connection = null;
+			PreparedStatement preparedStatement = null;
+			ModelSecurity ms=new ModelSecurity();
+			passwordMomentanea= ms.generaPassword();
+			System.out.println(passwordMomentanea);
+			String query = "update utente set password = ? where email = ?";
 			try {
-				if(preparedStatement != null)
-					preparedStatement.close();
+				connection = DriverManagerConnectionPool.getConnection();
+				preparedStatement = connection.prepareStatement(query);
+				preparedStatement.setString(1, passwordMomentanea);
+				preparedStatement.setString(2, email);
+
+				preparedStatement.executeUpdate();
 			} finally {
+				if (preparedStatement != null)
+					preparedStatement.close();
 				DriverManagerConnectionPool.releaseConnection(connection);
 			}
 		}
+		return passwordMomentanea;
 	}
+	public String generaPassword() {
+		String upperAlphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+		String lowerAlphabet = "abcdefghijklmnopqrstuvwxyz";
+		String numbers = "0123456789";
 
-	public void aggiuntaIndirizzo(Indirizzo indirizzo, Utente utente) throws SQLException {
+		String alphaNumeric = upperAlphabet + lowerAlphabet + numbers;
+		StringBuilder sb = new StringBuilder();
+		Random random = new Random();
+
+		int length = 10;
+
+		for (int i = 0; i < length; i++) {
+			int index = random.nextInt(alphaNumeric.length());
+			char randomChar = alphaNumeric.charAt(index);
+			sb.append(randomChar);
+		}
+
+		String randomString = sb.toString();
+		return randomString;
+	}
+	public UtenteBO loginAmministratore(String email, String password) throws SQLException {
+		UtenteBO utenteBO = new UtenteBO();
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
-		String insertSQL = "INSERT INTO indirizzo" + "(via, civico, citta, telefono, cap, email) values (?,?,?,?,?,?)";
-
+		String query = "SELECT * FROM utenteBO WHERE email = ? AND password = ?";
+		UtenteBO utente = new UtenteBO();
+		ResultSet rs=null;
 
 		try {
 			connection = DriverManagerConnectionPool.getConnection();
-			preparedStatement = connection.prepareStatement(insertSQL);
+			preparedStatement = connection.prepareStatement(query);
+			preparedStatement.setString(1, email);
+			preparedStatement.setString(2, password);
+			rs = preparedStatement.executeQuery();
+		} catch (SQLException e) {
 
-			preparedStatement.setString(1, indirizzo.getVia());
-			preparedStatement.setString(2, "1");
-			preparedStatement.setString(3, indirizzo.getCitta());
-			preparedStatement.setString(4, indirizzo.getTelefono());
-			preparedStatement.setString(5, indirizzo.getCap());
-			preparedStatement.setString(6, utente.getEmail());
+		}
+		if(rs.next()){
+			utente.setEmail(rs.getString("email"));
+			utente.setEmail(rs.getString("password"));
+			utente.setRuolo(rs.getInt("ruolo"));
+			return utente;
+		}else return null;
+	}
 
-			preparedStatement.executeUpdate();
+	public boolean cercaUtenteBO(String email) throws SQLException {
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		String query = "select * from utenteBO WHERE email = ?";
+		boolean trovato=false;
+		try {
+			connection = DriverManagerConnectionPool.getConnection();
+			preparedStatement = connection.prepareStatement(query);
+			preparedStatement.setString(1, email);
+			ResultSet rs = preparedStatement.executeQuery();
+			if (rs.next())
+				trovato=true;
+			if (preparedStatement != null)
+				preparedStatement.close();
+		} finally {
+			DriverManagerConnectionPool.releaseConnection(connection);
+		}
+		return trovato;
+	}
 
-			System.out.println("Insert Query update");
-			connection.commit();
-
-		}finally {
+	public String recuperoPasswordUtenteBO(String email) throws SQLException {
+		String passwordMomentanea=null;
+		if(cercaUtenteBO(email)){
+			Connection connection = null;
+			PreparedStatement preparedStatement = null;
+			System.out.println(passwordMomentanea);
+			String query = "update utenteBO set password = ? where email = ?";
 			try {
-				if(preparedStatement != null)
+				connection = DriverManagerConnectionPool.getConnection();
+				preparedStatement = connection.prepareStatement(query);
+				preparedStatement.setString(1, passwordMomentanea);
+				preparedStatement.setString(2, email);
+
+				preparedStatement.executeUpdate();
+			} finally {
+				if (preparedStatement != null)
 					preparedStatement.close();
-			}finally {
 				DriverManagerConnectionPool.releaseConnection(connection);
 			}
 		}
+		return passwordMomentanea;
 	}
 }

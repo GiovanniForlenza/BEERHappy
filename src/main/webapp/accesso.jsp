@@ -46,5 +46,13 @@
         <input type="submit">
         <input type="reset">
     </form>
+
+    <h1>Recupero password</h1>
+    <form method="post" action="RecuperoPasswordServlet">
+        <labe>Nome</labe>   <br>
+        <input type="text" name="email" autocomplete="off" required>  <br>
+        <input type="submit">
+        <p class="messageEmailError">email non presente</p>
+    </form>
 </body>
 </html>

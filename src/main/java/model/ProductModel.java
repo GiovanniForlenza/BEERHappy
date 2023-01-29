@@ -33,7 +33,7 @@ public class ProductModel {
 				bean.setDescrizione(rs.getString("descrizione"));
 				bean.setFormato(rs.getString("formato"));
 				bean.setQuantitaDisp(rs.getInt("quantita"));
-				bean.setPrezzo(rs.getString("prezzo"));
+				bean.setPrezzo(rs.getDouble("prezzo"));
 			}
 
 			System.out.println(bean);

@@ -3,7 +3,7 @@
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="com.example.webapptest.RimozioneIndirizzoServlet" %><%--
   Created by IntelliJ IDEA.
-  User: jhon
+  User: for_g
   Date: 05/01/2023
   Time: 12:19
   To change this template use File | Settings | File Templates.
@@ -11,7 +11,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
   // Check user credentials
-  Boolean flag = (Boolean) session.getAttribute("accesso");
+  Boolean flag = (Boolean) session.getAttribute("accessoUtente");
   if ((flag == null) || (!flag.booleanValue()))
   {
     response.sendRedirect("accesso.jsp");
@@ -19,6 +19,7 @@
   }
 
   Utente utente = (Utente) session.getAttribute("utente");
+
 
 
 %>
@@ -60,67 +61,71 @@
 		<input type="button" id="cambiopassword" value="Cambia password">
 	</form>
 
-<form action="aggiuntaIndirizzo.jsp" >
-	<h3>Indirizzi</h3>
-	<input type="submit" id="addAddress" value="Aggiungi indirizzo">
-</form>
+	<form action="aggiuntaIndirizzo.jsp" >
+		<h3>Indirizzi</h3>
+		<input type="submit" id="addAddress" value="Aggiungi indirizzo">
+	</form>
 
-<%
-	if(utente.getIndirizzi() != null){
-		if(utente.getIndirizzi().size() > 0){
-			for(int i = 0; i < utente.getIndirizzi().size(); i++){
-%>
+	<%
+		if(utente.getIndirizzi() != null){
+			if(utente.getIndirizzi().size() > 0){
+				for(int i = 0; i < utente.getIndirizzi().size(); i++){
+	%>
 
-				<p>citta: <%= utente.getIndirizzi().get(i).getCitta()%></p>
-				<p>cap: <%= utente.getIndirizzi().get(i).getCap()%></p>
-				<p>via: <%= utente.getIndirizzi().get(i).getVia()%></p>
-				<p>telefono: <%= utente.getIndirizzi().get(i).getTelefono()%></p>
-				<br>
+	<p>citta: <%= utente.getIndirizzi().get(i).getCitta()%></p>
+	<p>cap: <%= utente.getIndirizzi().get(i).getCap()%></p>
+	<p>via: <%= utente.getIndirizzi().get(i).getVia()%></p>
+	<p>telefono: <%= utente.getIndirizzi().get(i).getTelefono()%></p>
+	<br>
 
-				<a href="<%= response.encodeURL("RimozioneIndirizzoServlet?indirizzoID="+
-					utente.getIndirizzi().get(i).getID() + "")%>">x</a>
+	<a href="<%= response.encodeURL("RimozioneIndirizzoServlet?indirizzoID="+
+		utente.getIndirizzi().get(i).getID() + "")%>">x</a>
 
-<%
+	<%
 			}
 		}
 	}
 	else {
-%>
-		<p>nessun indirizzo presente</p>
-<%
-	}
-%>
+	%>
 
-<form action="aggiuntaCarta.jsp" >
-	<h3>Carte</h3>
-	<input type="submit" id="addCarta" value="Aggiungi carta">
-</form>
+	<p>nessun indirizzo presente</p>
 
-<%
-	if(utente.getCarte() != null){
-		if(utente.getCarte().size() > 0){
-			for(int i = 0; i < utente.getCarte().size(); i++){
-%>
-
-<p>titolare: <%= utente.getCarte().get(i).getIntestatario()%></p>
-<p>numero carta: <%= utente.getCarte().get(i).getnCata()%></p>
-<p>scadenza: <%= utente.getCarte().get(i).getDataScadenza()%></p>
-<br>
-
-<a href="<%= response.encodeURL("RimozioneCartaServlet?cartaID="+
-	utente.getCarte().get(i).getId()+"")%>">x</a>
-
-<%
+	<%
 		}
-	}
-} else {
-%>
+	%>
+	//QUI PARTONO LE CARTE
+	<form action="aggiuntaCarta.jsp" >
+		<h3>Carte</h3>
+		<input type="submit" id="addCarta" value="Aggiungi carta">
+	</form>
 
-<p>nessuna carta presente</p>
+	<%
+		if(utente.getCarte() != null){
+			if(utente.getCarte().size() > 0){
+				for(int i = 0; i < utente.getCarte().size(); i++){
+	%>
 
-<%
-	}
-%>
+	<p>titolare: <%= utente.getCarte().get(i).getIntestatario()%></p>
+	<p>numero carta: <%= utente.getCarte().get(i).getnCata()%></p>
+	<p>scadenza: <%= utente.getCarte().get(i).getDataScadenza()%></p>
+	<br>
 
+	<a href="<%= response.encodeURL("RimozioneCartaServlet?cartaID="+
+		utente.getCarte().get(i).getId()+"")%>">x</a>
+
+	<%
+			}
+		}
+	} else {
+	%>
+
+	<p>nessuna carta presente</p>
+
+	<%
+		}
+	%>
+
+	<a href="<%= response.encodeURL("EliminazioneServlet?email="+
+		utente.getEmail())%>">x</a>
 </body>
 </html>

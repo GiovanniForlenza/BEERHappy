@@ -1,6 +1,7 @@
 package com.example.webapptest;
 
 import entity.Utente;
+import entity.UtenteBO;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -19,32 +20,42 @@ public class AccedereServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		AddressModel am = new AddressModel();
 		CardModel cm = new CardModel();
-		ModelSecurity ms= new ModelSecurity();
+		ModelSecurity ms = new ModelSecurity();
 		Utente utente;
+		UtenteBO utenteBO;
 
-		String mail, password;
-		boolean flag;
+		String email, password;
 
-		mail = request.getParameter("e-mail");
+
+		email = request.getParameter("e-mail");
 		password = request.getParameter("password");
 
 		try {
-			flag = ms.controlloAccesso(mail, password);
-			System.out.println("Valore di ritorno: " + flag);
-			if(flag == false)
-				response.sendRedirect("http://localhost:8080/webAppTest_war/accesso.jsp");
-			else {
-				utente = ms.getUtente();
-				request.getSession().setAttribute("accesso", true);
+			if ((utenteBO = ms.loginAmministratore(email, password)) != null) {
+				request.getSession().setAttribute("utenteBO", utenteBO);
+				request.getSession().setAttribute("accessoUtenteBO", true);
+				request.getSession().setAttribute("accessoUtente", false);
+				response.sendRedirect("http://localhost:8080/webAppTest_war/selezioneRuolo.jsp");
 
+			} else if ((utente = ms.loginUtente(email, password)) != null) {
 				utente.setIndirizzi(am.recuperoIndirizzo(utente));
 				utente.setCarte(cm.recuperoCarte(utente));
 				request.getSession().setAttribute("utente", utente);
+				utente.setIndirizzi(am.recuperoIndirizzo(utente));
+				utente.setCarte(cm.recuperoCarte(utente));
+				request.getSession().setAttribute("utente", utente);
+				request.getSession().setAttribute("accessoUtenteBO", false);
+				request.getSession().setAttribute("accessoUtente", true);
 				response.sendRedirect("http://localhost:8080/webAppTest_war/homePageStore.jsp");
-			}
-		}catch (SQLException e){
-			e.printStackTrace();
-		}
 
+			} else {
+				request.getSession().setAttribute("accessoUtenteBO", false);
+				request.getSession().setAttribute("accessoUtente", false);
+				response.sendRedirect("http://localhost:8080/webAppTest_war/accesso.jsp");
+			}
+		} catch (SQLException e) {
+
+		}
 	}
+
 }

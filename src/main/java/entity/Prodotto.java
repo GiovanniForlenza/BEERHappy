@@ -4,16 +4,17 @@ import java.util.Objects;
 
 public class Prodotto {
     String nome;
-    String prezzo;
+    double prezzo;
     String birrificio;
     int quantitaDisp;
     String formato; // 33cl
     String descrizione;
+    String pathImage;
     int quantita;
 
     public Prodotto(){}
 
-    public Prodotto(String nome, String prezzo, String birrificio, int quantitaDisp, String formato, String descrizione) {
+    public Prodotto(String nome, double prezzo, String birrificio, int quantitaDisp, String formato, String descrizione) {
         this.nome = nome;
         this.prezzo = prezzo;
         this.birrificio = birrificio;
@@ -22,7 +23,9 @@ public class Prodotto {
         this.descrizione = descrizione;
         this.quantita = 0;
     }
-
+    public String getPathImage() {
+        return pathImage;
+    }
     public String getNome() {
         return nome;
     }
@@ -31,11 +34,11 @@ public class Prodotto {
         this.nome = nome;
     }
 
-    public String getPrezzo() {
+    public double getPrezzo() {
         return prezzo;
     }
 
-    public void setPrezzo(String prezzo) {
+    public void setPrezzo(double prezzo) {
         this.prezzo = prezzo;
     }
 
@@ -49,6 +52,10 @@ public class Prodotto {
 
     public int getQuantitaDisp() {
         return quantitaDisp;
+    }
+
+    public void setPathImage(String pathImage) {
+        this.pathImage = pathImage;
     }
 
     public void setQuantitaDisp(int quantitaDisp) {
