@@ -250,6 +250,7 @@ public class ModelSecurity implements Security {
 		UtenteBO utenteBO = null;
 		ResultSet rs;
 
+
 		try {
 			connection = DriverManagerConnectionPool.getConnection();
 			preparedStatement = connection.prepareStatement(query);

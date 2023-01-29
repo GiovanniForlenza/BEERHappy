@@ -54,6 +54,7 @@ public class AccedereServlet extends HttpServlet {
 			}
 		} catch (SQLException e) {
 
+
 		}
 	}
 
