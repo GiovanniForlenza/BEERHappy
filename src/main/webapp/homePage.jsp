@@ -13,6 +13,8 @@
     <ul>
         <li><a href="catalogo.jsp">catalogo</a></li>
         <li><a href="catalogoNovita.jsp">novita</a></li>
+        <li><a href="carrello.jsp">carrello</a></li>
+
         <li><a>chi siamo</a></li>
     </ul>
 

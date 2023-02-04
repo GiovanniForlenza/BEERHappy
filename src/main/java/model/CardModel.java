@@ -1,15 +1,50 @@
 package model;
 import entity.Carta;
+import entity.Indirizzo;
 import entity.Utente;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 
 public class CardModel {
 
+    public Carta doRetrieveByKey(int code) throws SQLException {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+
+        Carta bean = new Carta();
+
+        String selectSQL = "SELECT * FROM carta WHERE cartaID = ?";
+
+        try {
+            connection = DriverManagerConnectionPool.getConnection();
+            preparedStatement = connection.prepareStatement(selectSQL);
+            preparedStatement.setInt(1, code);
+
+            System.out.println("doRetrieveByKey: "+ preparedStatement.toString());
+            ResultSet rs = preparedStatement.executeQuery();
+
+            while(rs.next()) {
+                bean.setId(rs.getInt("cartaID"));
+                bean.setnCata(rs.getString("numero"));
+                bean.setIntestatario(rs.getString("titolare"));
+                bean.setCvv(rs.getInt("cvv"));
+                bean.setDataScadenza(rs.getString("dataScadenza"));
+            }
+
+            System.out.println(bean);
+            return bean;
+        } finally {
+            try {
+                if(preparedStatement != null)
+                    preparedStatement.close();
+            } finally {
+                DriverManagerConnectionPool.releaseConnection(connection);
+            }
+        }
+
+
+    }
     public ArrayList<Carta> recuperoCarte(Utente utente) throws SQLException {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
@@ -67,32 +102,28 @@ public class CardModel {
     public Carta aggiuntaCarta(Carta carta, Utente utente) throws SQLException {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
-        String insertSQL = "INSERT INTO carta"+"(email, numero, cvv, titolare) values (?,?,?,?);";
-
-
+        String insertSQL = "INSERT INTO carta(email, numero, cvv, titolare, dataScadenza) values (?,?,?,?,?);";
         try {
             connection = DriverManagerConnectionPool.getConnection();
-            preparedStatement = connection.prepareStatement(insertSQL);
-
+            preparedStatement = connection.prepareStatement(insertSQL, Statement.RETURN_GENERATED_KEYS);
             preparedStatement.setString(1, utente.getEmail());
             preparedStatement.setString(2, carta.getnCata());
             preparedStatement.setInt(3, carta.getCvv());
             preparedStatement.setString(4, carta.getIntestatario());
-
-
+            preparedStatement.setString(5, carta.getDataScadenza());
 
             preparedStatement.executeUpdate();
-            ResultSet rs=preparedStatement.getGeneratedKeys();
-            rs.next();
-            carta.setId(rs.getInt(1));
-            System.out.println("Insert Query update");
-            System.out.print("L'id della nuova carta è: "+carta.getId());
+            ResultSet rs = preparedStatement.getGeneratedKeys();
+            if (rs.next()) {
+                carta.setId(Integer.parseInt(rs.getString(1)));
+            }
+
             connection.commit();
-        }finally {
+        } finally {
             try {
-                if(preparedStatement != null)
+                if (preparedStatement != null)
                     preparedStatement.close();
-            }finally {
+            } finally {
                 DriverManagerConnectionPool.releaseConnection(connection);
                 return carta;
             }

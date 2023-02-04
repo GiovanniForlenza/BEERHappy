@@ -1,4 +1,4 @@
-package com.example.webapptest;
+package control;
 
 import entity.Carrello;
 import entity.Prodotto;
@@ -39,13 +39,8 @@ public class GestioneCarrelloServlet extends HttpServlet {
 					CartModel cartModel = new CartModel();
 					cartModel.doUpdate(prodotto);
 					carrello.removeProdotti(prodotto);
-				} else if (action.equals("clearCart")) {
-					//TODO aggiornare la quantita dei prodotti presenti nel carrello
-					carrello.clearProdotti();
-				} else if (action.equals("checkout")){
-
-					//TODO contollo accesso, redirect page checkout
-					Boolean accesso = (Boolean) request.getSession().getAttribute("accesso");
+				}else if (action.equals("checkout")){
+					Boolean accesso = (Boolean) request.getSession().getAttribute("accessoUtente");
 					if(accesso == null || !accesso.booleanValue()){
 						path = "http://localhost:8080/webAppTest_war/accesso.jsp";
 					}

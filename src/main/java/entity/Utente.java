@@ -11,6 +11,8 @@ public class Utente {
     String cognome;
     ArrayList<Carta> carte;
     ArrayList<Indirizzo> indirizzi;
+    ArrayList<Ordine> ordini;
+    ArrayList<ProdottoOrdinato> prodotti;
     Carrello carrello;
 
     public Utente(){}
@@ -116,5 +118,29 @@ public class Utente {
                 ", indirizzi=" + indirizzi +
                 ", carrello=" + carrello +
                 '}';
+    }
+
+	public void addOrdine(Ordine ordine) {
+        if(this.ordini == null) {
+            this.ordini = new ArrayList<>();
+        }
+
+        this.ordini.add(ordine);
+	}
+
+    public ArrayList<Ordine> getOrdini() {
+        return ordini;
+    }
+
+    public void setOrdini(ArrayList<Ordine> ordini) {
+        this.ordini = ordini;
+    }
+
+    public ArrayList<ProdottoOrdinato> getProdotti() {
+        return prodotti;
+    }
+
+    public void setProdotti(ArrayList<ProdottoOrdinato> prodotti) {
+        this.prodotti = prodotti;
     }
 }

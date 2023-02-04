@@ -1,6 +1,6 @@
 <%@ page import="entity.Prodotto" %>
 <%@ page import="entity.Carrello" %>
-<%@ page import="com.example.webapptest.GestioneCarrelloServlet" %>
+<%@ page import="control.GestioneCarrelloServlet" %>
 <%--
   Created by IntelliJ IDEA.
   User: jhon

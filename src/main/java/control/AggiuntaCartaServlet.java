@@ -1,4 +1,4 @@
-package com.example.webapptest;
+package control;
 
 import entity.Carta;
 import entity.Utente;
@@ -18,7 +18,6 @@ public class AggiuntaCartaServlet extends HttpServlet {
 
         @Override
         protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-            ModelSecurity modelSecurity = new ModelSecurity();
             Carta carta = new Carta();
 
             carta.setIntestatario(request.getParameter("titolare"));
@@ -26,14 +25,28 @@ public class AggiuntaCartaServlet extends HttpServlet {
             carta.setnCata(request.getParameter("numero"));
 
             Utente utente = (Utente) request.getSession().getAttribute("utente");
+            String address = request.getParameter("address");
+
+            if(address != null)
+                System.out.println(address);
 
             try{
-                CardModel cm=new CardModel();
-                carta=cm.aggiuntaCarta(carta,utente);
+                CardModel cm = new CardModel();
+                carta = cm.aggiuntaCarta(carta,utente);
                 utente.addCarta(carta);
                 request.removeAttribute("utente");
                 request.setAttribute("utente", utente);
-                response.sendRedirect("http://localhost:8080/webAppTest_war/profilo.jsp");
+
+                Boolean ordine = (Boolean) request.getSession().getAttribute("ordine");
+
+                if(ordine != null && ordine){
+                    request.getSession().removeAttribute("ordine");
+                    response.sendRedirect("http://localhost:8080/webAppTest_war/effettuaOrdine.jsp");
+                }
+                else {
+                    response.sendRedirect("http://localhost:8080/webAppTest_war/profilo.jsp");
+                }
+
             }catch(SQLException e){
                 e.printStackTrace();
             }

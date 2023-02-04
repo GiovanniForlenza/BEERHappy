@@ -32,9 +32,6 @@ public class Indirizzo {
     public int getID() {
         return id;
     }
-    public void setId(int indirizzoID) {
-        this.id = indirizzoID;
-    }
 
     public void setID(int id) {
         this.id = id;

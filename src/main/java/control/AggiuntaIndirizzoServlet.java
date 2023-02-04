@@ -1,4 +1,4 @@
-package com.example.webapptest;
+package control;
 
 import entity.Indirizzo;
 import entity.Utente;
@@ -15,7 +15,7 @@ import java.sql.SQLException;
 
 @WebServlet(name = "AggiuntaIndirizzoServlet", value = "/AggiuntaIndirizzoServlet")
 public class AggiuntaIndirizzoServlet extends HttpServlet {
-
+	
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		Indirizzo indirizzo = new Indirizzo();
@@ -24,14 +24,11 @@ public class AggiuntaIndirizzoServlet extends HttpServlet {
 		indirizzo.setCivico(Integer.parseInt(request.getParameter("civico")));
 		indirizzo.setCap(request.getParameter("cap"));
 		indirizzo.setTelefono(request.getParameter("telefono"));
-
-
-
 		Utente utente = (Utente) request.getSession().getAttribute("utente");
 
 		try{
-			AddressModel am = new AddressModel();
-			indirizzo=am.aggiuntaIndirizzo(indirizzo,utente);
+			AddressModel addressModel = new AddressModel();
+			indirizzo = addressModel.aggiuntaIndirizzo(indirizzo, utente);
 			utente.addIndirizzo(indirizzo);
 			request.removeAttribute("utente");
 			request.setAttribute("utente", utente);

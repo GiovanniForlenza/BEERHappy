@@ -3,31 +3,30 @@ package model;
 import entity.Indirizzo;
 import entity.Utente;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 
 public class AddressModel {
 
-	public Indirizzo doRetrieveByKey(String code) throws SQLException {
+	public Indirizzo doRetrieveByKey(int code) throws SQLException {
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 
 		Indirizzo bean = new Indirizzo();
 
-		String selectSQL = "SELECT * FROM indirizzo WHERE id = ?";
+		String selectSQL = "SELECT * FROM indirizzo WHERE indirizzoID = ?";
 
 		try {
 			connection = DriverManagerConnectionPool.getConnection();
 			preparedStatement = connection.prepareStatement(selectSQL);
-			preparedStatement.setInt(1, Integer.parseInt(code));
+			preparedStatement.setInt(1, code);
 
 			System.out.println("doRetrieveByKey: "+ preparedStatement.toString());
 			ResultSet rs = preparedStatement.executeQuery();
 
 			while(rs.next()) {
+				bean.setID(rs.getInt("indirizzoID"));
+				bean.setCivico(rs.getInt("civico"));
 				bean.setCitta(rs.getString("citta"));
 				bean.setTelefono(rs.getString("telefono"));
 				bean.setVia(rs.getString("via"));
@@ -35,6 +34,7 @@ public class AddressModel {
 			}
 
 			System.out.println(bean);
+			return bean;
 		} finally {
 			try {
 				if(preparedStatement != null)
@@ -44,7 +44,7 @@ public class AddressModel {
 			}
 		}
 
-		return bean;
+
 	}
 	public void doDelete(int indirizzoID) throws SQLException {
 		Connection connection = null;
@@ -118,7 +118,7 @@ public class AddressModel {
 
 		try {
 			connection = DriverManagerConnectionPool.getConnection();
-			preparedStatement = connection.prepareStatement(insertSQL);
+			preparedStatement = connection.prepareStatement(insertSQL, Statement.RETURN_GENERATED_KEYS);
 			preparedStatement.setString(1, indirizzo.getVia());
 			preparedStatement.setInt(2, indirizzo.getCivico());
 			preparedStatement.setString(3, indirizzo.getCitta());
@@ -130,8 +130,14 @@ public class AddressModel {
 
 			preparedStatement.executeUpdate();
 			ResultSet rs=preparedStatement.getGeneratedKeys();
-			rs.next();
-			indirizzo.setID(rs.getInt(1));
+
+			if(rs.next()) {
+				indirizzo.setID(Integer.parseInt(rs.getString(1)));
+			}
+
+			System.out.println("Insert Query update");
+			System.out.print("L'id della nuova carta è: "+indirizzo.getID());
+
 			System.out.println("Insert Query update");
 			System.out.print("L'id del nuovo indirizzo è: "+indirizzo.getID());
 			connection.commit();

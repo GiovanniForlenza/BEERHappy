@@ -13,10 +13,10 @@
 <body>
 
 <form method="post" action="AggiuntaCartaServlet">
-    <p>titolare </p><input name="titolare" type="text">
-    <p>data scadenza </p><input name="dataScadenza" type="date">
-    <p>cvv </p><input name="cvv" type="number">
-    <p>numero carta</p><input name="numero" type="text">
+    <p>titolare </p><input name="titolare" type="text" required>
+    <p>data scadenza </p><input name="dataScadenza" type="date" required>
+    <p>cvv </p><input name="cvv" type="number" required>
+    <p>numero carta</p><input name="numero" type="number" maxlength="16" required>
     <input type="reset" value="reset">
     <input type="submit" value="salva">
 </form>

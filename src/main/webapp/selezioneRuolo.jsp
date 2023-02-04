@@ -1,9 +1,9 @@
 <%@ page import="entity.UtenteBO" %>
 <%@ page import="entity.Indirizzo" %>
 <%@ page import="java.util.ArrayList" %>
-<%@ page import="com.example.webapptest.RimozioneIndirizzoServlet" %>
+<%@ page import="control.RimozioneIndirizzoServlet" %>
 <%@ page import="entity.UtenteBO" %>
-<%@ page import="com.example.webapptest.GestioneCatalogoServlet" %>
+<%@ page import="control.GestioneCatalogoServlet" %>
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%

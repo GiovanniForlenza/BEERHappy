@@ -1,9 +1,9 @@
 <%@ page import="entity.Utente" %>
 <%@ page import="entity.Indirizzo" %>
 <%@ page import="java.util.ArrayList" %>
-<%@ page import="com.example.webapptest.RimozioneIndirizzoServlet" %><%--
+<%@ page import="control.RimozioneIndirizzoServlet" %><%--
   Created by IntelliJ IDEA.
-  User: for_g
+  User: jhon
   Date: 05/01/2023
   Time: 12:19
   To change this template use File | Settings | File Templates.
@@ -92,7 +92,7 @@
 	<%
 		}
 	%>
-	//QUI PARTONO LE CARTE
+
 	<form action="aggiuntaCarta.jsp" >
 		<h3>Carte</h3>
 		<input type="submit" id="addCarta" value="Aggiungi carta">
@@ -103,15 +103,13 @@
 			if(utente.getCarte().size() > 0){
 				for(int i = 0; i < utente.getCarte().size(); i++){
 	%>
+					<p>titolare: <%= utente.getCarte().get(i).getIntestatario()%></p>
+					<p>numero carta: <%= utente.getCarte().get(i).getnCata()%></p>
+					<p>scadenza: <%= utente.getCarte().get(i).getDataScadenza()%></p>
+					<br>
 
-	<p>titolare: <%= utente.getCarte().get(i).getIntestatario()%></p>
-	<p>numero carta: <%= utente.getCarte().get(i).getnCata()%></p>
-	<p>scadenza: <%= utente.getCarte().get(i).getDataScadenza()%></p>
-	<br>
-
-	<a href="<%= response.encodeURL("RimozioneCartaServlet?cartaID="+
-		utente.getCarte().get(i).getId()+"")%>">x</a>
-
+					<a href="<%= response.encodeURL("RimozioneCartaServlet?cartaID="+ utente.getCarte().get(i).getId())%>">x</a>
+					<br>
 	<%
 			}
 		}
@@ -124,7 +122,6 @@
 		}
 	%>
 
-	<a href="<%= response.encodeURL("EliminazioneServlet?email="+
-		utente.getEmail())%>">x</a>
+	<a href="<%= response.encodeURL("EliminazioneServlet?email="+utente.getEmail())%>">Elimina account</a>
 </body>
 </html>

@@ -259,7 +259,6 @@ public class ModelSecurity implements Security {
 			rs = preparedStatement.executeQuery();
 
 			if (rs.next()) {
-				System.out.println("Qua ci arriva");
 				utenteBO=new UtenteBO();
 				utenteBO.setEmail(rs.getString("email"));
 				utenteBO.setPassword(rs.getString("password"));
