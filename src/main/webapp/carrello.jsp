@@ -9,6 +9,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
+	Boolean flag = (Boolean) session.getAttribute("accessoUtente");
 	Carrello carrello = (Carrello) session.getAttribute("carrello");
 %>
 <html>
@@ -18,6 +19,18 @@
 <body>
 
 	<%
+		if (flag == null){
+	%>
+			<%@ include file="navBarGuest.jsp"%>
+	<%
+		}
+		else{
+	%>
+			<%@ include file="navBarStore.jsp"%>
+	<%
+		}
+	%>
+	<%
 		if(carrello != null){
 			ArrayList<Prodotto> prodottiNelCarrello = carrello.getProdotti();
 			//stampa prodotti
@@ -26,7 +39,7 @@
 				<p><%=prodotto.getNome()%></p>
 				<p><%=prodotto.getQuantita()%></p>
 				<p><%=prodotto.getFormato()%></p>
-				<p><%=prodotto.getPrezzo()%></p>
+				<p><%=prodotto.getPrezzo()%> &euro;</p>
 				<a href="<%=response.encodeURL("GestioneCarrelloServlet?action=rimuoviProdotto&nome=" + prodotto.getNome()
 				+"&birrificio=" + prodotto.getBirrificio() + "&formato=" + prodotto.getFormato()+ "&quantita=" + prodotto.getQuantita())%>">rimuovi</a>
 	<%

@@ -82,7 +82,6 @@ public class OrderModel {
 
 
 			String queryProdotti = "select * from prodottoOrdinato where ordineID = ?";
-			ArrayList<ProdottoOrdinato> prodotto = new ArrayList<>();
 
 			preparedStatement = connection.prepareStatement(queryProdotti);
 			for(int i = 0; i < order.size(); i++) {
@@ -100,9 +99,8 @@ public class OrderModel {
 					prodottoOrdinato.setPrezzoProdotto(resultSet.getDouble("prezzo"));
 					prodottoOrdinato.setPathImage(resultSet.getString("pathImage"));
 
-					prodotto.add(prodottoOrdinato);
+					order.get(i).addProdotto(prodottoOrdinato);
 				}
-				order.get(i).setProdotti(prodotto);
 			}
 
 		}catch (Exception e){

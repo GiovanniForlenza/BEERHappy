@@ -31,7 +31,7 @@ public class GestioneOrdineUtenteServlet extends HttpServlet {
 
 			Ordine ordine = new Ordine();
 			ordine.setEmail(utente.getEmail());
-			ordine.setDataOrdine("");
+			ordine.setDataOrdine(today.toString());
 			ordine.setVia(indirizzo.getVia());
 			ordine.setCitta(indirizzo.getCitta());
 			ordine.setCivico(indirizzo.getCivico());
@@ -57,11 +57,12 @@ public class GestioneOrdineUtenteServlet extends HttpServlet {
 					prodottoOrdinato.setOrdineID(ordine.getIdOrdine());
 
 					orderModel.aggiuntaProdottiOrdine(prodottoOrdinato);
-					ordine.addProdotto(prodottoOrdinato);
+					//ordine.addProdotto(prodottoOrdinato);
 				}
 
 				carrello.clearProdotti();
-				utente.addOrdine(ordine);
+				utente.setOrdini(orderModel.recuperoOrdini(utente));
+				//utente.addOrdine(ordine);
 				request.getSession().removeAttribute("utente");
 				request.getSession().setAttribute("utente", utente);
 				response.sendRedirect("http://localhost:8080/webAppTest_war/ordinePagina.jsp");

@@ -37,15 +37,15 @@ public class AggiuntaCartaServlet extends HttpServlet {
                 request.removeAttribute("utente");
                 request.setAttribute("utente", utente);
 
-                Boolean ordine = (Boolean) request.getSession().getAttribute("ordine");
-
-                if(ordine != null && ordine){
-                    request.getSession().removeAttribute("ordine");
+                Boolean selectCard = (Boolean) request.getSession().getAttribute("selectCard");
+                if(selectCard != null && selectCard) {
+                    request.getSession().setAttribute("selectCard", false);
+                    request.getSession().removeAttribute("selectCard");
                     response.sendRedirect("http://localhost:8080/webAppTest_war/effettuaOrdine.jsp");
                 }
-                else {
+                else
                     response.sendRedirect("http://localhost:8080/webAppTest_war/profilo.jsp");
-                }
+
 
             }catch(SQLException e){
                 e.printStackTrace();

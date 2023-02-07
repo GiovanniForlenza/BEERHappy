@@ -32,7 +32,14 @@ public class AggiuntaIndirizzoServlet extends HttpServlet {
 			utente.addIndirizzo(indirizzo);
 			request.removeAttribute("utente");
 			request.setAttribute("utente", utente);
-			response.sendRedirect("http://localhost:8080/webAppTest_war/profilo.jsp");
+			Boolean selectAddress = (Boolean) request.getSession().getAttribute("selectAddress");
+			if(selectAddress != null && selectAddress) {
+				request.getSession().setAttribute("selectAddress", false);
+				request.getSession().removeAttribute("selectAddress");
+				response.sendRedirect("http://localhost:8080/webAppTest_war/effettuaOrdine.jsp");
+			}
+			else
+				response.sendRedirect("http://localhost:8080/webAppTest_war/profilo.jsp");
 		}catch(SQLException e){
 			e.printStackTrace();
 		}

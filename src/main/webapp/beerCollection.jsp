@@ -29,15 +29,14 @@
 			Prodotto prodotto = (Prodotto) it.next();
 %>
 
-<ol>
-	<li><%=prodotto.getNome()%></li>
-	<li>Birrificio: <%=prodotto.getBirrificio()%></li>
-	<li>Descrizione prodotto: <%=prodotto.getDescrizione()%></li>
-	<li>Formato: <%=prodotto.getFormato()%></li>
-	<li>$ <%=prodotto.getPrezzo()%></li>
+	<p><%=prodotto.getNome()%></p>
+	<p>Birrificio: <%=prodotto.getBirrificio()%></p>
+	<p>Descrizione prodotto: <%=prodotto.getDescrizione()%></p>
+	<p>Formato: <%=prodotto.getFormato()%></p>
+	<p><%=prodotto.getPrezzo()%> &euro;</p>
 	<a href="<%= response.encodeURL("DettagliProdottoServlet?nome=" + prodotto.getNome() +
 	"&birrificio=" + prodotto.getBirrificio() + "&formato=" + prodotto.getFormato())%>">dettagli</a>
-</ol>
+
 
 <%
 		i++;

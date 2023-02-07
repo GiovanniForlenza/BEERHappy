@@ -14,7 +14,6 @@
 	//TODO fai i controlli sulla pagina
 	Utente utente = (Utente) request.getSession().getAttribute("utente");
 	ArrayList<Ordine> ordini = utente.getOrdini();
-	ArrayList<ProdottoOrdinato> prod = utente.getProdotti();
 %>
 
 <html>
@@ -23,18 +22,20 @@
 </head>
 <body>
 
+	<%@ include file="navBarStore.jsp"%>
+
 	<h2>Ordini</h2>
 	<%
 		for(int i = 0; i < ordini.size(); i++){
 			for(int j = 0; j < ordini.get(i).getProdotti().size(); j++){
 				ArrayList<ProdottoOrdinato> prodotti = ordini.get(i).getProdotti();
 	%>
-				<p><%=prodotti.get(j).getNome()%></p>
-				<p><%=prodotti.get(j).getQuantitaSelezionata()%></p>
-				<p><%=prodotti.get(j).getPrezzoProdotto()%></p>
+				<p>nome prodotto: <%=prodotti.get(j).getNome()%></p>
+				<p>quantita selezionata: <%=prodotti.get(j).getQuantitaSelezionata()%></p>
+				<p>prezzo prodotto: <%=prodotti.get(j).getPrezzoProdotto()%>€</p>
 	<%		}
 	%>
-			<p><%=ordini.get(i).getPrezzo()%></p>
+			<p>Totale ordine: <%=ordini.get(i).getPrezzo()%>€</p>
 			<p>numero ordine: <%=ordini.get(i).getIdOrdine()%></p>
 			<p>---------------------------------</p>
 	<%	}

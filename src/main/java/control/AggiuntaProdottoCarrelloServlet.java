@@ -16,6 +16,10 @@ public class AggiuntaProdottoCarrelloServlet extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
+	}
+
+	@Override
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Carrello carrello = (Carrello) request.getSession().getAttribute("carrello");
         String quantity = request.getParameter("quantity");
 
@@ -63,9 +67,7 @@ public class AggiuntaProdottoCarrelloServlet extends HttpServlet {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-	}
 
-	@Override
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
     }
 }

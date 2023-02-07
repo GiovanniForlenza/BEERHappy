@@ -4,6 +4,8 @@ import entity.Prodotto;
 import entity.Utente;
 import entity.UtenteBO;
 
+import javax.swing.*;
+import java.awt.dnd.DragGestureRecognizer;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -315,5 +317,34 @@ public class ModelSecurity implements Security {
 			}
 		}
 		return passwordMomentanea;
+	}
+
+	public void cambioPassword(Utente utente, String password) throws SQLException {
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		String query = "UPDATE utente SET nome = ?, cognome = ?, email = ?, password = ? WHERE email = ?";
+		try {
+			connection = DriverManagerConnectionPool.getConnection();
+			preparedStatement = connection.prepareStatement(query);
+
+			preparedStatement.setString(1, utente.getNome());
+			preparedStatement.setString(2, utente.getCognome());
+			preparedStatement.setString(3, utente.getEmail());
+			preparedStatement.setString(4, password);
+			preparedStatement.setString(5, utente.getEmail());
+
+			preparedStatement.executeUpdate();
+			connection.commit();
+		}catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				if(preparedStatement != null)
+					preparedStatement.close();
+			} finally {
+				DriverManagerConnectionPool.releaseConnection(connection);
+			}
+		}
+
 	}
 }

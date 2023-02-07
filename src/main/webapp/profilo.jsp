@@ -27,11 +27,9 @@
 	<title>Profile PAGE</title>
 </head>
 <body>
-<!--
-	<form method="post" action="EliminazioneServlet">
-		<input type="submit" value="elimina account">
-	</form>
--->
+
+	<%@ include file="navBarStore.jsp"%>
+
 	<form method="post" name="nomeCognome">
 		<p>nome: <input  name="nome" disabled="true" value="<%= utente.getNome() %>"> </p>
 		<p>cognome: <input name="cognome" disabled="true" value="<%= utente.getCognome()%>"></p>
@@ -56,9 +54,7 @@
         }
 	</script>
 
-	<form action="">
-		<input type="button" id="cambiopassword" value="Cambia password">
-	</form>
+	<a href="cambioPassword.jsp">Cambia password</a>
 
 	<form action="aggiuntaIndirizzo.jsp" >
 		<h3>Indirizzi</h3>

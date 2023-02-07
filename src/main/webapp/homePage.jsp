@@ -8,15 +8,8 @@
     <body>
         <h1>HomePage</h1>
     <br>
-    <a href="accesso.jsp">Accedi / Registrati</a>
-    <br>
-    <ul>
-        <li><a href="catalogo.jsp">catalogo</a></li>
-        <li><a href="catalogoNovita.jsp">novita</a></li>
-        <li><a href="carrello.jsp">carrello</a></li>
 
-        <li><a>chi siamo</a></li>
-    </ul>
+    <%@ include file="navBarGuest.jsp"%>
 
     </body>
 </html>

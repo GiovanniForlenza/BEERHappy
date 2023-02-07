@@ -28,6 +28,19 @@
 <body>
 
 	<%
+		if (flag == null){
+	%>
+			<%@ include file="navBarGuest.jsp"%>
+	<%
+		}
+		else{
+	%>
+			<%@ include file="navBarStore.jsp"%>
+	<%
+		}
+	%>
+
+	<%
 		ArrayList<Prodotto> prodotti = carrello.getProdotti();
 		if(prodotti.size() > 0){
 	%>
@@ -65,7 +78,7 @@
 				<button id="closeAddress">x</button>
 			</dialog>
 
-			<a href="aggiuntaIndirizzo.jsp">aggiungi indirizzo</a> <br>
+			<button onclick="selectAddress()">aggiungi indirizzo</button> <br>
 
 			<%
 				Indirizzo addressView = (Indirizzo) request.getSession().getAttribute("visualizza");
@@ -106,8 +119,7 @@
 				<button id="closeCard">x</button>
 			</dialog>
 
-			<a href="aggiuntaCarta.jsp">aggiungi carta</a>	<br>
-
+			<button onclick="selectCard()">aggiungi carta</button> <br>
 
 			<%
 				Carta carta = (Carta) request.getSession().getAttribute("cardView");
@@ -120,6 +132,18 @@
 			<%
 				}
 			%>
+
+			<script>
+				function selectAddress(){
+					<%request.getSession().setAttribute("selectAddress", true);%>
+					document.location.href = "aggiuntaIndirizzo.jsp";
+				}
+
+				function selectCard(){
+					<%request.getSession().setAttribute("selectCard", true);%>
+					document.location.href = "aggiuntaCarta.jsp";
+				}
+			</script>
 
 			<script>
 				const
@@ -167,7 +191,6 @@
 				<p><%=prodotti.get(i).getPrezzo()%></p>
 	<%
 			}
-			tot = Math.round(tot * 100) / 100;
 			request.getSession().setAttribute("prezzo",tot);
 	%>
 			<h3>totale ordine <%=tot%>€</h3>
