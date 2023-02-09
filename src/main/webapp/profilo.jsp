@@ -1,7 +1,7 @@
 <%@ page import="entity.Utente" %>
 <%@ page import="entity.Indirizzo" %>
 <%@ page import="java.util.ArrayList" %>
-<%@ page import="com.example.webapptest.RimozioneIndirizzoServlet" %><%--
+<%@ page import="control.RimozioneIndirizzoServlet" %><%--
   Created by IntelliJ IDEA.
   User: jhon
   Date: 05/01/2023
@@ -30,27 +30,35 @@
 
 	<%@ include file="navBarStore.jsp"%>
 
-	<form method="post" name="nomeCognome">
+	<form name="nomeCognome" action="ModificaDatiServlet" method="post">
 		<p>nome: <input  name="nome" disabled="true" value="<%= utente.getNome() %>"> </p>
 		<p>cognome: <input name="cognome" disabled="true" value="<%= utente.getCognome()%>"></p>
 		<p>email: <input disabled value="<%= utente.getEmail()%>"></p>
+		<!--
+		<input type="submit" id="save" value="save" hidden="hidden">
 		<input type="button" id="button" value="modifica dati" onclick="enable();">	<br> <br>
+		-->
+		<input type="submit" value="salva" id="save
+">
 	</form>
 
 	<script type="text/javascript">
         function enable() {
-            let btn = document.getElementById("button");
 
             document.nomeCognome.nome.disabled = false;
             document.nomeCognome.cognome.disabled = false;
-
+            document.getElementById("save").hidden = false;
+			document.getElementById("button").hidden = true;
+/*
             btn.value = "salva";
             btn.onclick = () => {
                 btn.value = "modifica dati";
                 document.nomeCognome.nome.disabled = true;
                 document.nomeCognome.cognome.disabled = true;
                 //save data end refresh page
+				document.location.href = "ModificaDatiServlet";
             };
+*/
         }
 	</script>
 
@@ -67,23 +75,23 @@
 				for(int i = 0; i < utente.getIndirizzi().size(); i++){
 	%>
 
-	<p>citta: <%= utente.getIndirizzi().get(i).getCitta()%></p>
-	<p>cap: <%= utente.getIndirizzi().get(i).getCap()%></p>
-	<p>via: <%= utente.getIndirizzi().get(i).getVia()%></p>
-	<p>telefono: <%= utente.getIndirizzi().get(i).getTelefono()%></p>
-	<br>
+					<p>citta: <%= utente.getIndirizzi().get(i).getCitta()%></p>
+					<p>cap: <%= utente.getIndirizzi().get(i).getCap()%></p>
+					<p>via: <%= utente.getIndirizzi().get(i).getVia()%></p>
+					<p>telefono: <%= utente.getIndirizzi().get(i).getTelefono()%></p>
+					<br>
 
-	<a href="<%= response.encodeURL("RimozioneIndirizzoServlet?indirizzoID="+
-		utente.getIndirizzi().get(i).getID() + "")%>">x</a>
+					<a href="<%= response.encodeURL("RimozioneIndirizzoServlet?indirizzoID="+
+						utente.getIndirizzi().get(i).getID() + "")%>">x</a>
 
 	<%
 			}
 		}
 	}
-	else {
+		else {
 	%>
 
-	<p>nessun indirizzo presente</p>
+			<p>nessun indirizzo presente</p>
 
 	<%
 		}
@@ -107,15 +115,15 @@
 					<a href="<%= response.encodeURL("RimozioneCartaServlet?cartaID="+ utente.getCarte().get(i).getId())%>">x</a>
 					<br>
 	<%
+				}
 			}
-		}
-	} else {
+		} else {
 	%>
 
-	<p>nessuna carta presente</p>
+				<p>nessuna carta presente</p>
 
 	<%
-		}
+			}
 	%>
 
 	<a href="<%= response.encodeURL("EliminazioneServlet?email="+utente.getEmail())%>">Elimina account</a>

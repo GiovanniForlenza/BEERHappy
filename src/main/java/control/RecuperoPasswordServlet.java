@@ -1,4 +1,5 @@
-package com.example.webapptest;
+/*
+package control;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -48,3 +49,5 @@ public class RecuperoPasswordServlet extends HttpServlet {
             }
         }
 }
+
+ */

@@ -38,13 +38,18 @@
 
 %>
         <form method="post" action="modificaProdotto.jsp">
-            <input type="hidden" name="nome" value=<%=i%>>
             <p>Nome: <label><%=prodotto.getNome()%></label></p>
+            <input type="hidden" name="nome" value="<%=prodotto.getNome()%>">
             <p>Birrificio: <label><%=prodotto.getBirrificio()%></label></p>
+            <input type="hidden" name="birrificio" value="<%=prodotto.getBirrificio()%>">
             <p>Formato: <label><%=prodotto.getFormato()%></label></p>
+            <input type="hidden" name="formato" value="<%=prodotto.getFormato()%>">
             <p>Descrizione: <label><%=prodotto.getDescrizione()%></label></p>
+            <input type="hidden" name="descrizione" value="<%=prodotto.getDescrizione()%>">
             <p>Quantità: <label><%=prodotto.getQuantitaDisp()%></label></p>
+            <input type="hidden" name="quantita" value="<%=prodotto.getQuantitaDisp()%>">
             <p>Prezzo: <label><%=prodotto.getPrezzo()%></label></p>
+            <input type="hidden" name="prezzo" value="<%=prodotto.getPrezzo()%>">
             <input type="submit" value="Modifica"> <br>
         </form>
 <%

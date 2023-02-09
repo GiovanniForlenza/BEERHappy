@@ -318,6 +318,34 @@ public class ModelSecurity implements Security {
 		}
 		return passwordMomentanea;
 	}
+	public void modificaDati(Utente utente, String nome, String cognome) throws SQLException {
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		String query = "UPDATE utente SET nome = ?, cognome = ?, email = ?, password = ? WHERE email = ?";
+		try {
+			connection = DriverManagerConnectionPool.getConnection();
+			preparedStatement = connection.prepareStatement(query);
+
+			preparedStatement.setString(1, nome);
+			preparedStatement.setString(2, cognome);
+			preparedStatement.setString(3, utente.getEmail());
+			preparedStatement.setString(4, utente.getPassword());
+			preparedStatement.setString(5, utente.getEmail());
+
+			preparedStatement.executeUpdate();
+			connection.commit();
+		}catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				if(preparedStatement != null)
+					preparedStatement.close();
+			} finally {
+				DriverManagerConnectionPool.releaseConnection(connection);
+			}
+		}
+
+	}
 
 	public void cambioPassword(Utente utente, String password) throws SQLException {
 		Connection connection = null;

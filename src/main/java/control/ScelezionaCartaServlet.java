@@ -1,4 +1,4 @@
-package com.example.webapptest;
+package control;
 
 import entity.Carta;
 import jakarta.servlet.ServletException;

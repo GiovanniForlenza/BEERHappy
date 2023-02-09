@@ -103,7 +103,7 @@ public class CatalogoModel {
    public boolean searchProductByKey(String nome, String birrificio) {
        Connection connection = null;
        PreparedStatement preparedStatement = null;
-       String query = "select * from where nome=? and birrificio=?";
+       String query = "select * from prodotto where nome = ? and birrificio = ?";
        boolean flag = false;
 
        try {

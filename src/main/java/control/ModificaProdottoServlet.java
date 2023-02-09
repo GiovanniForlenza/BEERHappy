@@ -1,18 +1,16 @@
-package com.example.webapptest;
+package control;
 
 import entity.Prodotto;
-import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.HttpServlet;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.*;
+import jakarta.servlet.http.*;
+import jakarta.servlet.annotation.*;
 import model.CatalogoModel;
 
 import java.io.IOException;
 import java.util.ArrayList;
 
-@WebServlet(name = "AggiuntaProdottoServlet", value = "/AggiuntaProdottoServlet")
-public class AggiuntaProdottoServlet extends HttpServlet {
+@WebServlet(name = "ModificaProdottoServlet", value = "/ModificaProdottoServlet")
+public class ModificaProdottoServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
@@ -20,7 +18,8 @@ public class AggiuntaProdottoServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        Prodotto prodotto=new Prodotto();
+        Prodotto oldProduct = (Prodotto) request.getSession().getAttribute("oldProduct");
+        Prodotto prodotto = new Prodotto();
         prodotto.setNome(request.getParameter("nome"));
         prodotto.setBirrificio(request.getParameter("birrificio"));
         prodotto.setFormato(request.getParameter("formato"));
@@ -28,24 +27,24 @@ public class AggiuntaProdottoServlet extends HttpServlet {
         prodotto.setDescrizione(request.getParameter("descrizione"));
         prodotto.setPrezzo(Double.parseDouble(request.getParameter("prezzo")));
         prodotto.setPathImage(request.getParameter("pathImage"));
-        CatalogoModel cm=new CatalogoModel();
-
-        if(cm.searchProductByKey(prodotto.getNome(), prodotto.getBirrificio())){
-
-            request.getSession().setAttribute("error", "Prodotto già presente");
-            System.out.println("Prodotto già esistente");
-            response.sendRedirect("http://localhost:8080/webAppTest_war/aggiuntaProdotto.jsp");
-
-
+        CatalogoModel cm = new CatalogoModel();
+        boolean flag = cm.searchProductByKey(prodotto.getNome(), prodotto.getBirrificio());
+        System.out.println(flag);
+        if(flag) {
+            request.setAttribute("error", "error");
+            request.getSession().removeAttribute("oldProduct");
+            request.getSession().setAttribute("oldProduct", oldProduct);
+            response.sendRedirect("http://localhost:8080/webAppTest_war/modificaProdotto.jsp");
         } else {
-            cm.addProduct(prodotto);
+            System.out.println(oldProduct.toString());
+            cm.updateProduct(oldProduct, prodotto);
             ArrayList<Prodotto> prodotti=(ArrayList<Prodotto>) request.getSession().getAttribute("prodotti");
+            prodotti = Prodotto.remove(prodotti, oldProduct);
             prodotti.add(prodotto);
+
             request.getSession().removeAttribute("prodotti");
             request.getSession().setAttribute("prodotti", prodotti);
-
-            System.out.println("Prodotto aggiunto");
             response.sendRedirect("http://localhost:8080/webAppTest_war/gestioneCatalogo.jsp");
-        }
+       }
     }
 }

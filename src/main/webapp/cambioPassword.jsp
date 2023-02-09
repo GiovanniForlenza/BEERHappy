@@ -13,14 +13,12 @@
 		response.sendRedirect("accesso.jsp");
 		return;
 	}
-	Utente utente = (Utente) request.getSession().getAttribute("utente");
 %>
 <html>
 <head>
 	<title>CambioPassword</title>
 </head>
 <body>
-	<p><%=utente.getPassword()%></p>
 	<form action="CambioPasswordServlet" method="post">
 		<label>Enter password
 			<input type="password" name="old" id="old">

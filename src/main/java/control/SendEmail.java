@@ -1,4 +1,5 @@
-package com.example.webapptest;
+/*
+package control;
 import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.Session;
@@ -15,7 +16,7 @@ public class SendEmail {
         String host ="smtp.ngi.it";
         Properties props = System.getProperties();
         Session session = Session.getInstance(props, null);
-        props.put("mail.smtp.host", "smtp.ngi.it");
+        props.put("mail.smtp.host", "smtp.tre.it");
         MimeMessage message=new MimeMessage(session);
         message.setFrom(new InternetAddress(mittente));
         message.addRecipients(Message.RecipientType.TO, email);
@@ -24,4 +25,4 @@ public class SendEmail {
         Transport.send(message);
     }
 }
-
+*/

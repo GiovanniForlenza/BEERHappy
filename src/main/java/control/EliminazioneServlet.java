@@ -1,4 +1,4 @@
-package com.example.webapptest;
+package control;
 
 import entity.Utente;
 import jakarta.servlet.ServletException;
@@ -25,10 +25,7 @@ public class EliminazioneServlet extends HttpServlet {
             throw new RuntimeException(e);
         }
         request.setAttribute("accesso", false);
-        System.out.println("Ci arrivo");
         response.sendRedirect("http://localhost:8080/webAppTest_war/accesso.jsp");
-
-
 
     }
 

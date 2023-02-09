@@ -52,13 +52,14 @@ public class ProductModel {
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 
-		String deleteSQL = "DELETE FROM prodotto WHERE id = ?";
+		String deleteSQL = "DELETE FROM prodotto WHERE nome = ? AND birrificio= ? AND formato = ?";
 
 		try {
 			connection = DriverManagerConnectionPool.getConnection();
 			preparedStatement = connection.prepareStatement(deleteSQL);
-			//TODO add getId() been Prodotto
-			//preparedStatement.setInt(1, product.getId());
+			preparedStatement.setString(1, product.getNome());
+			preparedStatement.setString(2, product.getBirrificio());
+			preparedStatement.setString(3, product.getFormato());
 			System.out.println("doDelete: "+ preparedStatement.toString());
 			preparedStatement.executeUpdate();
 

@@ -30,7 +30,7 @@ CREATE TABLE prodotto(
     formato varchar(25) not null,
     quantita int not null,
     prezzo varchar(25) not null,
-    pathImage varchar(50) not null,
+    pathImage varchar(50),
     primary key(nome, birrificio)
 );
 
@@ -112,6 +112,7 @@ insert into indirizzo(via, civico, citta, telefono, cap, email) values ("via Par
 insert into indirizzo(via, civico, citta, telefono, cap, email) values ("via Pariti", 16, "Campagna", "3385875173","84022",  "pinoPaolo@gmail.com");
 
 insert into utenteBO(email, password, ruolo) values ("ciropallinopal@beerhappy.it", "pallinopal", 3);
+insert into utenteBO(email, password, ruolo) values ("admin@beerhappy.it", "admin", 3);
 
 /*BIRRE*/
 INSERT INTO prodotto (nome, birrificio, descrizione, formato, quantita, prezzo, pathImage) values ("Breakfast Porter", "Impavida",

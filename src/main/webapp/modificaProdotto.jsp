@@ -25,27 +25,54 @@
         if(ruolo==2)
             response.sendRedirect("selezioneRuolo.jsp");
     }
-    int i=(Integer.parseInt(request.getParameter("nome")));
-    ArrayList<Prodotto> prodotti= (ArrayList<Prodotto>) request.getAttribute("prodotti");
-    Prodotto prodotto=prodotti.get(i);
-    request.getSession().setAttribute("prodotto", prodotto);
+    //int i=(Integer.parseInt(request.getParameter("nome")));
+    //ArrayList<Prodotto> prodotti= (ArrayList<Prodotto>) request.getAttribute("prodotti");
+    //Prodotto prodotto=prodotti.get(i);
+    //request.getSession().setAttribute("prodotto", prodotto);
 %>
 <html>
 <head>
     <title>Modifica prodotto</title>
 </head>
 <body>
+<%
+    String
+            nome = request.getParameter("nome"),
+            birrificio = request.getParameter("birrificio"),
+            formato = request.getParameter("formato"),
+            descrizione = request.getParameter("descrizione"),
+            quantita = request.getParameter("quantita"),
+            prezzo = request.getParameter("prezzo");
+
+    Prodotto prodotto = new Prodotto();
+    if(nome != null && birrificio != null && formato != null && descrizione != null && quantita != null && prezzo != null) {
+        prodotto.setNome(nome);
+        prodotto.setBirrificio(birrificio);
+        prodotto.setFormato(formato);
+        prodotto.setDescrizione(descrizione);
+        prodotto.setQuantitaDisp(Integer.parseInt(quantita));
+        prodotto.setPrezzo(Double.parseDouble(prezzo));
+        prodotto.setPathImage("");
+
+        request.getSession().setAttribute("oldProduct", prodotto);
+    }else{
+        prodotto = (Prodotto) request.getSession().getAttribute("oldProduct");
+    }
+%>
+<!-- TODO mostra messaggio se il prodotto è già presente -->
     <form method="post" action="ModificaProdottoServlet">
-        <p>Nome: <input type="text" name="nome" placeholder="<%=prodotto.getNome()%>"> <br></p>
-        <p>Birrificio: <input type="text" name="birrificio" placeholder="<%=prodotto.getBirrificio()%>"><br></p>
-        <p>Formato: <input type="text" name="formato" placeholder="<%=prodotto.getFormato()%>"><br></p>
-        <p>Descrizione: <input type="text" name="descrizione" placeholder="<%=prodotto.getDescrizione()%>"><br></p>
-        <p>Quantità: <input type="number" name="quantita" placeholder="<%=prodotto.getQuantita()%>"><br></p>
-        <p>Prezzo: <input type="text" name="prezzo" placeholder="<%=prodotto.getPrezzo()%>"><br></p>
-        <p>Image: <input type="image" name="pathImage" placeholder="<%=prodotto.getPathImage()%>"><br></p>
+        <p>Nome: <input type="text" name="nome" value="<%=prodotto.getNome()%>"> <br></p>
+        <p>Birrificio: <input type="text" name="birrificio" value="<%=prodotto.getBirrificio()%>"><br></p>
+        <p>Formato: <input type="text" name="formato" value="<%=prodotto.getFormato()%>"><br></p>
+        <p>Descrizione: <input type="text" name="descrizione" value="<%=prodotto.getDescrizione()%>"><br></p>
+        <p>Quantità: <input type="number" name="quantita" value="<%=prodotto.getQuantitaDisp()%>"><br></p>
+        <p>Prezzo: <input type="text" name="prezzo" value="<%=prodotto.getPrezzo()%>"><br></p>
+        <p>Image: <input type="image" name="pathImage" value="<%=prodotto.getPathImage()%>"><br></p>
         <input type="submit" value="Salva"> <br>
     </form>
 
-    <button></button>
+    <form action="EliminazioneProdottoServlet" method="post">
+        <input name="delete" type="submit" value="delete">
+    </form>
 </body>
 </html>
