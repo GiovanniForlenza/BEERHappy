@@ -1,10 +1,11 @@
-package control;
+package com.example.webapptest;
 
 import entity.Utente;
-import jakarta.servlet.*;
-import jakarta.servlet.http.*;
-import jakarta.servlet.annotation.*;
-import model.AddressModel;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import model.ModelSecurity;
 
 import java.io.IOException;

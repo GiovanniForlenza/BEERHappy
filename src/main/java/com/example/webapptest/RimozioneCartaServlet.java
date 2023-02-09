@@ -1,4 +1,4 @@
-package control;
+package com.example.webapptest;
 
 import entity.Utente;
 import jakarta.servlet.ServletException;

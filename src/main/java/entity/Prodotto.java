@@ -1,8 +1,8 @@
 package entity;
 
-import java.util.Objects;
+import java.util.ArrayList;
 
-public class Prodotto {
+public class Prodotto{
     String nome;
     double prezzo;
     String birrificio;
@@ -114,7 +114,22 @@ public class Prodotto {
         if (this == o) return true;
         if (!(o instanceof Prodotto)) return false;
         Prodotto prodotto = (Prodotto) o;
-        return Objects.equals(nome, prodotto.nome) && Objects.equals(prezzo, prodotto.prezzo) && Objects.equals(birrificio, prodotto.birrificio) && Objects.equals(formato, prodotto.formato) && Objects.equals(descrizione, prodotto.descrizione);
+        return nome.equals(prodotto.nome) && prezzo==(prodotto.prezzo) && birrificio.equals(birrificio) && formato.equals(formato) && descrizione.equals(prodotto.descrizione);
     }
 
+    public boolean compareKeys(Prodotto prodotto){
+        if(nome.equals(prodotto.nome) && birrificio.equals(prodotto.birrificio))
+            return true;
+        else return false;
+    }
+
+    public static ArrayList<Prodotto> remove(ArrayList<Prodotto> prodotti, Prodotto prodotto){
+        for(int i=0; i< prodotti.size(); i++){
+            if(prodotti.get(i).compareKeys(prodotto)) {
+                prodotti.remove(i);
+                return prodotti;
+            }
+        }
+            return prodotti;
+    }
 }

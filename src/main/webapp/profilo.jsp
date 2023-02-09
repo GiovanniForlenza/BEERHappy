@@ -1,7 +1,7 @@
 <%@ page import="entity.Utente" %>
 <%@ page import="entity.Indirizzo" %>
 <%@ page import="java.util.ArrayList" %>
-<%@ page import="control.RimozioneIndirizzoServlet" %><%--
+<%@ page import="com.example.webapptest.RimozioneIndirizzoServlet" %><%--
   Created by IntelliJ IDEA.
   User: jhon
   Date: 05/01/2023

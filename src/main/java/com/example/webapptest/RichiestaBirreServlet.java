@@ -1,4 +1,4 @@
-package control;
+package com.example.webapptest;
 
 import jakarta.servlet.*;
 import jakarta.servlet.http.*;

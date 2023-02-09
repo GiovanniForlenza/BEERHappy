@@ -1,4 +1,4 @@
-package control;
+package com.example.webapptest;
 
 import entity.Indirizzo;
 import entity.Utente;
@@ -8,7 +8,6 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import model.AddressModel;
-import model.ModelSecurity;
 
 import java.io.IOException;
 import java.sql.SQLException;

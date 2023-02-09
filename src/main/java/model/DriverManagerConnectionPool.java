@@ -23,7 +23,7 @@ public class DriverManagerConnectionPool {
 		freeDbConnection = new LinkedList<Connection>();
 	}
 	private synchronized static Connection createDBConnection() throws SQLException {
-		Connection newConnection = DriverManager.getConnection("jdbc:mysql://localhost:3306/beerhappy", "root", "Amministratore");
+		Connection newConnection = DriverManager.getConnection("jdbc:mysql://localhost:3306/beerhappy", "root", "admin");
 
 		newConnection.setAutoCommit(false);
 		return newConnection;

@@ -1,15 +1,15 @@
 package com.example.webapptest;
 
-import entity.Utente;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.*;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import model.ModelSecurity;
 
 import javax.mail.MessagingException;
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.Random;
 
 @WebServlet(name = "RecuperoPasswordServlet", value = "/RecuperoPasswordServlet")
 public class RecuperoPasswordServlet extends HttpServlet {
@@ -26,21 +26,24 @@ public class RecuperoPasswordServlet extends HttpServlet {
             String password;
 
             try {
-                if ((password=ms.recuperoPasswordUtenteBO(email))!=null) {
-                    SendEmail invioEmail = new SendEmail();
-                    messaggio=messaggio+password;
-                    invioEmail.SendingEmail(email, messaggio, "Recupero password");
-                    resp.sendRedirect("http://localhost:8080/webAppTest_war/accesso.jsp");
+                try {
+                    if ((password = ms.recuperoPasswordUtenteBO(email)) != null) {
+                        SendEmail invioEmail = new SendEmail();
+                        messaggio = messaggio + password;
+                        invioEmail.SendingEmail(email, messaggio, "Recupero password");
+                        resp.sendRedirect("http://localhost:8080/webAppTest_war/accesso.jsp");
+                    } else if ((password = ms.recuperoPassword(email)) != null) {
+                        SendEmail invioEmail = new SendEmail();
+                        messaggio = messaggio + password;
+                        invioEmail.SendingEmail(email, messaggio, "Recupero password");
+                        resp.sendRedirect("http://localhost:8080/webAppTest_war/accesso.jsp");
+                    }
+                } catch (SQLException | MessagingException e) {
+                    throw new RuntimeException(e);
                 }
-                else if((password=ms.recuperoPassword(email))!=null){
-                    SendEmail invioEmail = new SendEmail();
-                    messaggio=messaggio+password;
-                    invioEmail.SendingEmail(email, messaggio, "Recupero password");
-                    resp.sendRedirect("http://localhost:8080/webAppTest_war/accesso.jsp");
-                }
-            } catch (MessagingException e) {
+            } catch (IOException e) {
                 throw new RuntimeException(e);
-            } catch (SQLException e) {
+            } catch (RuntimeException e) {
                 throw new RuntimeException(e);
             }
         }
