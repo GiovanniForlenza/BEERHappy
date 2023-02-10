@@ -1,9 +1,6 @@
 package model;
 
-import entity.Indirizzo;
-import entity.Ordine;
-import entity.ProdottoOrdinato;
-import entity.Utente;
+import entity.*;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -89,14 +86,13 @@ public class OrderModel {
 				resultSet = preparedStatement.executeQuery();
 
 				while(resultSet.next()){
-					ProdottoOrdinato prodottoOrdinato = new ProdottoOrdinato();
-					prodottoOrdinato.setOrdineID(resultSet.getInt("ordineID"));
+					Prodotto prodottoOrdinato = new Prodotto();
 					prodottoOrdinato.setNome(resultSet.getString("nome"));
 					prodottoOrdinato.setBirrificio(resultSet.getString("birrificio"));
 					prodottoOrdinato.setDescrizione(resultSet.getString("descrizione"));
 					prodottoOrdinato.setFormato(resultSet.getString("formato"));
-					prodottoOrdinato.setQuantitaSelezionata(resultSet.getInt("quantita"));
-					prodottoOrdinato.setPrezzoProdotto(resultSet.getDouble("prezzo"));
+					prodottoOrdinato.setQuantita(resultSet.getInt("quantita"));
+					prodottoOrdinato.setPrezzo(resultSet.getDouble("prezzo"));
 					prodottoOrdinato.setPathImage(resultSet.getString("pathImage"));
 
 					order.get(i).addProdotto(prodottoOrdinato);
@@ -117,7 +113,7 @@ public class OrderModel {
 		return order;
 	}
 
-	public void aggiuntaProdottiOrdine(ProdottoOrdinato prodottoOrdinato) throws SQLException {
+	public void aggiuntaProdottiOrdine(Prodotto prodottoOrdinato, Ordine ordine) throws SQLException {
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 		String insertSQL = "INSERT INTO prodottoOrdinato (nome, birrificio, descrizione, formato, quantita, prezzo, ordineID, pathImage) values (?, ?, ?, ?, ?, ?, ?,?)";
@@ -129,9 +125,9 @@ public class OrderModel {
 			preparedStatement.setString(2, prodottoOrdinato.getBirrificio());
 			preparedStatement.setString(3, prodottoOrdinato.getDescrizione());
 			preparedStatement.setString(4, prodottoOrdinato.getFormato());
-			preparedStatement.setInt(5, prodottoOrdinato.getQuantitaSelezionata());
-			preparedStatement.setDouble(6, prodottoOrdinato.getPrezzoProdotto());
-			preparedStatement.setInt(7, prodottoOrdinato.getOrdineID());
+			preparedStatement.setInt(5, prodottoOrdinato.getQuantita());
+			preparedStatement.setDouble(6, prodottoOrdinato.getPrezzo());
+			preparedStatement.setInt(7, ordine.getIdOrdine());
 			preparedStatement.setString(8,"");
 
 			preparedStatement.executeUpdate();

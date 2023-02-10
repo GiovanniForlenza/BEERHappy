@@ -113,44 +113,7 @@ public class ModelSecurity implements Security {
 		this.utente = utente;
 	}
 
-	public Collection<Prodotto> doRetrieveAll() throws SQLException {
-		Connection connection = null;
-		PreparedStatement preparedStatement = null;
 
-		Collection<Prodotto> customers = new LinkedList<Prodotto>();
-
-		String selectSQL = "SELECT * FROM prodotto";
-
-
-		try {
-			connection = DriverManagerConnectionPool.getConnection();
-			preparedStatement = connection.prepareStatement(selectSQL);
-
-			System.out.println("doRetrieveAll:" + preparedStatement.toString());
-			ResultSet rs = preparedStatement.executeQuery();
-
-			while (rs.next()) {
-				Prodotto bean = new Prodotto();
-
-				bean.setNome(rs.getString("nome"));
-				bean.setBirrificio(rs.getString("birrificio"));
-				bean.setDescrizione(rs.getString("descrizione"));
-				bean.setFormato(rs.getString("formato"));
-				bean.setQuantitaDisp(rs.getInt("quantita"));
-				bean.setPrezzo(rs.getDouble("prezzo"));
-				customers.add(bean);
-			}
-		} finally {
-			try {
-				if (preparedStatement != null)
-					preparedStatement.close();
-			} finally {
-				DriverManagerConnectionPool.releaseConnection(connection);
-			}
-		}
-
-		return customers;
-	}
 
 	public void removeUser(Utente utente) throws SQLException {
 		Connection connection = null;

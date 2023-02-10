@@ -181,10 +181,11 @@
 
 			<h2>Prodotti</h2>
 	<%
-			double tot = 0;
+			float tot = 0;
 			for(int i = 0; i < prodotti.size(); i++)
 			{
-				tot = tot + (prodotti.get(i).getPrezzo() * prodotti.get(i).getQuantita());
+				tot = tot +
+						(float) (prodotti.get(i).getPrezzo() * prodotti.get(i).getQuantita());
 	%>
 				<p><%=prodotti.get(i).getNome()%></p>
 				<p><%=prodotti.get(i).getQuantita()%></p>
@@ -194,7 +195,7 @@
 			request.getSession().setAttribute("prezzo",tot);
 	%>
 			<h3>totale ordine <%=tot%>€</h3>
-			<form action="GestioneOrdineUtenteServlet"  method="post">
+			<form action="OrdineUtenteServlet"  method="post">
 				<input type="submit" name="effettua ordine" value="Effettua ordine">
 			</form>
 			<a href="carrello.jsp">annulla</a>

@@ -12,7 +12,7 @@ public class Utente {
     ArrayList<Carta> carte;
     ArrayList<Indirizzo> indirizzi;
     ArrayList<Ordine> ordini;
-    ArrayList<ProdottoOrdinato> prodotti;
+    ArrayList<Prodotto> prodotti;
     Carrello carrello;
 
     public Utente(){}
@@ -136,11 +136,11 @@ public class Utente {
         this.ordini = ordini;
     }
 
-    public ArrayList<ProdottoOrdinato> getProdotti() {
+    public ArrayList<Prodotto> getProdotti() {
         return prodotti;
     }
 
-    public void setProdotti(ArrayList<ProdottoOrdinato> prodotti) {
+    public void setProdotti(ArrayList<Prodotto> prodotti) {
         this.prodotti = prodotti;
     }
 }

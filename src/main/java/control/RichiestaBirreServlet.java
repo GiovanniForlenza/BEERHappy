@@ -4,6 +4,7 @@ import jakarta.servlet.*;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
 import model.ModelSecurity;
+import model.ProductModel;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -18,8 +19,9 @@ public class RichiestaBirreServlet extends HttpServlet {
 		String redirectedPage = "/catalogo.jsp";
 
 		try {
+			ProductModel productModel = new ProductModel();
 			request.removeAttribute("birre");
-			request.setAttribute("birre", model.doRetrieveAll());
+			request.setAttribute("birre", productModel.doRetrieveAll());
 
 			Boolean flag = (Boolean) request.getSession().getAttribute("accesso");
 			if(flag != null){

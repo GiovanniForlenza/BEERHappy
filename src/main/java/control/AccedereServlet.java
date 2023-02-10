@@ -1,4 +1,6 @@
 package control;
+import entity.Carrello;
+import entity.Prodotto;
 import entity.Utente;
 import entity.UtenteBO;
 import jakarta.servlet.ServletException;
@@ -13,6 +15,7 @@ import model.OrderModel;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 @WebServlet(name = "AccedereServlet", value = "/AccedereServlet")
 public class AccedereServlet extends HttpServlet {
@@ -41,10 +44,20 @@ public class AccedereServlet extends HttpServlet {
 				utente.setOrdini(orderModel.recuperoOrdini(utente));
 				utente.setIndirizzi(am.recuperoIndirizzo(utente));
 				utente.setCarte(cm.recuperoCarte(utente));
+
 				request.getSession().setAttribute("utente", utente);
 				request.getSession().setAttribute("accessoUtenteBO", false);
 				request.getSession().setAttribute("accessoUtente", true);
-				response.sendRedirect("http://localhost:8080/webAppTest_war/homePageStore.jsp");
+
+				Carrello carrello = (Carrello) request.getSession().getAttribute("carrello");
+
+				if(carrello != null){
+					if(carrello.getProdotti().size() > 0){
+						response.sendRedirect("http://localhost:8080/webAppTest_war/effettuaOrdine.jsp");
+					}
+				}else {
+					response.sendRedirect("http://localhost:8080/webAppTest_war/homePageStore.jsp");
+				}
 			} else {
 				request.getSession().setAttribute("accessoUtenteBO", false);
 				request.getSession().setAttribute("accessoUtente", false);

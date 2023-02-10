@@ -6,18 +6,18 @@ public class Ordine {
 	int idOrdine;
 	String email;
 	String dataOrdine;
-	double prezzoOrdine;
+	float prezzoOrdine;
 	String via;
 	int	civico;
 	String citta;
 	String telefono;
 	String stato;
-	ArrayList <ProdottoOrdinato> prodotti;
+	ArrayList <Prodotto> prodotti;
 
  	public Ordine(){
 	}
 
-	public Ordine(int idOrdine, String email, String dataOrdine, double prezzo, String via, int civico, String citta, String telefono) {
+	public Ordine(int idOrdine, String email, String dataOrdine, float prezzo, String via, int civico, String citta, String telefono) {
 		this.idOrdine = idOrdine;
 		this.email = email;
 		this.dataOrdine = dataOrdine;
@@ -52,11 +52,11 @@ public class Ordine {
 		this.dataOrdine = dataOrdine;
 	}
 
-	public double getPrezzo() {
+	public float getPrezzo() {
 		return prezzoOrdine;
 	}
 
-	public void setPrezzo(double prezzo) {
+	public void setPrezzo(float prezzo) {
 		this.prezzoOrdine = prezzo;
 	}
 
@@ -100,15 +100,15 @@ public class Ordine {
 		this.stato = stato;
 	}
 
-	public ArrayList<ProdottoOrdinato> getProdotti() {
+	public ArrayList<Prodotto> getProdotti() {
 		return prodotti;
 	}
 
-	public void setProdotti(ArrayList<ProdottoOrdinato> prodotti) {
+	public void setProdotti(ArrayList<Prodotto> prodotti) {
 		this.prodotti = prodotti;
 	}
 
-	public void addProdotto(ProdottoOrdinato prodottoOrdinato){
+	public void addProdotto(Prodotto prodottoOrdinato){
 		 if(this.prodotti == null)
 			 this.prodotti = new ArrayList<>();
 

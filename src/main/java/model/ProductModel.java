@@ -6,6 +6,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.LinkedList;
 
 public class ProductModel {
 
@@ -74,6 +77,45 @@ public class ProductModel {
 			}
 		}
 
+	}
+
+	public ArrayList<Prodotto> doRetrieveAll() throws SQLException {
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+
+		ArrayList<Prodotto> prodotti = new ArrayList<>();
+
+		String selectSQL = "SELECT * FROM prodotto";
+
+
+		try {
+			connection = DriverManagerConnectionPool.getConnection();
+			preparedStatement = connection.prepareStatement(selectSQL);
+
+			System.out.println("doRetrieveAll:" + preparedStatement.toString());
+			ResultSet rs = preparedStatement.executeQuery();
+
+			while (rs.next()) {
+				Prodotto bean = new Prodotto();
+
+				bean.setNome(rs.getString("nome"));
+				bean.setBirrificio(rs.getString("birrificio"));
+				bean.setDescrizione(rs.getString("descrizione"));
+				bean.setFormato(rs.getString("formato"));
+				bean.setQuantitaDisp(rs.getInt("quantita"));
+				bean.setPrezzo(rs.getDouble("prezzo"));
+				prodotti.add(bean);
+			}
+		} finally {
+			try {
+				if (preparedStatement != null)
+					preparedStatement.close();
+			} finally {
+				DriverManagerConnectionPool.releaseConnection(connection);
+			}
+		}
+
+		return prodotti;
 	}
 
 }

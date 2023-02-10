@@ -1,3 +1,4 @@
+/*
 package control;
 
 import jakarta.servlet.ServletException;
@@ -48,5 +49,7 @@ public class RecuperoPasswordServlet extends HttpServlet {
             }
         }
 }
+
+ */
 
 

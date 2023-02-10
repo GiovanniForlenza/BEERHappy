@@ -2,7 +2,7 @@
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="entity.Ordine" %>
 <%@ page import="entity.Prodotto" %>
-<%@ page import="entity.ProdottoOrdinato" %><%--
+<%--
   Created by IntelliJ IDEA.
   User: jhon
   Date: 02/02/23
@@ -28,11 +28,11 @@
 	<%
 		for(int i = 0; i < ordini.size(); i++){
 			for(int j = 0; j < ordini.get(i).getProdotti().size(); j++){
-				ArrayList<ProdottoOrdinato> prodotti = ordini.get(i).getProdotti();
+				ArrayList<Prodotto> prodotti = ordini.get(i).getProdotti();
 	%>
 				<p>nome prodotto: <%=prodotti.get(j).getNome()%></p>
-				<p>quantita selezionata: <%=prodotti.get(j).getQuantitaSelezionata()%></p>
-				<p>prezzo prodotto: <%=prodotti.get(j).getPrezzoProdotto()%>€</p>
+				<p>quantita selezionata: <%=prodotti.get(j).getQuantita()%></p>
+				<p>prezzo prodotto: <%=prodotti.get(j).getPrezzo()%>€</p>
 	<%		}
 	%>
 			<p>Totale ordine: <%=ordini.get(i).getPrezzo()%>€</p>

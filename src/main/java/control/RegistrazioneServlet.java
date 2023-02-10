@@ -1,5 +1,6 @@
 package control;
 
+import entity.Carrello;
 import entity.Utente;
 import jakarta.servlet.*;
 import jakarta.servlet.http.*;
@@ -37,7 +38,16 @@ public class RegistrazioneServlet extends HttpServlet {
 			}
 			request.getSession().setAttribute("utente", utente);
 			request.getSession().setAttribute("accessoUtente",true);
-			response.sendRedirect("http://localhost:8080/webAppTest_war/homePageStore.jsp");
+
+			Carrello carrello = (Carrello) request.getSession().getAttribute("carrello");
+
+			if(carrello != null){
+				if(carrello.getProdotti().size() > 0){
+					response.sendRedirect("http://localhost:8080/webAppTest_war/effettuaOrdine.jsp");
+				}
+			}else {
+				response.sendRedirect("http://localhost:8080/webAppTest_war/homePageStore.jsp");
+			}
 		}
 		else {
 			System.out.println("Error email already present");
