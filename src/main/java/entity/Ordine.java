@@ -3,23 +3,22 @@ package entity;
 import java.util.ArrayList;
 
 public class Ordine {
+
 	int idOrdine;
-	String email;
 	String dataOrdine;
 	float prezzoOrdine;
 	String via;
 	int	civico;
 	String citta;
 	String telefono;
-	String stato;
+	Stato stato;
 	ArrayList <Prodotto> prodotti;
 
  	public Ordine(){
 	}
 
-	public Ordine(int idOrdine, String email, String dataOrdine, float prezzo, String via, int civico, String citta, String telefono) {
+	public Ordine(int idOrdine, String dataOrdine, float prezzo, String via, int civico, String citta, String telefono) {
 		this.idOrdine = idOrdine;
-		this.email = email;
 		this.dataOrdine = dataOrdine;
 		this.prezzoOrdine = prezzo;
 		this.via = via;
@@ -34,14 +33,6 @@ public class Ordine {
 
 	public void setIdOrdine(int idOrdine) {
 		this.idOrdine = idOrdine;
-	}
-
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
 	}
 
 	public String getDataOrdine() {
@@ -92,11 +83,11 @@ public class Ordine {
 		this.telefono = telefono;
 	}
 
-	public String getStato() {
+	public Stato getStato() {
 		return stato;
 	}
 
-	public void setStato(String stato) {
+	public void setStato(Stato stato) {
 		this.stato = stato;
 	}
 
@@ -113,6 +104,22 @@ public class Ordine {
 			 this.prodotti = new ArrayList<>();
 
 		 this.prodotti.add(prodottoOrdinato);
+	}
+
+	public boolean compareKeys(Ordine ordine){
+		if(idOrdine==ordine.getIdOrdine())
+			return true;
+		else return false;
+	}
+
+	public static ArrayList<Ordine> remove(ArrayList<Ordine> ordini, Ordine ordine){
+		 for(int i=0; i<ordini.size(); i++){
+			 if(ordini.get(i).compareKeys(ordine)){
+				 ordini.remove(i);
+				 return ordini;
+			 }
+		 }
+		 return ordini;
 	}
 
 }

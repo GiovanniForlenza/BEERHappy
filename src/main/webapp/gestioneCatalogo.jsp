@@ -32,6 +32,7 @@
 </head>
 
 <body>
+<%@ include file="navBarBO.jsp"%>
 <%
     for(int i=0; i<prodotti.size(); i++){
         Prodotto prodotto=prodotti.get(i);

@@ -4,7 +4,7 @@ create DATABASE beerhappy;
 USE beerhappy;
 
 DROP user IF EXISTS 'beerhappy'@'localhost';
-CREATE USER 'beerhappy'@'localhost' IDENTIFIED BY 'Amministratore';
+CREATE USER 'beerhappy'@'localhost' IDENTIFIED BY 'admin';
 GRANT ALL ON storage.* TO 'beerhappy'@'localhost';
 
 CREATE TABLE utente(

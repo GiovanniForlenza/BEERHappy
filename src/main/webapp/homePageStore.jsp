@@ -20,6 +20,10 @@
 	}
 
 	Utente utente = (Utente) session.getAttribute("utente");
+
+	if(request.getSession().getAttribute("carrello")!=null){
+		response.sendRedirect("");
+	}
 %>
 <html>
 <head>

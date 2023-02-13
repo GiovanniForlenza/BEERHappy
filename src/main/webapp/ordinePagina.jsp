@@ -37,6 +37,7 @@
 	%>
 			<p>Totale ordine: <%=ordini.get(i).getPrezzo()%>€</p>
 			<p>numero ordine: <%=ordini.get(i).getIdOrdine()%></p>
+			<p>Stato: <%=ordini.get(i).getStato().name()%>
 			<p>---------------------------------</p>
 	<%	}
 	%>

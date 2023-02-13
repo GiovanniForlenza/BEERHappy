@@ -1,17 +1,16 @@
 package control;
 
 import entity.*;
-import jakarta.servlet.*;
-import jakarta.servlet.http.*;
-import jakarta.servlet.annotation.*;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import model.OrderModel;
 
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.Locale;
-import java.util.TimeZone;
+import java.time.LocalDate;
 
 @WebServlet(name = "OrdineUtenteServlet", value = "/OrdineUtenteServlet")
 public class OrdineUtenteServlet extends HttpServlet {
@@ -26,23 +25,21 @@ public class OrdineUtenteServlet extends HttpServlet {
         if(utente != null && indirizzo != null && carta != null && carrello != null) {
             float prezzo = (Float) request.getSession().getAttribute("prezzo");
             //TODO data da gestire
-            Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("Europe/Rome"), Locale.ITALY);
-            Date today = calendar.getTime();
 
+            LocalDate localDate=LocalDate.now();
             Ordine ordine = new Ordine();
-            ordine.setEmail(utente.getEmail());
-            ordine.setDataOrdine(today.toString());
+            ordine.setDataOrdine(localDate.toString());
             ordine.setVia(indirizzo.getVia());
             ordine.setCitta(indirizzo.getCitta());
             ordine.setCivico(indirizzo.getCivico());
             ordine.setTelefono(indirizzo.getTelefono());
             ordine.setPrezzo(prezzo);
-            ordine.setStato("inoltrato");
+            ordine.setStato(Stato.inoltrato);
 
             OrderModel orderModel = new OrderModel();
 
             try {
-                ordine = orderModel.aggiuntaOrdine(ordine);
+                ordine = orderModel.aggiuntaOrdine(ordine, utente);
                 Prodotto prodottoOrdinato = new Prodotto();
                 for(int i = 0; i < carrello.getProdotti().size(); i++){
                     Prodotto prodotto = carrello.getProdotti().get(i);

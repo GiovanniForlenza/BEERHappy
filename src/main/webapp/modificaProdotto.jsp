@@ -25,10 +25,7 @@
         if(ruolo==2)
             response.sendRedirect("selezioneRuolo.jsp");
     }
-    //int i=(Integer.parseInt(request.getParameter("nome")));
-    //ArrayList<Prodotto> prodotti= (ArrayList<Prodotto>) request.getAttribute("prodotti");
-    //Prodotto prodotto=prodotti.get(i);
-    //request.getSession().setAttribute("prodotto", prodotto);
+
 %>
 <html>
 <head>

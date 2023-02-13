@@ -1,17 +1,13 @@
 package model;
 
-import entity.Prodotto;
 import entity.Utente;
 import entity.UtenteBO;
 
-import javax.swing.*;
-import java.awt.dnd.DragGestureRecognizer;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Collection;
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.Random;
 
 public class ModelSecurity implements Security {
@@ -188,7 +184,7 @@ public class ModelSecurity implements Security {
 		}
 		return passwordMomentanea;
 	}
-	public String generaPassword() {
+	public static String generaPassword() {
 		String upperAlphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 		String lowerAlphabet = "abcdefghijklmnopqrstuvwxyz";
 		String numbers = "0123456789";
@@ -337,5 +333,104 @@ public class ModelSecurity implements Security {
 			}
 		}
 
+	}
+
+	public ArrayList<UtenteBO> recuperoUtentiBO(){
+		Connection connection = null;
+		PreparedStatement preparedStatement=null;
+		String query = "SELECT * FROM utenteBO WHERE ruolo!=4";
+		ArrayList<UtenteBO> utenti=new ArrayList<>();
+		ResultSet rs;
+
+
+		try {
+			connection = DriverManagerConnectionPool.getConnection();
+			preparedStatement = connection.prepareStatement(query);
+			rs = preparedStatement.executeQuery();
+
+			while (rs.next()) {
+				UtenteBO utenteBO=new UtenteBO();
+				utenteBO.setEmail(rs.getString("email"));
+				utenteBO.setPassword(rs.getString("password"));
+				utenteBO.setRuolo(rs.getInt("ruolo"));
+				utenti.add(utenteBO);
+			}
+			if (preparedStatement != null)
+				preparedStatement.close();
+			DriverManagerConnectionPool.releaseConnection(connection);
+
+		} catch (SQLException e) {
+				e.printStackTrace();
+		}
+		return  utenti;
+	}
+
+	public void updateRoles(UtenteBO utenteBO, int ruolo){
+			Connection connection = null;
+			PreparedStatement preparedStatement = null;
+			String query = "update utenteBO set ruolo = ? where email = ?";
+			try {
+				connection = DriverManagerConnectionPool.getConnection();
+				preparedStatement = connection.prepareStatement(query);
+				preparedStatement.setInt(1, ruolo);
+				preparedStatement.setString(2, utenteBO.getEmail());
+
+				preparedStatement.executeUpdate();
+				connection.commit();
+
+				if (preparedStatement != null)
+					preparedStatement.close();
+				DriverManagerConnectionPool.releaseConnection(connection);
+
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+
+	}
+	public void deleteUtenteBO(UtenteBO utenteBO){
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		String query = "delete from utenteBO where email=?";
+		try {
+			connection = DriverManagerConnectionPool.getConnection();
+			preparedStatement = connection.prepareStatement(query);
+			preparedStatement.setString(1, utenteBO.getEmail());
+
+			preparedStatement.executeUpdate();
+			connection.commit();
+
+			if (preparedStatement != null)
+				preparedStatement.close();
+			DriverManagerConnectionPool.releaseConnection(connection);
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void addUserBO(UtenteBO utenteBO) throws SQLException {
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		String insertSQL = "INSERT INTO utenteBO" + "(email, password, ruolo) values (?,?,?)";
+		try {
+			connection = DriverManagerConnectionPool.getConnection();
+			preparedStatement = connection.prepareStatement(insertSQL);
+
+			preparedStatement.setString(1, utenteBO.getEmail());
+			preparedStatement.setString(2, utenteBO.getPassword());
+			preparedStatement.setString(3, utenteBO.getRuolo()+"");
+
+
+			preparedStatement.executeUpdate();
+			System.out.println("Insert Query update");
+			connection.commit();
+		} finally {
+			try {
+				if (preparedStatement != null)
+					preparedStatement.close();
+			} finally {
+				DriverManagerConnectionPool.releaseConnection(connection);
+			}
+		}
 	}
 }
