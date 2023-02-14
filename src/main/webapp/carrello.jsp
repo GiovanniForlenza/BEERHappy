@@ -30,9 +30,7 @@
 	<%
 		}
 	%>
-	<%
-		if(carrello != null){
-	%>
+
 	<div class="container my-5">
 		<h1 class="text-center">Carrello</h1>
 		<table class="table table-striped">
@@ -46,6 +44,13 @@
 			</tr>
 			</thead>
 	<%
+			if(carrello == null) {
+	%>
+				<p>il carrello è vuoto</p>
+	<%
+			}
+			else{
+
 			ArrayList<Prodotto> prodottiNelCarrello = carrello.getProdotti();
 			for (Prodotto prodotto : prodottiNelCarrello){
 	%>
@@ -60,6 +65,7 @@
 			</tr>
 	<%
 			}
+
 	%>
 
 
@@ -78,18 +84,14 @@
 		</div>
 	</div>
 
-	<%		}
+	<%
+				}
 			else{
-				%>
-			<p>il carrello è vuoto</p>
-	<%
-			}
-		}
-		else{
 	%>
-			<p>il carrello è vuoto</p>
+				<p>il carrello è vuoto</p>
 	<%
-		}
+				}
+			}
 	%>
 
 

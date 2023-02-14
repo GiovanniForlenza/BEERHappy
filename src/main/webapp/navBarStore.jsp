@@ -49,9 +49,9 @@
 			<li class="nav-item">
 				<a class="nav-link" href="profilo.jsp">Profilo</a>
 			</li>
-			<li class="nav-item">
-				<a class="nav-link" href="accesso.jsp">Logout</a>
-			</li>
+			<form action="LogoutServlet" method="GET">
+				<input type="submit" class="btn btn-secondary" value="Logout">
+			</form>
 		</ul>
 	</div>
 </nav>

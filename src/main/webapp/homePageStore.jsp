@@ -18,8 +18,6 @@
 		response.sendRedirect("accesso.jsp");
 		return;
 	}
-
-	Utente utente = (Utente) session.getAttribute("utente");
 %>
 <html>
 <head>
@@ -27,7 +25,7 @@
 </head>
 <body>
 	<%@ include file="navBarStore.jsp"%>
-	<p>Ciao <%= utente.getNome()%></p>
+
 	<!-- Header -->
 	<header class="jumbotron jumbotron-fluid text-center bg-primary text-white">
 		<div class="container">

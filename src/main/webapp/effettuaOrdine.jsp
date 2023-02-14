@@ -42,8 +42,16 @@
 	%>
 
 	<%
-		ArrayList<Prodotto> prodotti = carrello.getProdotti();
-		if(prodotti.size() > 0){
+		if(carrello == null){
+	%>
+			<p>non sono presenti prodotti nel carrello</p>
+			<p>per effettuare un ordine aggiungi delle birre nel carrello</p>
+	<%
+		}
+
+
+		else if(carrello.getProdotti().size() > 0){
+			ArrayList<Prodotto> prodotti = carrello.getProdotti();
 	%>
 	<div class="container">
 		<h1 class="text-center mt-5">Pagina di checkout</h1>
@@ -90,9 +98,7 @@
 	</div>
 <br>
 
-			<%
-				//if(addressView == null){
-			%>
+
 	<div class="container">
 		<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#dialogAddress">
 			seleziona o aggiungi indirizzo
@@ -135,9 +141,6 @@
 					}
 				%>
 			</div>
-			<%
-				//}
-			%>
 		</div>
 	</div>
 			<%

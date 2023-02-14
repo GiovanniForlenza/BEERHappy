@@ -9,50 +9,55 @@
 <html>
 <head>
     <title>Login PAGE</title>
-
-    <style>
-        .messageEmailError{
-            display: none;
-        }
-    </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="css/loginpage.css" rel="stylesheet">
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"
+          integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
 
 </head>
 <body>
-    <h1>registrati</h1>
-    <form method="post" action="RegistrazioneServlet">
-        <labe>Nome</labe>   <br>
-        <input type="text" name="nome" autocomplete="off" required>  <br>
-        <p class="messageEmailError">email gia presente</p>
 
-        <labe>Cognome</labe>    <br>
-        <input type="text" name="cognome" autocomplete="off" required>    <br>
 
-        <labe>Email</labe>  <br>
-        <input type="email" name="e-mail" required>  <br>
+    <div class="container">
+        <div id="cover">
+            <h1 class="sign-up">
+                Hello Friend!</h1>
+            <p class="sign-up">
+                Enter your Personal details<br>and start a journey with us</p>
+            <a class="button sign-up" href="#cover">Sign Up</a>
+            <h1 class="sign-in">
+                Welcome Back!</h1>
+            <p class="sign-in">
+                To keep connected with us please<br>login with your personal info</p>
+            <br>
+            <a class="button sub sign-in" href="#">Sign In</a>
+        </div>
+        <div class="login">
+            <h1>
+                Sign In</h1>
+            <form method="POST" action="AccedereServlet">
+                <input type="email" name="e-mail" placeholder="Email" class="input-field"><br>
+                <input type="password" name="password" placeholder="Password" class="input-field"><br>
 
-        <labe>Password</labe>   <br>
-        <input type="password" name="password" required> <br>
+                <a id="forgot-pass" href="recuperoPassword.jsp">Forgot your password</a><br>
+                <input type="submit" type="submit" value="Sign In" class="submit-btn">
+            </form>
 
-        <labe>Conferma Password</labe>  <br>
-        <input type="password" name="rePassword" required>   <br>
+        </div>
+        <div class="register">
+            <h1>
+                Create Account</h1>
+            <form method="POST" action="RegistrazioneServlet">
+                <input type="text" placeholder="Name" name="nome" class="input-field" autocomplete="off" required><br>
+                <input type="text" placeholder="Cognome" name="cognome" class="input-field" autocomplete="off" required><br>
+                <input type="email" placeholder="Email" name="e-mail" class="input-field" required><br>
+                <input type="password" placeholder="Password" name="password" class="input-field" required><br>
+                <input type="password" placeholder="Password" name="repassword" class="input-field" required><br>
+                <input class="submit-btn" type="submit" value="Sign up">
+            </form>
+        </div>
+    </div>
 
-        <input type="submit">
-    </form>
-
-    <h1>accedi</h1>
-    <form method="post" action="AccedereServlet">
-        <input type="email" name="e-mail" placeholder="Enter e mail"> <br>
-        <input type="password" name="password" placeholder="Enter password"> <br>
-        <input type="submit">
-        <input type="reset">
-    </form>
-
-    <h1>Recupero password</h1>
-    <form method="post" action="RecuperoPasswordServlet">
-        <labe>Nome</labe>   <br>
-        <input type="text" name="email" autocomplete="off" required>  <br>
-        <input type="submit">
-        <p class="messageEmailError">email non presente</p>
-    </form>
 </body>
 </html>

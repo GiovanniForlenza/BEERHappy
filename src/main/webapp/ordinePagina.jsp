@@ -41,24 +41,29 @@
 				<th>Totale</th>
 				<th>Stato</th>
 				<th></th>
-				<th></th>
 			</tr>
 			</thead>
 			<tbody>
 		<%
-			//stampa ordini
-			for(int i = 0; i < ordini.size(); i++){
-		%>
-			<tr>
-				<td>#<%=ordini.get(i).getIdOrdine()%></td>
-				<td><%=ordini.get(i).getDataOrdine()%></td>
-				<td><%="Italy, " + ordini.get(i).getCitta() + ", " + ordini.get(i).getVia() + " "+ ordini.get(i).getCivico()%></td>
-				<td>&euro; <%=ordini.get(i).getPrezzo()%></td>
-				<td><%=ordini.get(i).getStato().name()%></td>
-				<td><a href="#">Annulla Ordine</a></td>
-				<td><a href="#">Visualizza dettagli</a></td>
-			</tr>
+			if(ordini == null || ordini.size() < 1){
+				%>
+			<p>non sono presenti ordini</p>
 		<%
+			}
+			else{
+			//stampa ordini
+				for(int i = 0; i < ordini.size(); i++){
+		%>
+				<tr>
+					<td>#<%=ordini.get(i).getIdOrdine()%></td>
+					<td><%=ordini.get(i).getDataOrdine()%></td>
+					<td><%="Italy, " + ordini.get(i).getCitta() + ", " + ordini.get(i).getVia() + " "+ ordini.get(i).getCivico()%></td>
+					<td>&euro; <%=ordini.get(i).getPrezzo()%></td>
+					<td><%=ordini.get(i).getStato().name()%></td>
+					<td><a href="#">Annulla Ordine</a></td>
+				</tr>
+		<%
+				}
 			}
 		%>
 			</tbody>
