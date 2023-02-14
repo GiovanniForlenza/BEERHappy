@@ -118,4 +118,46 @@ public class ProductModel {
 		return prodotti;
 	}
 
+	public ArrayList<Prodotto> doRetrieveProducts(String name) throws SQLException {
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+
+		ArrayList<Prodotto> prodotti = new ArrayList<>();
+
+		String selectSQL = "SELECT * FROM prodotto where nome like ?";
+
+
+		try {
+			connection = DriverManagerConnectionPool.getConnection();
+			preparedStatement = connection.prepareStatement(selectSQL);
+
+			preparedStatement.setString(1, "%" + name + "%");
+
+			System.out.println("doRetrieveAll:" + preparedStatement.toString());
+			ResultSet rs = preparedStatement.executeQuery();
+
+			while (rs.next()) {
+				Prodotto bean = new Prodotto();
+
+				bean.setNome(rs.getString("nome"));
+				bean.setBirrificio(rs.getString("birrificio"));
+				bean.setDescrizione(rs.getString("descrizione"));
+				bean.setFormato(rs.getString("formato"));
+				bean.setQuantitaDisp(rs.getInt("quantita"));
+				bean.setPrezzo(rs.getDouble("prezzo"));
+				prodotti.add(bean);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+			finally {
+				try {
+					if (preparedStatement != null)
+						preparedStatement.close();
+				} finally {
+					DriverManagerConnectionPool.releaseConnection(connection);
+				}
+			}
+		return prodotti;
+	}
 }

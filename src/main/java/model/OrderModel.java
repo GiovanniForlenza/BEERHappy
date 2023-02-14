@@ -1,9 +1,6 @@
 package model;
 
-import entity.Ordine;
-import entity.Prodotto;
-import entity.Stato;
-import entity.Utente;
+import entity.*;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -15,7 +12,6 @@ public class OrderModel {
 		Connection connection = null;
 		PreparedStatement preparedStatement = null;
 		String insertSQL = "INSERT INTO ordine (email, data, stato, via, civico, citta, telefono, prezzo) values (?, ?, ?, ?, ?, ?, ?, ?)";
-		System.out.println(ordine.getStato().name());
 
 		try {
 			connection = DriverManagerConnectionPool.getConnection();
@@ -237,5 +233,4 @@ public class OrderModel {
 			e.printStackTrace();
 		}
 	}
-
 }

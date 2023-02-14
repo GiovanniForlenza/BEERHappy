@@ -24,24 +24,40 @@
 
 	<%@ include file="navBarStore.jsp"%>
 
-	<h2>Ordini</h2>
-	<%
-		for(int i = 0; i < ordini.size(); i++){
-			for(int j = 0; j < ordini.get(i).getProdotti().size(); j++){
-				ArrayList<Prodotto> prodotti = ordini.get(i).getProdotti();
-	%>
-				<p>nome prodotto: <%=prodotti.get(j).getNome()%></p>
-				<p>quantita selezionata: <%=prodotti.get(j).getQuantita()%></p>
-				<p>prezzo prodotto: <%=prodotti.get(j).getPrezzo()%>€</p>
-	<%		}
-	%>
-			<p>Totale ordine: <%=ordini.get(i).getPrezzo()%>€</p>
-			<p>numero ordine: <%=ordini.get(i).getIdOrdine()%></p>
-			<p>Stato: <%=ordini.get(i).getStato().name()%>
-			<p>---------------------------------</p>
-	<%	}
-	%>
-
+	<div class="container mt-5">
+		<h1>Ordini</h1>
+		<table class="table mt-3">
+			<thead>
+			<tr>
+				<th>ID ordine</th>
+				<th>Data</th>
+				<th>Indirizzo di spedizione</th>
+				<th>Totale</th>
+				<th>Stato</th>
+				<th></th>
+				<th></th>
+			</tr>
+			</thead>
+			<tbody>
+		<%
+			//stampa ordini
+			for(int i = 0; i < ordini.size(); i++){
+		%>
+			<tr>
+				<td>#<%=ordini.get(i).getIdOrdine()%></td>
+				<td><%=ordini.get(i).getDataOrdine()%></td>
+				<td><%="Italy, " + ordini.get(i).getCitta() + ", " + ordini.get(i).getVia() + " "+ ordini.get(i).getCivico()%></td>
+				<td>&euro; <%=ordini.get(i).getPrezzo()%></td>
+				<td><%=ordini.get(i).getStato().name()%></td>
+				<td><a href="#">Annulla Ordine</a></td>
+				<td><a href="#">Visualizza dettagli</a></td>
+			</tr>
+		<%
+			}
+		%>
+			</tbody>
+		</table>
+	</div>
 
 </body>
 </html>

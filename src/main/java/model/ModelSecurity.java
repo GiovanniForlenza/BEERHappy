@@ -1,13 +1,18 @@
 package model;
 
+import entity.Prodotto;
 import entity.Utente;
 import entity.UtenteBO;
 
+import javax.swing.*;
+import java.awt.dnd.DragGestureRecognizer;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.LinkedList;
 import java.util.Random;
 
 public class ModelSecurity implements Security {
@@ -332,7 +337,6 @@ public class ModelSecurity implements Security {
 				DriverManagerConnectionPool.releaseConnection(connection);
 			}
 		}
-
 	}
 
 	public ArrayList<UtenteBO> recuperoUtentiBO(){
@@ -360,31 +364,31 @@ public class ModelSecurity implements Security {
 			DriverManagerConnectionPool.releaseConnection(connection);
 
 		} catch (SQLException e) {
-				e.printStackTrace();
+			e.printStackTrace();
 		}
 		return  utenti;
 	}
 
 	public void updateRoles(UtenteBO utenteBO, int ruolo){
-			Connection connection = null;
-			PreparedStatement preparedStatement = null;
-			String query = "update utenteBO set ruolo = ? where email = ?";
-			try {
-				connection = DriverManagerConnectionPool.getConnection();
-				preparedStatement = connection.prepareStatement(query);
-				preparedStatement.setInt(1, ruolo);
-				preparedStatement.setString(2, utenteBO.getEmail());
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		String query = "update utenteBO set ruolo = ? where email = ?";
+		try {
+			connection = DriverManagerConnectionPool.getConnection();
+			preparedStatement = connection.prepareStatement(query);
+			preparedStatement.setInt(1, ruolo);
+			preparedStatement.setString(2, utenteBO.getEmail());
 
-				preparedStatement.executeUpdate();
-				connection.commit();
+			preparedStatement.executeUpdate();
+			connection.commit();
 
-				if (preparedStatement != null)
-					preparedStatement.close();
-				DriverManagerConnectionPool.releaseConnection(connection);
+			if (preparedStatement != null)
+				preparedStatement.close();
+			DriverManagerConnectionPool.releaseConnection(connection);
 
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 
 	}
 	public void deleteUtenteBO(UtenteBO utenteBO){
@@ -433,4 +437,5 @@ public class ModelSecurity implements Security {
 			}
 		}
 	}
+
 }

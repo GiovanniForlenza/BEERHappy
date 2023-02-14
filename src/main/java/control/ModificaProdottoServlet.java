@@ -55,6 +55,6 @@ public class ModificaProdottoServlet extends HttpServlet {
                 request.getSession().setAttribute("prodotti", prodotti);
                 response.sendRedirect("http://localhost:8080/webAppTest_war/gestioneCatalogo.jsp");
             }
-       }
+        }
     }
 }

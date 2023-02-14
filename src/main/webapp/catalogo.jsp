@@ -26,8 +26,8 @@
     <%
         }
     %>
-    <h2>Catalogo</h2>
-    <h3>PRODOTTI</h3>
+    <br>
+    <h2 class="text-center">Catalogo birre</h2>
     <%@ include file="beerCollection.jsp" %>
 
 

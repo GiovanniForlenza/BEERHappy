@@ -1,6 +1,6 @@
 package entity;
 
 public enum Stato {
-    inoltrato, annullato, consegnato, inConsegna;
+	inoltrato, annullato, consegnato, inConsegna;
 
 }

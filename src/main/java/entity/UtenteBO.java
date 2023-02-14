@@ -3,7 +3,6 @@ package entity;
 import java.util.ArrayList;
 
 public class UtenteBO {
-
     String email;
     String password;
     int ruolo;
@@ -39,7 +38,6 @@ public class UtenteBO {
     public void setRuolo(int ruolo) {
         this.ruolo = ruolo;
     }
-
     public boolean compareKeys(UtenteBO utenteBO) {
         if (utenteBO.getEmail().equals(this.email))
             return true;

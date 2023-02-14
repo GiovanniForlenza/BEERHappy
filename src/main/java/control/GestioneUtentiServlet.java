@@ -15,6 +15,7 @@ import java.util.ArrayList;
 public class GestioneUtentiServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
         ModelSecurity mc=new ModelSecurity();
         ArrayList<UtenteBO> utenti;
         utenti=mc.recuperoUtentiBO();
@@ -24,6 +25,5 @@ public class GestioneUtentiServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
     }
 }

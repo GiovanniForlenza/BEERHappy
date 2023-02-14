@@ -15,15 +15,11 @@ import java.util.ArrayList;
 public class GestioneOrdiniServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        OrderModel cm=new OrderModel();
+
+        OrderModel cm = new OrderModel();
         ArrayList<Ordine> ordini;
-        ordini=cm.recuperoOrdini();
+        ordini = cm.recuperoOrdini();
         request.getSession().setAttribute("ordini", ordini);
         response.sendRedirect("http://localhost:8080/webAppTest_war/gestioneOrdini.jsp");
-    }
-
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
     }
 }

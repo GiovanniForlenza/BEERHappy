@@ -34,12 +34,11 @@
 		<p>nome: <input  name="nome" disabled="true" value="<%= utente.getNome() %>"> </p>
 		<p>cognome: <input name="cognome" disabled="true" value="<%= utente.getCognome()%>"></p>
 		<p>email: <input disabled value="<%= utente.getEmail()%>"></p>
-		<!--
 		<input type="submit" id="save" value="save" hidden="hidden">
 		<input type="button" id="button" value="modifica dati" onclick="enable();">	<br> <br>
+		<!--
+		<input type="submit" value="salva" id="save">
 		-->
-		<input type="submit" value="salva" id="save
-">
 	</form>
 
 	<script type="text/javascript">
@@ -119,9 +118,7 @@
 			}
 		} else {
 	%>
-
 				<p>nessuna carta presente</p>
-
 	<%
 			}
 	%>

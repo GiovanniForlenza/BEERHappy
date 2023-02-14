@@ -8,7 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>NavBAR</title>
+	<title>NavBAR</title>
 </head>
 
 <style>
@@ -19,11 +19,9 @@
         overflow: hidden;
         background-color: #333333;
     }
-
     li {
         float: left;
     }
-
     li a {
         display: block;
         color: white;
@@ -31,16 +29,15 @@
         padding: 16px;
         text-decoration: none;
     }
-
     li a:hover {
         background-color: #111111;
     }
 </style>
 
 <body>
-    <ul class="horizontal">
-        <li><a href="selezioneRuolo.jsp">Cambia ruolo</a></li>
-    </ul>
+<ul class="horizontal">
+	<li><a href="selezioneRuolo.jsp">Cambia ruolo</a></li>
+</ul>
 <br>
 </body>
 </html>

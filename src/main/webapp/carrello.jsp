@@ -32,21 +32,52 @@
 	%>
 	<%
 		if(carrello != null){
+	%>
+	<div class="container my-5">
+		<h1 class="text-center">Carrello</h1>
+		<table class="table table-striped">
+			<thead>
+			<tr>
+				<th>Prodotto</th>
+				<th>Prezzo</th>
+				<th>Quantità</th>
+				<th>Totale</th>
+				<th></th>
+			</tr>
+			</thead>
+	<%
 			ArrayList<Prodotto> prodottiNelCarrello = carrello.getProdotti();
-			//stampa prodotti
 			for (Prodotto prodotto : prodottiNelCarrello){
 	%>
-				<p><%=prodotto.getNome()%></p>
-				<p><%=prodotto.getQuantita()%></p>
-				<p><%=prodotto.getFormato()%></p>
-				<p><%=prodotto.getPrezzo()%> &euro;</p>
-				<a href="<%=response.encodeURL("GestioneCarrelloServlet?action=rimuoviProdotto&nome=" + prodotto.getNome()
-				+"&birrificio=" + prodotto.getBirrificio() + "&formato=" + prodotto.getFormato()+ "&quantita=" + prodotto.getQuantita())%>">rimuovi</a>
+			<tbody>
+			<tr>
+				<td><%=prodotto.getNome()%></td>
+				<td>€ <%=prodotto.getPrezzo()%></td>
+				<td><%=prodotto.getQuantita()%></td>
+				<td>€ <%=(prodotto.getQuantita() * prodotto.getPrezzo())%></td>
+				<td><a href="<%=response.encodeURL("GestioneCarrelloServlet?action=rimuoviProdotto&nome=" + prodotto.getNome()
+				+"&birrificio=" + prodotto.getBirrificio() + "&formato=" + prodotto.getFormato()+ "&quantita=" + prodotto.getQuantita())%>">rimuovi</a></td>
+			</tr>
 	<%
 			}
+	%>
+
+
+	<%
 			if (prodottiNelCarrello.size() > 0) {
 	%>
-				<a href="<%=response.encodeURL("GestioneCarrelloServlet?action=checkout")%>">Continue to checkout</a>
+			<tr>
+				<td colspan="4" class="text-right">Subtotale</td>
+				<td>€ tot</td>
+			</tr>
+			</tbody>
+		</table>
+		<div class="d-flex justify-content-end">
+			<a href="catalogo.jsp" class="btn btn-primary mr-3">Continua lo shopping</a>
+			<a href="<%=response.encodeURL("GestioneCarrelloServlet?action=checkout")%>" class="btn btn-success">Procedi al checkout</a>
+		</div>
+	</div>
+
 	<%		}
 			else{
 				%>
@@ -60,6 +91,7 @@
 	<%
 		}
 	%>
+
 
 </body>
 </html>

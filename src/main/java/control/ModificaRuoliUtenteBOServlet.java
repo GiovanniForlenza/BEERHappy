@@ -29,7 +29,7 @@ public class ModificaRuoliUtenteBOServlet extends HttpServlet {
         ModelSecurity ms=new ModelSecurity();
         System.out.println(""+ruoli.length);
         if(ruoli.length==0){
-          request.getSession().setAttribute("oldUser", utenteBO);
+            request.getSession().setAttribute("oldUser", utenteBO);
         } else if(ruoli.length==1){
             if(ruoli[0].equals("Gestore catalogo"))
                 ruolo=1;

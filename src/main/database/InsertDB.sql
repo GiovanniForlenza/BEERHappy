@@ -3,10 +3,12 @@ INSERT INTO utente (nome, cognome, email, password) values ("Gino","Paolo","gino
 INSERT INTO utente (nome, cognome, email, password) values ("Pino","Paolo","pinoPaolo@gmail.com","ilPiccoloPino");
 INSERT INTO utente (nome, cognome, email, password) values ("Andrea","Maglio","andreaMaglio@gmail.com","ViaColVento");
 INSERT INTO utente (nome, cognome, email, password) values ("Gaetana","Galdi","gaetanagaldi.gg@gmail.com","ViaColVento");
+
  /*INDIRIZZI DI GINO*/
 insert into indirizzo(via, civico, citta, telefono, cap, email) values ("via Pariti", 16, "Campagna", "3385875173","84022",  "ginoPaolo@gmail.com");
 insert into indirizzo(via, civico, citta, telefono, cap, email) values ("via Pariti", 16, "Campagna", "3385875173","84022",  "pinoPaolo@gmail.com");
 
+/* UTENTE BO*/
 insert into utenteBO(email, password, ruolo) values ("ciropallinopal@beerhappy.it", "pallinopal", 3);
 insert into utenteBO(email, password, ruolo) values ("admin@beerhappy.it", "admin", 3);
 
@@ -37,8 +39,8 @@ INSERT INTO prodottoNelCarrello (email, nome, birrificio, quantita) values("gino
 INSERT INTO prodottoNelCarrello (email, nome, birrificio, quantita) values("pinoPaolo@gmail.com", "Pride and Joy", "Vocation", 2);
 
 /* ORDINI*/
-INSERT INTO ordine (email, data, stato, via, civico, citta, telefono, prezzo) values ("ginoPaolo@gmail.com", "", "inoltrato", "via Pariti", 16, "Campagna", "3385875173", 4.05);
-
+insert INTO ordine(email, data, stato, via, civico, citta, telefono, prezzo) values("ginoPaolo@gmail.com", current_date(), "inoltrato", "via Pariti", 16, "Campagna", "3385875173", "4.05");
+  
 /* PRODOTTI ORDINATI*/
 INSERT INTO prodottoOrdinato (nome, birrificio, descrizione, formato, quantita, prezzo, ordineID, pathImage) values ("Lazy Wit", "Impavida",
 "Un twist di scorze di agrumi, coriandolo e pepe profuma questa Belgian Wit! Opalescente, sinuosa, profumatissima… è la birra

@@ -3,7 +3,6 @@ package entity;
 import java.util.ArrayList;
 
 public class Ordine {
-
 	int idOrdine;
 	String dataOrdine;
 	float prezzoOrdine;
@@ -113,13 +112,13 @@ public class Ordine {
 	}
 
 	public static ArrayList<Ordine> remove(ArrayList<Ordine> ordini, Ordine ordine){
-		 for(int i=0; i<ordini.size(); i++){
-			 if(ordini.get(i).compareKeys(ordine)){
-				 ordini.remove(i);
-				 return ordini;
-			 }
-		 }
-		 return ordini;
+		for(int i=0; i<ordini.size(); i++){
+			if(ordini.get(i).compareKeys(ordine)){
+				ordini.remove(i);
+				return ordini;
+			}
+		}
+		return ordini;
 	}
 
 }

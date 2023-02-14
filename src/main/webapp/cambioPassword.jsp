@@ -19,29 +19,59 @@
 	<title>CambioPassword</title>
 </head>
 <body>
-	<form action="CambioPasswordServlet" method="post">
-		<label>Enter password
-			<input type="password" name="old" id="old">
-		</label>
-		<%
-			if(request.getSession().getAttribute("notChack") != null){
-				request.getSession().removeAttribute("notChack");
-		%>
-				<p>La password ineserita non valida</p>
-		<%
-			}
-		%>
-		<br>
+	<%@ include file="navBarStore.jsp"%>
 
-		<label>Enter new password
-			<input type="password" name="password" id="password" onkeyup="check()">
-		</label><br>
-		<label>Confirm new password
-			<input type="password" name="confirm_password" id="confirm_password" onkeyup="check()">
-		</label>
-		<span id="message"></span><br>
-		<input type="submit" id="submit" disabled="disabled">
-	</form>
+	<div class="container my-5">
+		<h1 class="mb-4">Modifica Password</h1>
+		<form action="CambioPasswordServlet" method="post">
+			<div class="form-group">
+				<label for="old">Password Attuale</label>
+				<input
+						type="password"
+						class="form-control"
+						id="old"
+						placeholder="Inserisci la tua password attuale"
+						name="old"
+				/>
+			</div>
+			<%
+				if(request.getSession().getAttribute("notChack") != null){
+					request.getSession().removeAttribute("notChack");
+			%>
+			<h5 style="color: red">Password ineserita non valida</h5>
+			<%
+				}
+			%>
+			<br>
+			<div class="form-group">
+				<label for="password">Nuova Password</label>
+				<input
+						type="password"
+						class="form-control"
+						id="password"
+						placeholder="Inserisci la tua nuova password"
+						name="password"
+						onkeyup="check()"
+				/>
+			</div>
+			<div class="form-group">
+				<label for="confirm_password">Conferma Password</label>
+				<input
+						type="password"
+						class="form-control"
+						id="confirm_password"
+						placeholder="Conferma la tua nuova password"
+						name="confirm_password"
+						onkeyup="check()"
+				/>
+			</div>
+			<span id="message"></span><br>
+			<input type="submit" class="btn btn-primary" id="submit" disabled="disabled" value="Modifica Password">
+		</form>
+	</div>
+
+
+
 
 	<script>
 		var check = function() {

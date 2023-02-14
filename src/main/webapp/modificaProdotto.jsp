@@ -25,7 +25,6 @@
         if(ruolo==2)
             response.sendRedirect("selezioneRuolo.jsp");
     }
-
 %>
 <html>
 <head>

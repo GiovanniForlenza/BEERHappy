@@ -24,9 +24,9 @@ public class OrdineUtenteServlet extends HttpServlet {
 
         if(utente != null && indirizzo != null && carta != null && carrello != null) {
             float prezzo = (Float) request.getSession().getAttribute("prezzo");
-            //TODO data da gestire
 
             LocalDate localDate=LocalDate.now();
+
             Ordine ordine = new Ordine();
             ordine.setDataOrdine(localDate.toString());
             ordine.setVia(indirizzo.getVia());

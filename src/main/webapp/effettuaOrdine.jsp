@@ -19,7 +19,8 @@
 
 	Utente utente = (Utente) session.getAttribute("utente");
 	Carrello carrello = (Carrello) session.getAttribute("carrello");
-
+	Indirizzo addressView = (Indirizzo) request.getSession().getAttribute("visualizza");
+	Carta carta = (Carta) request.getSession().getAttribute("cardView");
 %>
 <html>
 <head>
@@ -44,96 +45,182 @@
 		ArrayList<Prodotto> prodotti = carrello.getProdotti();
 		if(prodotti.size() > 0){
 	%>
-			<h2>DATI Utente</h2>
-			<h3>nome: <%=utente.getNome()%></h3>
-			<h3>cognome: <%=utente.getCognome()%></h3>
-			<h3>e-mail: <%=utente.getEmail()%></h3>
+	<div class="container">
+		<h1 class="text-center mt-5">Pagina di checkout</h1>
+		<form class="mt-5">
+			<div class="form-group">
+				<label for="username">Nome utente</label>
+				<input type="text" class="form-control" id="username" value="<%=utente.getNome() + " " + utente.getCognome()%>" disabled />
+			</div>
+			<div class="form-group">
+				<label for="email">Email</label>
+				<input type="email" class="form-control" id="email" value="<%=utente.getEmail()%>" disabled />
+			</div>
+			<h3 class="mt-5">Prodotti nel carrello</h3>
+			<table class="table mt-3">
+				<thead>
+				<tr>
+					<th>Prodotto</th>
+					<th>Quantità</th>
+					<th>Prezzo</th>
+				</tr>
+				</thead>
+	<%
+			float tot = 0;
+			for(int i = 0; i < prodotti.size(); i++)
+			{
+				tot = tot +
+						(float) (prodotti.get(i).getPrezzo() * prodotti.get(i).getQuantita());
+	%>
+			<tbody>
+			<tr>
+				<td><%=prodotti.get(i).getNome()%></td>
+				<td><%=prodotti.get(i).getQuantita()%></td>
+				<td><%=prodotti.get(i).getPrezzo()%></td>
+			</tr>
+			</tbody>
 
-			<button id="buttonDialogAddress">seleziona indirizzo</button>
-			<dialog id="dialogAddress">
+	<%
+			}
+			request.getSession().setAttribute("prezzo",tot);
+	%>
+			</table>
+			<h3>totale ordine <%=tot%>€</h3>
+		</form>
+	</div>
+<br>
+
+			<%
+				//if(addressView == null){
+			%>
+	<div class="container">
+		<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#dialogAddress">
+			seleziona o aggiungi indirizzo
+		</button>
+	</div><br>
+
+	<div class="modal fade" id="dialogAddress" tabindex="-1" role="dialog" aria-labelledby="dialogAddressLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="dialogAddressLabel">Seleziona indirizzo</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+
 				<%
 					ArrayList<Indirizzo> indirizzi =  utente.getIndirizzi();
 					if(indirizzi != null){
+				%>
+					<ul class="list-group">
+				<%
 						for(int i=0; i < indirizzi.size(); i++){
 				%>
+						<li class="list-group-item">
 							<form action="SelezionaIndirizzoServlet" method="post">
 								<input type="hidden" name="selezionato" value="<%=indirizzi.get(i).getID()%>">
-								<p><%=indirizzi.get(i).getCitta()%></p>
-								<p><%=indirizzi.get(i).getVia()%></p>
-								<p><%=indirizzi.get(i).getCivico()%></p>
-								<p><%=indirizzi.get(i).getTelefono()%></p>
-								<input type="submit" value="select">
+								<%=indirizzi.get(i).getCitta() + ", " + indirizzi.get(i).getVia()%>
+								<input type="submit" class="btn btn-primary float-right" value="select">
 							</form>
+						</li>
 				<%
 						}
-
-					}else {
 				%>
-						<p>non sono presenti indirizzi</p>
-						<p>aggiungi un indirizzo per poterlo selezionare</p>
+					</ul>
+					<button type="button" class="btn btn-primary mt-3" onclick="selectAddress()">Aggiungi nuovo indirizzo</button>
+				</div>
 				<%
 					}
 				%>
-
-				<button id="closeAddress">x</button>
-			</dialog>
-
-			<button onclick="selectAddress()">aggiungi indirizzo</button> <br>
-
+			</div>
 			<%
-				Indirizzo addressView = (Indirizzo) request.getSession().getAttribute("visualizza");
+				//}
+			%>
+		</div>
+	</div>
+			<%
 				if(addressView != null){
 			%>
-					<p>INDIRIZZO SELEZIONATO</p>
-					<p><%=addressView.getCitta()%></p>
-					<p><%=addressView.getVia()%></p>
-					<p><%=addressView.getCivico()%></p>
-					<p><%=addressView.getTelefono()%></p>
+					<div class="container">
+						<div class="modal-header form-group">
+							<h5 class="modal-title">Indirizzo selezionato</h5>
+						</div>
+						<div class="modal-body">
+							<h6>Città: <%=addressView.getCitta()%></h6>
+							<h6>Via: <%=addressView.getVia()%></h6>
+							<h6>Civico: <%=addressView.getCivico()%></h6>
+							<h6>Telefono: <%=addressView.getTelefono()%></h6>
+						</div>
+					</div><br>
 			<%
 				}
 			%>
+	<div class="container">
+		<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#dialogCard">
+			seleziona o aggiungi carta
+		</button>
+	</div><br>
 
-			<button id="buttonDialogCard">seleziona carta</button>
-			<dialog id="dialogCard">
+	<div class="modal fade" id="dialogCard" tabindex="-1" role="dialog" aria-labelledby="dialogAddressLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="dialogCardLabel">Seleziona carta</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+
 				<%
 					ArrayList<Carta> card =  utente.getCarte();
 					if(card != null){
+				%>
+					<ul class="list-group">
+				<%
 						for(int i=0; i < card.size(); i++){
 				%>
+						<li class="list-group-item">
 							<form action="ScelezionaCartaServlet" method="post">
 								<input type="hidden" name="selezionato" value="<%=card.get(i).getId()%>">
-								<p><%=card.get(i).getIntestatario()%></p>
-								<p><%=card.get(i).getnCata()%></p>
-								<p><%=card.get(i).getDataScadenza()%></p>
-								<input type="submit" value="select">
+								<p><%=card.get(i).getIntestatario() + ", " + card.get(i).getnCata() + ", " +  card.get(i).getDataScadenza()%></p>
+								<input type="submit" class="btn btn-primary float-right" value="select">
 							</form>
+						</li>
 				<%
 						}
-					}else {
 				%>
-						<p>non sono presenti carte</p>
-						<p>aggiungi una carta per poterla selezionare</p>
+					</ul>
+					<button type="button" class="btn btn-primary mt-3" onclick="selectCard()">Aggiungi nuovo carta</button>
+				</div>
 				<%
 					}
 				%>
-				<button id="closeCard">x</button>
-			</dialog>
-
-			<button onclick="selectCard()">aggiungi carta</button> <br>
+			</div>
+		</div>
+	</div>
 
 			<%
-				Carta carta = (Carta) request.getSession().getAttribute("cardView");
 				if(carta != null){
 			%>
-					<p>CARTA SELEZIONATA</p>
-					<p><%=carta.getIntestatario()%></p>
-					<p><%=carta.getnCata()%></p>
-					<p><%=carta.getDataScadenza()%></p>
+				<div class="container">
+					<div class="modal-header">
+						<h5 class="modal-title">Carta selezionata</h5>
+					</div>
+					<div class="modal-body">
+						<h6>Intestatario: <%=carta.getIntestatario()%></h6>
+						<h6>Numero Carta: <%=carta.getnCata()%></h6>
+						<h6>Data scadenza: <%=carta.getDataScadenza()%></h6>
+					</div>
+				</div><br>
 			<%
 				}
 			%>
 
 			<script>
+
 				function selectAddress(){
 					<%request.getSession().setAttribute("selectAddress", true);%>
 					document.location.href = "aggiuntaIndirizzo.jsp";
@@ -143,9 +230,11 @@
 					<%request.getSession().setAttribute("selectCard", true);%>
 					document.location.href = "aggiuntaCarta.jsp";
 				}
-			</script>
 
+
+			</script>
 			<script>
+
 				const
 					dialogAddress  = document.getElementById('dialogAddress'),
 					closeAddress   = document.getElementById('closeAddress'),
@@ -179,26 +268,17 @@
 				observer.observe(dialogCard, { attributes: true });
 			</script>
 
-			<h2>Prodotti</h2>
-	<%
-			float tot = 0;
-			for(int i = 0; i < prodotti.size(); i++)
-			{
-				tot = tot +
-						(float) (prodotti.get(i).getPrezzo() * prodotti.get(i).getQuantita());
-	%>
-				<p><%=prodotti.get(i).getNome()%></p>
-				<p><%=prodotti.get(i).getQuantita()%></p>
-				<p><%=prodotti.get(i).getPrezzo()%></p>
-	<%
-			}
-			request.getSession().setAttribute("prezzo",tot);
-	%>
-			<h3>totale ordine <%=tot%>€</h3>
-			<form action="OrdineUtenteServlet"  method="post">
-				<input type="submit" name="effettua ordine" value="Effettua ordine">
-			</form>
-			<a href="carrello.jsp">annulla</a>
+			<div class="container">
+					<form action="OrdineUtenteServlet"  method="post">
+						<div>
+							<input class="btn btn-primary float-right" type="submit" name="effettua ordine" value="Effettua ordine">
+						</div>
+						<div>
+							<a class="btn btn-secondary float-right" href="carrello.jsp">annulla</a>
+						</div>
+					</form>
+			</div>
+
 	<%
 		}else {
 	%>
@@ -207,5 +287,6 @@
 	<%
 		}
 	%>
+
 </body>
 </html>
