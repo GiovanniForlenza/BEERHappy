@@ -11,7 +11,13 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
-	//TODO fai i controlli sulla pagina
+	Boolean flag = (Boolean) session.getAttribute("accessoUtente");
+	if ((flag == null) || (!flag.booleanValue()))
+	{
+		response.sendRedirect("accesso.jsp");
+		return;
+	}
+
 	Utente utente = (Utente) request.getSession().getAttribute("utente");
 	ArrayList<Ordine> ordini = utente.getOrdini();
 %>
