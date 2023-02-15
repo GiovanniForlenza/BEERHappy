@@ -13,7 +13,7 @@
 	Boolean flag = (Boolean) session.getAttribute("accessoUtenteBO");
 	if ((flag == null) || (!flag.booleanValue()))
 	{
-		response.sendRedirect("accesso.jsp");
+		response.sendRedirect("login.jsp");
 		return;
 	}
 	else if(flag.booleanValue() ) {
@@ -54,15 +54,22 @@
 	}
 %>
 
-<form method="post" action="ModificaStatoServlet">
-	<p>ID: <label><%=ordine.getIdOrdine()%></label></p>
-	<input type="hidden" name="nome" value="<%=ordine.getIdOrdine()%>">
-	<p>Data: <label><%=ordine.getDataOrdine()%></label></p>
-	<p>Prezzo: <label><%=ordine.getPrezzo()%></label></p>
-	<p>Stato: <label><%=ordine.getStato()%></label></p>
-	<p>Seleziona stato: In consegna<input type="radio" name="newState" value="inConsegna"> Consegnato<input type="radio" name="newState" value="consegnato"></p>
-	<input type="submit" value="Salva"> <br>
-</form>
+<%@include file="navBarBO.jsp"%>
+<div class="container">
+		<div class="border p-3 rounded">
+			<form method="post" action="ModificaStatoServlet">
+				<p>Ordine id: <label><%=ordine.getIdOrdine()%></label></p>
+				<input type="hidden" name="nome" value="<%=ordine.getIdOrdine()%>">
+				<p>Data: <label><%=ordine.getDataOrdine()%></label></p>
+				<p>Prezzo: <label><%=ordine.getPrezzo()%></label></p>
+				<p>Stato: <label><%=ordine.getStato()%></label></p>
+				<p>Seleziona stato: In consegna<input type="radio" name="newState" value="inConsegna"> Consegnato<input type="radio" name="newState" value="consegnato"></p>
+				<a class="btn btn-secondary" href="gestioneOrdini.jsp">Annulla</a>
+				<input class="btn btn-primary" type="submit" value="Salva"> <br>
+			</form>
+		</div>
+</div>
+
 
 </body>
 </html>

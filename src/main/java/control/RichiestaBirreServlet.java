@@ -11,10 +11,8 @@ import java.sql.SQLException;
 
 @WebServlet(name = "RichiestaBirreServlet", value = "/RichiestaBirreServlet")
 public class RichiestaBirreServlet extends HttpServlet {
-	static ModelSecurity model = new ModelSecurity();
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
 
 		String redirectedPage = "/catalogo.jsp";
 
@@ -23,10 +21,18 @@ public class RichiestaBirreServlet extends HttpServlet {
 			request.removeAttribute("birre");
 			request.setAttribute("birre", productModel.doRetrieveAll());
 
-			Boolean flag = (Boolean) request.getSession().getAttribute("accesso");
-			if(flag != null){
-				redirectedPage = "/catalogo.jsp";
+			Boolean home = (Boolean) request.getSession().getAttribute("home");
+			Boolean homestore = (Boolean) request.getSession().getAttribute("homestore");
+
+			if(home != null) {
+				redirectedPage = "/homePage.jsp";
+				request.getSession().removeAttribute("home");
+			} else if (homestore != null) {
+				redirectedPage = "/homePageStore.jsp";
+				request.getSession().removeAttribute("homestore");
 			}
+
+
 		} catch(SQLException e) {
 			System.out.println("Error: "+ e.getMessage());
 			request.setAttribute("error", e.getMessage());

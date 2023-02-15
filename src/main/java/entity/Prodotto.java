@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class Prodotto{
     String nome;
-    double prezzo;
+    float prezzo;
     String birrificio;
     int quantitaDisp;
     String formato; // 33cl
@@ -14,7 +14,7 @@ public class Prodotto{
 
     public Prodotto(){}
 
-    public Prodotto(String nome, double prezzo, String birrificio, int quantitaDisp, String formato, String descrizione) {
+    public Prodotto(String nome, float prezzo, String birrificio, int quantitaDisp, String formato, String descrizione) {
         this.nome = nome;
         this.prezzo = prezzo;
         this.birrificio = birrificio;
@@ -34,11 +34,11 @@ public class Prodotto{
         this.nome = nome;
     }
 
-    public double getPrezzo() {
+    public float getPrezzo() {
         return prezzo;
     }
 
-    public void setPrezzo(double prezzo) {
+    public void setPrezzo(float prezzo) {
         this.prezzo = prezzo;
     }
 

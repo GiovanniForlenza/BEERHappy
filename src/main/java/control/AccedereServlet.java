@@ -61,7 +61,8 @@ public class AccedereServlet extends HttpServlet {
 			} else {
 				request.getSession().setAttribute("accessoUtenteBO", false);
 				request.getSession().setAttribute("accessoUtente", false);
-				response.sendRedirect("http://localhost:8080/webAppTest_war/accesso.jsp");
+				request.getSession().setAttribute("email_password", true);
+				response.sendRedirect("http://localhost:8080/webAppTest_war/login.jsp");
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();

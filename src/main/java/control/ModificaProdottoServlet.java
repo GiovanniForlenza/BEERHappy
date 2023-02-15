@@ -25,7 +25,7 @@ public class ModificaProdottoServlet extends HttpServlet {
         prodotto.setFormato(request.getParameter("formato"));
         prodotto.setQuantitaDisp(Integer.parseInt(request.getParameter("quantita")));
         prodotto.setDescrizione(request.getParameter("descrizione"));
-        prodotto.setPrezzo(Double.parseDouble(request.getParameter("prezzo")));
+        prodotto.setPrezzo(Float.parseFloat(request.getParameter("prezzo")));
         prodotto.setPathImage(request.getParameter("pathImage"));
         CatalogoModel cm = new CatalogoModel();
 

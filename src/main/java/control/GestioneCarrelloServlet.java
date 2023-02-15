@@ -42,7 +42,7 @@ public class GestioneCarrelloServlet extends HttpServlet {
 				}else if (action.equals("checkout")){
 					Boolean accesso = (Boolean) request.getSession().getAttribute("accessoUtente");
 					if(accesso == null || !accesso.booleanValue()){
-						path = "http://localhost:8080/webAppTest_war/accesso.jsp";
+						path = "http://localhost:8080/webAppTest_war/login.jsp";
 					}
 					else if(accesso){
 						path = "http://localhost:8080/webAppTest_war/effettuaOrdine.jsp";

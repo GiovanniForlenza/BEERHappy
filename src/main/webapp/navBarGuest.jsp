@@ -46,7 +46,7 @@
 			</ul>
 			<ul class="navbar-nav ml-auto">
 				<li class="nav-item">
-					<a class="nav-link" href="accesso.jsp">Accedi</a>
+					<a class="nav-link" href="login.jsp">Accedi</a>
 				</li>
 			</ul>
 		</div>

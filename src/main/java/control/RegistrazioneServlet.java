@@ -51,7 +51,8 @@ public class RegistrazioneServlet extends HttpServlet {
 		}
 		else {
 			System.out.println("Error email already present");
-			response.sendRedirect("http://localhost:8080/webAppTest_war/profilo.jsp");
+			request.getSession().setAttribute("error_mail", true);
+			response.sendRedirect("http://localhost:8080/webAppTest_war/signUp.jsp");
 		}
 
 	}

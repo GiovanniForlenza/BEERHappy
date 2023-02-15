@@ -30,7 +30,7 @@ CREATE TABLE prodotto(
     formato varchar(25) not null,
     quantita int not null,
     prezzo varchar(25) not null,
-    pathImage varchar(50),
+    pathImage varchar(250) null,
     primary key(nome, birrificio)
 );
 

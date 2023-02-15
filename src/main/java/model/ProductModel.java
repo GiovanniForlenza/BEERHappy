@@ -36,7 +36,8 @@ public class ProductModel {
 				bean.setDescrizione(rs.getString("descrizione"));
 				bean.setFormato(rs.getString("formato"));
 				bean.setQuantitaDisp(rs.getInt("quantita"));
-				bean.setPrezzo(rs.getDouble("prezzo"));
+				bean.setPrezzo(rs.getFloat("prezzo"));
+				bean.setPathImage(rs.getString("pathImage"));
 			}
 
 			System.out.println(bean);
@@ -103,7 +104,8 @@ public class ProductModel {
 				bean.setDescrizione(rs.getString("descrizione"));
 				bean.setFormato(rs.getString("formato"));
 				bean.setQuantitaDisp(rs.getInt("quantita"));
-				bean.setPrezzo(rs.getDouble("prezzo"));
+				bean.setPrezzo(rs.getFloat("prezzo"));
+				bean.setPathImage(rs.getString("pathImage"));
 				prodotti.add(bean);
 			}
 		} finally {
@@ -144,7 +146,8 @@ public class ProductModel {
 				bean.setDescrizione(rs.getString("descrizione"));
 				bean.setFormato(rs.getString("formato"));
 				bean.setQuantitaDisp(rs.getInt("quantita"));
-				bean.setPrezzo(rs.getDouble("prezzo"));
+				bean.setPrezzo(rs.getFloat("prezzo"));
+				bean.setPathImage(rs.getString("pathImage"));
 				prodotti.add(bean);
 			}
 		} catch (SQLException e) {

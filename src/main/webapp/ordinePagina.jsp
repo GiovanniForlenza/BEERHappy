@@ -14,7 +14,7 @@
 	Boolean flag = (Boolean) session.getAttribute("accessoUtente");
 	if ((flag == null) || (!flag.booleanValue()))
 	{
-		response.sendRedirect("accesso.jsp");
+		response.sendRedirect("login.jsp");
 		return;
 	}
 

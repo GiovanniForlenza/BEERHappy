@@ -34,10 +34,14 @@
 		<!-- Prodotti -->
 		<div class="col-md-4">
 			<div class="card mb-4">
-				<img class="card-img-top" src="https://via.placeholder.com/500x325" alt="Immagine prodotto">
+				<img class="card-img-top" src="<%=birra.get(i).getPathImage()%>" alt="Immagine prodotto">
 				<div class="card-body">
 					<h4 class="card-title"><%=prodotto.getNome()%></h4>
-					<p class="card-text"><%=prodotto.getDescrizione()%></p>
+					<p class="card-text"
+					   style="  overflow: hidden;
+                            display: -webkit-box;
+                            -webkit-line-clamp: 3;
+                            -webkit-box-orient: vertical;"><%=prodotto.getDescrizione()%></p>
 					<a href="<%= response.encodeURL("DettagliProdottoServlet?nome=" + prodotto.getNome() +
 				"&birrificio=" + prodotto.getBirrificio() + "&formato=" + prodotto.getFormato())%>" class="btn btn-primary">Dettagli</a>
 				</div>

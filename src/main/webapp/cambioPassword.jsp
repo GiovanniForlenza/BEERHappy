@@ -10,7 +10,7 @@
 	Boolean flag = (Boolean) session.getAttribute("accessoUtente");
 	if ((flag == null) || (!flag.booleanValue()))
 	{
-		response.sendRedirect("accesso.jsp");
+		response.sendRedirect("login.jsp");
 		return;
 	}
 %>
@@ -70,27 +70,7 @@
 		</form>
 	</div>
 
-
-
-
-	<script>
-		var check = function() {
-            if(document.getElementById('password').value == "" ||
-                document.getElementById('confirm_password').value == ""){
-                document.getElementById('submit').disabled = true;
-			}
-			else if (document.getElementById('password').value ==
-				document.getElementById('confirm_password').value) {
-				document.getElementById('message').style.color = 'green';
-				document.getElementById('message').innerHTML = 'matching';
-                document.getElementById('submit').disabled = false;
-			} else {
-				document.getElementById('message').style.color = 'red';
-				document.getElementById('message').innerHTML = 'not matching';
-                document.getElementById('submit').disabled = true;
-			}
-		}
-	</script>
+	<script type="text/javascript" src="javaScript/ControlloPassword.js"></script>
 
 </body>
 </html>

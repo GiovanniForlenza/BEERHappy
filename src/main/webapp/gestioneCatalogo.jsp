@@ -13,7 +13,7 @@
     Boolean flag = (Boolean) session.getAttribute("accessoUtenteBO");
     if ((flag == null) || (!flag.booleanValue()))
     {
-        response.sendRedirect("accesso.jsp");
+        response.sendRedirect("login.jsp");
         return;
     }
     else if(flag.booleanValue() ) {
@@ -33,30 +33,55 @@
 
 <body>
 <%@ include file="navBarBO.jsp"%>
-<%
-    for(int i=0; i<prodotti.size(); i++){
-        Prodotto prodotto=prodotti.get(i);
 
-%>
-        <form method="post" action="modificaProdotto.jsp">
-            <p>Nome: <label><%=prodotto.getNome()%></label></p>
-            <input type="hidden" name="nome" value="<%=prodotto.getNome()%>">
-            <p>Birrificio: <label><%=prodotto.getBirrificio()%></label></p>
-            <input type="hidden" name="birrificio" value="<%=prodotto.getBirrificio()%>">
-            <p>Formato: <label><%=prodotto.getFormato()%></label></p>
-            <input type="hidden" name="formato" value="<%=prodotto.getFormato()%>">
-            <p>Descrizione: <label><%=prodotto.getDescrizione()%></label></p>
-            <input type="hidden" name="descrizione" value="<%=prodotto.getDescrizione()%>">
-            <p>Quantità: <label><%=prodotto.getQuantitaDisp()%></label></p>
-            <input type="hidden" name="quantita" value="<%=prodotto.getQuantitaDisp()%>">
-            <p>Prezzo: <label><%=prodotto.getPrezzo()%></label></p>
-            <input type="hidden" name="prezzo" value="<%=prodotto.getPrezzo()%>">
-            <input type="submit" value="Modifica"> <br>
-        </form>
-<%
-    }
-%>
+<div class="container">
+    <h1 class="text-center mt-5">Gestione catalogo</h1>
+    <a class="btn btn-success float-right" href="aggiuntaProdotto.jsp">Aggiungi prodotto</a>
+        <table class="table mt-3">
+            <thead>
+            <tr>
+                <th>Nome</th>
+                <th>Birrificio</th>
+                <th>Formato</th>
+                <th>Descrizione</th>
+                <th>Quantità</th>
+                <th>Prezzo</th>
+                <th></th>
+            </tr>
+            </thead>
+            <%
+                for(int i=0; i<prodotti.size(); i++){
+                    Prodotto prodotto=prodotti.get(i);
+            %>
+    <form method="post" action="modificaProdotto.jsp">
+            <tbody>
+            <tr>
+                <input type="hidden" name="nome" value="<%=prodotto.getNome()%>">
+                <td><%=prodotto.getNome()%></td>
+                <input type="hidden" name="birrificio" value="<%=prodotto.getBirrificio()%>">
+                <td><%=prodotto.getBirrificio()%></td>
+                <input type="hidden" name="formato" value="<%=prodotto.getFormato()%>">
+                <td><%=prodotto.getFormato()%></td>
+                <input type="hidden" name="descrizione" value="<%=prodotto.getDescrizione()%>">
+                <td><%=prodotto.getDescrizione()%></td>
+                <input type="hidden" name="quantita" value="<%=prodotto.getQuantitaDisp()%>">
+                <td><%=prodotto.getQuantitaDisp()%></td>
+                <input type="hidden" name="prezzo" value="<%=prodotto.getPrezzo()%>">
+                <td><%=prodotto.getPrezzo()%> &euro;</td>
+                <input type="hidden" name="image" value="<%=prodotto.getPathImage()%>">
+                <td><input class="btn btn-primary" type="submit" value="Modifica"></td>
+            </tr>
+            </tbody>
+    </form>
 
-<a href="aggiuntaProdotto.jsp">Aggiungi prodotto</a>
+            <%
+                }
+            %>
+        </table>
+
+</div>
+
+
+
 </body>
 </html>

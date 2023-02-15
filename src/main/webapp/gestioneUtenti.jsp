@@ -17,7 +17,7 @@
     Boolean flag = (Boolean) session.getAttribute("accessoUtenteBO");
     if ((flag == null) || (!flag.booleanValue()))
     {
-        response.sendRedirect("accesso.jsp");
+        response.sendRedirect("login.jsp");
         return;
     }
     else if(flag.booleanValue() ) {
@@ -36,27 +36,53 @@
 
 <body>
 <%@ include file="navBarBO.jsp"%>
-<%
-	for(int i=0; i<utenti.size(); i++){
-		UtenteBO utenteBO=utenti.get(i);
-%>
-<form method="post" action="modificaRuoliUtenteBO.jsp">
-	<p>E-mail: <label><%=utenteBO.getEmail()%></label></p>
-	<input type="hidden" name="email" value="<%=utenteBO.getEmail()%>">
-	<%if(utenteBO.getRuolo()==1){%>
-	<p>Ruoli: <label>Gestore catalogo</label></p>
-	<%}else if(utenteBO.getRuolo()==2){%>
-	<p>Ruoli: <label>Gestore ordini</label></p>
-	<%}else if(utenteBO.getRuolo()==3){%>
-	<p>Ruoli: <label>Gestore catalogo, Gestore ordini</label></p>
-	<%}%>
-	<input type="hidden" name="ruolo" value="<%=utenteBO.getRuolo()%>">
-	<input type="submit" value="Modifica ruoli"> <br>
-</form>
-<%
-	}
-%>
 
-<a href="aggiuntaUtente.jsp">Aggiungi utente</a>
+
+
+<div class="container">
+	<h1 class="text-center mt-5">Gestione ordini</h1>
+	<a class="btn btn-success" href="aggiuntaUtente.jsp">Aggiungi utente</a>
+	<table class="table mt-3">
+		<thead>
+		<tr>
+			<th>E-mail</th>
+			<th>Ruoli</th>
+			<th></th>
+		</tr>
+		</thead>
+		<%
+			for(int i=0; i<utenti.size(); i++){
+				UtenteBO utenteBO=utenti.get(i);
+		%>
+		<form method="post" action="modificaRuoliUtenteBO.jsp">
+			<tbody>
+			<tr>
+				<input type="hidden" name="email" value="<%=utenteBO.getEmail()%>">
+				<td><%=utenteBO.getEmail()%></td>
+
+				<%if(utenteBO.getRuolo()==1){%>
+				<td>Gestore catalogo</td>
+				<%}else if(utenteBO.getRuolo()==2){%>
+				<td>Gestore ordini</td>
+				<%}else if(utenteBO.getRuolo()==3){%>
+				<td>Gestore catalogo, Gestore ordini</td>
+				<%}%>
+				<td>
+					<input type="hidden" name="ruolo" value="<%=utenteBO.getRuolo()%>">
+					<input class="btn btn-primary" type="submit" value="Modifica ruoli"> <br>
+				</td>
+
+			</tr>
+			</tbody>
+		</form>
+
+		<%
+			}
+		%>
+	</table>
+
+</div>
+
+
 </body>
 </html>

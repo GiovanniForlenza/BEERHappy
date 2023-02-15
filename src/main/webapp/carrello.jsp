@@ -50,20 +50,22 @@
 	<%
 			}
 			else{
-
+			float totale = 0;
 			ArrayList<Prodotto> prodottiNelCarrello = carrello.getProdotti();
 			for (Prodotto prodotto : prodottiNelCarrello){
+
 	%>
 			<tbody>
 			<tr>
 				<td><%=prodotto.getNome()%></td>
 				<td>€ <%=prodotto.getPrezzo()%></td>
 				<td><%=prodotto.getQuantita()%></td>
-				<td>€ <%=(prodotto.getQuantita() * prodotto.getPrezzo())%></td>
+				<td>€ <%=Math.round(prodotto.getQuantita() * prodotto.getPrezzo() * 100) / 100%></td>
 				<td><a href="<%=response.encodeURL("GestioneCarrelloServlet?action=rimuoviProdotto&nome=" + prodotto.getNome()
 				+"&birrificio=" + prodotto.getBirrificio() + "&formato=" + prodotto.getFormato()+ "&quantita=" + prodotto.getQuantita())%>">rimuovi</a></td>
 			</tr>
 	<%
+			totale += (Math.round(prodotto.getQuantita() * prodotto.getPrezzo() * 100) / 100);
 			}
 
 	%>
@@ -74,7 +76,7 @@
 	%>
 			<tr>
 				<td colspan="4" class="text-right">Subtotale</td>
-				<td>€ tot</td>
+				<td>€ <%=totale%></td>
 			</tr>
 			</tbody>
 		</table>

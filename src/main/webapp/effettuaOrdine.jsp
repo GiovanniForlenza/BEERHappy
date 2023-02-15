@@ -13,7 +13,7 @@
 	Boolean flag = (Boolean) session.getAttribute("accessoUtente");
 	if ((flag == null) || (!flag.booleanValue()))
 	{
-		response.sendRedirect("accesso.jsp");
+		response.sendRedirect("login.jsp");
 		return;
 	}
 
@@ -78,7 +78,7 @@
 			for(int i = 0; i < prodotti.size(); i++)
 			{
 				tot = tot +
-						(float) (prodotti.get(i).getPrezzo() * prodotti.get(i).getQuantita());
+						Math.round(prodotti.get(i).getPrezzo() * prodotti.get(i).getQuantita() * 100) / 100;
 	%>
 			<tbody>
 			<tr>
@@ -223,7 +223,6 @@
 			%>
 
 			<script>
-
 				function selectAddress(){
 					<%request.getSession().setAttribute("selectAddress", true);%>
 					document.location.href = "aggiuntaIndirizzo.jsp";
@@ -233,11 +232,9 @@
 					<%request.getSession().setAttribute("selectCard", true);%>
 					document.location.href = "aggiuntaCarta.jsp";
 				}
-
-
 			</script>
-			<script>
 
+			<script>
 				const
 					dialogAddress  = document.getElementById('dialogAddress'),
 					closeAddress   = document.getElementById('closeAddress'),
@@ -277,7 +274,7 @@
 							<input class="btn btn-primary float-right" type="submit" name="effettua ordine" value="Effettua ordine">
 						</div>
 						<div>
-							<a class="btn btn-secondary float-right" href="carrello.jsp">annulla</a>
+							<a class="btn btn-secondary" href="carrello.jsp">annulla</a>
 						</div>
 					</form>
 			</div>

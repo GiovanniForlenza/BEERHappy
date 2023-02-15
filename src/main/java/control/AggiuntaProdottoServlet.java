@@ -26,17 +26,14 @@ public class AggiuntaProdottoServlet extends HttpServlet {
         prodotto.setFormato(request.getParameter("formato"));
         prodotto.setQuantitaDisp(Integer.parseInt(request.getParameter("quantita")));
         prodotto.setDescrizione(request.getParameter("descrizione"));
-        prodotto.setPrezzo(Double.parseDouble(request.getParameter("prezzo")));
-        prodotto.setPathImage(request.getParameter("pathImage"));
+        prodotto.setPrezzo(Float.parseFloat(request.getParameter("prezzo")));
+        prodotto.setPathImage(request.getParameter("image"));
         CatalogoModel cm=new CatalogoModel();
 
         if(cm.searchProductByKey(prodotto.getNome(), prodotto.getBirrificio())){
-
             request.getSession().setAttribute("error", "Prodotto già presente");
             System.out.println("Prodotto già esistente");
             response.sendRedirect("http://localhost:8080/webAppTest_war/aggiuntaProdotto.jsp");
-
-
         } else {
             cm.addProduct(prodotto);
             ArrayList<Prodotto> prodotti=(ArrayList<Prodotto>) request.getSession().getAttribute("prodotti");

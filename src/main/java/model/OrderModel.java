@@ -91,7 +91,7 @@ public class OrderModel {
 					prodottoOrdinato.setDescrizione(resultSet.getString("descrizione"));
 					prodottoOrdinato.setFormato(resultSet.getString("formato"));
 					prodottoOrdinato.setQuantita(resultSet.getInt("quantita"));
-					prodottoOrdinato.setPrezzo(resultSet.getDouble("prezzo"));
+					prodottoOrdinato.setPrezzo(resultSet.getFloat("prezzo"));
 					prodottoOrdinato.setPathImage(resultSet.getString("pathImage"));
 
 					order.get(i).addProdotto(prodottoOrdinato);
@@ -198,7 +198,7 @@ public class OrderModel {
 				prodottoOrdinato.setDescrizione(resultSet.getString("descrizione"));
 				prodottoOrdinato.setFormato(resultSet.getString("formato"));
 				prodottoOrdinato.setQuantita(resultSet.getInt("quantita"));
-				prodottoOrdinato.setPrezzo(resultSet.getDouble("prezzo"));
+				prodottoOrdinato.setPrezzo(resultSet.getFloat("prezzo"));
 				prodottoOrdinato.setPathImage(resultSet.getString("pathImage"));
 
 				prodotti.add(prodottoOrdinato);

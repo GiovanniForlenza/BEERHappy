@@ -15,7 +15,7 @@
     Boolean flag = (Boolean) session.getAttribute("accessoUtenteBO");
     if ((flag == null) || (!flag.booleanValue()))
     {
-        response.sendRedirect("accesso.jsp");
+        response.sendRedirect("login.jsp");
         return;
     }
     else if(flag.booleanValue() ) {
@@ -38,7 +38,8 @@
             formato = request.getParameter("formato"),
             descrizione = request.getParameter("descrizione"),
             quantita = request.getParameter("quantita"),
-            prezzo = request.getParameter("prezzo");
+            prezzo = request.getParameter("prezzo"),
+            image = request.getParameter("image");
 
     Prodotto prodotto = new Prodotto();
     if(nome != null && birrificio != null && formato != null && descrizione != null && quantita != null && prezzo != null) {
@@ -47,28 +48,60 @@
         prodotto.setFormato(formato);
         prodotto.setDescrizione(descrizione);
         prodotto.setQuantitaDisp(Integer.parseInt(quantita));
-        prodotto.setPrezzo(Double.parseDouble(prezzo));
-        prodotto.setPathImage("");
+        prodotto.setPrezzo(Float.parseFloat(prezzo));
+        prodotto.setPathImage(image);
 
         request.getSession().setAttribute("oldProduct", prodotto);
     }else{
         prodotto = (Prodotto) request.getSession().getAttribute("oldProduct");
     }
 %>
-<!-- TODO mostra messaggio se il prodotto è già presente -->
-    <form method="post" action="ModificaProdottoServlet">
-        <p>Nome: <input type="text" name="nome" value="<%=prodotto.getNome()%>"> <br></p>
-        <p>Birrificio: <input type="text" name="birrificio" value="<%=prodotto.getBirrificio()%>"><br></p>
-        <p>Formato: <input type="text" name="formato" value="<%=prodotto.getFormato()%>"><br></p>
-        <p>Descrizione: <input type="text" name="descrizione" value="<%=prodotto.getDescrizione()%>"><br></p>
-        <p>Quantità: <input type="number" name="quantita" value="<%=prodotto.getQuantitaDisp()%>"><br></p>
-        <p>Prezzo: <input type="text" name="prezzo" value="<%=prodotto.getPrezzo()%>"><br></p>
-        <p>Image: <input type="image" name="pathImage" value="<%=prodotto.getPathImage()%>"><br></p>
-        <input type="submit" value="Salva"> <br>
-    </form>
 
-    <form action="EliminazioneProdottoServlet" method="post">
-        <input name="delete" type="submit" value="delete">
+<%@include file="navBarBO.jsp"%>
+
+<!-- TODO mostra messaggio se il prodotto è già presente -->
+<div class="container">
+    <h1 class="text-center mt-5">Modifica prodotto</h1>
+    <form class="mt-5" method="post" action="ModificaProdottoServlet">
+        <div class="form-group">
+            <label for="nome">Nome</label>
+            <input  type="text" class="form-control" id="nome" name="nome" value="<%=prodotto.getNome()%>">
+        </div>
+        <div class="form-group">
+            <label for="birrificio">Birrificio</label>
+            <input  type="text" class="form-control" id="birrificio" name="birrificio" value="<%=prodotto.getBirrificio()%>">
+        </div>
+        <div class="form-group">
+            <label for="formato">Formato</label>
+            <input  type="text" class="form-control" id="formato" name="formato" value="<%=prodotto.getFormato()%>">
+        </div>
+        <div class="form-group">
+            <label for="descrizione">Descrizione</label>
+            <textarea class="form-control" id="descrizione" name="descrizione" rows="4" cols="50">
+                <%=prodotto.getDescrizione()%>
+            </textarea>
+        </div>
+        <div class="form-group">
+            <label for="quantita">Quantità</label>
+            <input  type="number" class="form-control" id="quantita" name="quantita" value="<%=prodotto.getQuantitaDisp()%>">
+        </div>
+        <div class="form-group">
+            <label for="prezzo">Prezzo</label>
+            <input  type="text" class="form-control" id="prezzo" name="prezzo" value="<%=prodotto.getPrezzo()%>">
+        </div>
+        <div class="form-group">
+            <label for="image">URL Image</label>
+            <input  type="url" class="form-control" id="image" name="image" value="<%=prodotto.getPathImage()%>">
+        </div>
+        <div class="form-group">
+            <input class="btn btn-primary float-right" type="submit" value="Salva">
+            <a class="btn btn-secondary" href="gestioneCatalogo.jsp">Annulla</a>
+        </div>
     </form>
+    <form class="mt-5" action="EliminazioneProdottoServlet" method="post">
+        <input class="btn btn-danger" name="delete" type="submit" value="Elimina prodotto">
+    </form>
+</div>
+
 </body>
 </html>

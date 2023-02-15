@@ -33,6 +33,7 @@ public class AggiuntaProdottoCarrelloServlet extends HttpServlet {
         String birrificio = (String) request.getSession().getAttribute("birrificio");
         String formato = (String) request.getSession().getAttribute("formato");
 
+
         ProductModel productModel = new ProductModel();
         boolean flag = false;
         try {

@@ -2,7 +2,8 @@
 <%@ page import="entity.Utente" %>
 <%@ page import="java.util.List" %>
 <%@ page import="entity.Prodotto" %>
-<%@ page import="java.util.Iterator" %><%--
+<%@ page import="java.util.Iterator" %>
+<%@ page import="java.util.ArrayList" %><%--
   Created by IntelliJ IDEA.
   User: jhon
   Date: 02/01/2023
@@ -13,10 +14,17 @@
 <%
 	// Check user credentials
 	Boolean flag = (Boolean) session.getAttribute("accessoUtente");
-	if ((flag == null) || (!flag.booleanValue()))
-	{
-		response.sendRedirect("accesso.jsp");
+	if ((flag == null) || (!flag.booleanValue())) {
+		response.sendRedirect("login.jsp");
 		return;
+	}
+
+	ArrayList<Prodotto> birra = (ArrayList<Prodotto>) request.getAttribute("birre");
+	String error = (String)request.getAttribute("error");
+
+	if(birra == null && error == null) {
+		request.getSession().setAttribute("homestore", true);
+		response.sendRedirect(response.encodeRedirectURL("./RichiestaBirreServlet"));
 	}
 %>
 <html>
@@ -38,39 +46,33 @@
 	<div class="container my-5">
 		<h2 class="text-center">Birre in vendita</h2>
 		<div class="row">
+			<%
+				if(birra != null){
+					int i = birra.size() - 3;
+					while (i < birra.size()){
+			%>
 			<!-- Prodotto 1 -->
 			<div class="col-md-4">
 				<div class="card mb-4">
-					<img class="card-img-top" src="https://via.placeholder.com/500x325" alt="Immagine prodotto">
+					<img class="card-img-top" src="<%=birra.get(i).getPathImage()%>" alt="Immagine prodotto">
 					<div class="card-body">
-						<h4 class="card-title">Birra 1</h4>
-						<p class="card-text">Descrizione birra 1</p>
-						<a href="#" class="btn btn-primary">Acquista ora</a>
+						<h4 class="card-title"><%=birra.get(i).getNome()%></h4>
+						<p class="card-text"
+						   style="  overflow: hidden;
+                            display: -webkit-box;
+                            -webkit-line-clamp: 3;
+                            -webkit-box-orient: vertical;"><%=birra.get(i).getDescrizione()%>></p>
+						<a href="<%= response.encodeURL("DettagliProdottoServlet?nome=" + birra.get(i).getNome() +
+				"&birrificio=" + birra.get(i).getBirrificio() + "&formato=" + birra.get(i).getFormato())%>" class="btn btn-primary">Dettagli</a>
 					</div>
 				</div>
 			</div>
-			<!-- Prodotto 2 -->
-			<div class="col-md-4">
-				<div class="card mb-4">
-					<img class="card-img-top" src="https://via.placeholder.com/500x325" alt="Immagine prodotto">
-					<div class="card-body">
-						<h4 class="card-title">Birra 2</h4>
-						<p class="card-text">Descrizione birra 2</p>
-						<a href="#" class="btn btn-primary">Acquista ora</a>
-					</div>
-				</div>
-			</div>
-			<!-- Prodotto 3 -->
-			<div class="col-md-4">
-				<div class="card mb-4">
-					<img class="card-img-top" src="https://via.placeholder.com/500x325" alt="Immagine prodotto">
-					<div class="card-body">
-						<h4 class="card-title">Birra 3</h4>
-						<p class="card-text">Descrizione birra 3</p>
-						<a href="#" class="btn btn-primary">Acquista ora</a>
-					</div>
-				</div>
-			</div>
+
+			<%
+						i++;
+					}
+				}
+			%>
 		</div>
 	</div>
 

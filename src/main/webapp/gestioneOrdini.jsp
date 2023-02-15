@@ -13,7 +13,7 @@
 	Boolean flag = (Boolean) session.getAttribute("accessoUtenteBO");
 	if ((flag == null) || (!flag.booleanValue()))
 	{
-		response.sendRedirect("accesso.jsp");
+		response.sendRedirect("login.jsp");
 		return;
 	}
 	else if(flag.booleanValue() ) {
@@ -31,33 +31,56 @@
 </head>
 <body>
 <%@ include file="navBarBO.jsp"%>
-<%
-	for(int i=0; i<ordini.size(); i++){
-		Ordine ordine=ordini.get(i);
-%>
-<form method="post" action="modificaStatoOrdine.jsp">
-	<p>idOrdine: <label><%=ordine.getIdOrdine()%></label></p>
-	<input type="hidden" name="idOrdine" value="<%=ordine.getIdOrdine()%>">
-	<p>Prezzo: <label><%=ordine.getPrezzo()%></label></p>
-	<input type="hidden" name="prezzo" value="<%=ordine.getPrezzo()%>">
-	<p>Data: <label><%=ordine.getDataOrdine()%></label></p>
-	<input type="hidden" name="data" value="<%=ordine.getDataOrdine()%>">
-	<p>Indirizzo: <label><%=ordine.getCitta()+" "+ordine.getVia()+" "+ordine.getCivico()+" "+ordine.getTelefono()%></label></p>
-	<input type="hidden" name="via" value="<%=ordine.getVia()%>">
-	<input type="hidden" name="citta" value="<%=ordine.getCitta()%>">
-	<input type="hidden" name="civico" value="<%=ordine.getCivico()%>">
-	<input type="hidden" name="telefono" value="<%=ordine.getTelefono()%>">
-	<p>Stato: <label><%=ordine.getStato()%></label></p>
-	<input type="hidden" name="stato" value="<%=ordine.getStato()%>">
-	<%if(!(ordine.getStato().equals(Stato.annullato))&&!(ordine.getStato().equals(Stato.consegnato))){%>
-	<input type="submit" value="Modifica"> <br>
-	<%
-		}
-	%>
 
-</form>
-<%
-	}
-%>
+<div class="container">
+	<h1 class="text-center mt-5">Gestione ordini</h1>
+	<table class="table mt-3">
+		<thead>
+		<tr>
+			<th>Ordine id</th>
+			<th>Prezzo</th>
+			<th>Data</th>
+			<th>Indirizzo</th>
+			<th>Stato</th>
+			<th></th>
+		</tr>
+		</thead>
+		<%
+			for(int i=0; i < ordini.size(); i++){
+				Ordine ordine = ordini.get(i);
+		%>
+		<form method="post" action="modificaStatoOrdine.jsp">
+			<tbody>
+			<tr>
+				<input type="hidden" name="idOrdine" value="<%=ordine.getIdOrdine()%>">
+				<td><%=ordine.getIdOrdine()%></td>
+				<input type="hidden" name="prezzo" value="<%=ordine.getPrezzo()%>">
+				<td><%=ordine.getPrezzo()%></td>
+				<input type="hidden" name="data" value="<%=ordine.getDataOrdine()%>">
+				<td><%=ordine.getDataOrdine()%></td>
+				<input type="hidden" name="via" value="<%=ordine.getVia()%>">
+				<input type="hidden" name="citta" value="<%=ordine.getCitta()%>">
+				<input type="hidden" name="civico" value="<%=ordine.getCivico()%>">
+				<input type="hidden" name="telefono" value="<%=ordine.getTelefono()%>">
+				<td><%=ordine.getCitta()+" "+ordine.getVia()+" "+ordine.getCivico()+" "+ordine.getTelefono()%></td>
+				<input type="hidden" name="stato" value="<%=ordine.getStato()%>">
+				<td><%=ordine.getStato()%></td>
+
+				<%if(!(ordine.getStato().equals(Stato.annullato))&&!(ordine.getStato().equals(Stato.consegnato))){%>
+				<td><input class="btn btn-primary" type="submit" value="Modifica"></td>
+				<%
+					}
+				%>
+
+			</tr>
+			</tbody>
+		</form>
+
+		<%
+			}
+		%>
+	</table>
+
+</div>
 </body>
 </html>

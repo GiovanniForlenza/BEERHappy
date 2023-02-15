@@ -33,16 +33,4 @@ public class RecuperoProdottiServlet extends HttpServlet {
 		return products;
 	}
 
-	@Override
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-/*		ProductModel productModel = new ProductModel();
-		try {
-			ArrayList<Prodotto> prodotti = productModel.doRetrieveAll();
-			request.getSession().setAttribute("prodotti", prodotti);
-			response.sendRedirect("http://localhost:8080/webAppTest_war/searchBar.jsp");
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-*/
-	}
 }

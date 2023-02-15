@@ -46,7 +46,7 @@
 		<div class="row">
 			<!-- Immagine -->
 			<div class="col-md-6">
-				<img src="https://via.placeholder.com/500x325" alt="Immagine prodotto">
+				<img src="<%=prodotto.getPathImage()%>" height="500px" alt="Immagine prodotto">
 			</div>
 			<!-- Descrizione -->
 			<div class="col-md-6">

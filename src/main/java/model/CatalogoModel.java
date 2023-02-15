@@ -27,7 +27,7 @@ public class CatalogoModel {
                 prodotto.setDescrizione(resultSet.getString("descrizione"));
                 prodotto.setFormato(resultSet.getString("formato"));
                 prodotto.setQuantitaDisp(resultSet.getInt("quantita"));
-                prodotto.setPrezzo(resultSet.getDouble("prezzo"));
+                prodotto.setPrezzo(resultSet.getFloat("prezzo"));
                 prodotto.setPathImage(resultSet.getString("pathImage"));
                 prodotti.add(prodotto);
             }
@@ -85,7 +85,7 @@ public class CatalogoModel {
            preparedStatement.setString(4, newProduct.getFormato());
            preparedStatement.setInt(5, newProduct.getQuantitaDisp());
            preparedStatement.setDouble(6, newProduct.getPrezzo());
-           preparedStatement.setString(7, newProduct.getPathImage());
+           preparedStatement.setString(7, oldProduct.getPathImage());
            preparedStatement.setString(8, oldProduct.getNome());
            preparedStatement.setString(9, oldProduct.getBirrificio());
 
@@ -93,6 +93,7 @@ public class CatalogoModel {
            connection.commit();
            if(preparedStatement!=null)
                preparedStatement.close();
+
            DriverManagerConnectionPool.releaseConnection(connection);
 
        } catch (SQLException e) {
