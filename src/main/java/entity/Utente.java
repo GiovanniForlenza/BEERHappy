@@ -135,4 +135,14 @@ public class Utente {
         this.ordini = ordini;
     }
 
+    public void annullaOrdine(int idOrdine){
+        for(int i=0; i<ordini.size(); i++){
+            if(ordini.get(i).getIdOrdine()==idOrdine){
+                ordini.get(i).setStato(Stato.annullato);
+            }
+        }
+
+    }
+
+
 }

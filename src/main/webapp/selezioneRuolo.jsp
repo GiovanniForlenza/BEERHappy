@@ -28,6 +28,7 @@
 <body>
 <div class="d-flex justify-content-center align-items-center" style="height: 100vh;">
     <div class="border p-3 rounded" style="width: 35%;">
+<%@ include file="navBarBO.jsp"%>
 <%
     if(ruolo==1){
 %>

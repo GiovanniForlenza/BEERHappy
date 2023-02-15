@@ -15,18 +15,15 @@ import java.sql.SQLException;
 public class EliminazioneServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String s=request.getParameter("email");
-        System.out.println(s);
         ModelSecurity mc=new ModelSecurity();
         Utente utente = (Utente) request.getSession().getAttribute("utente");
         try {
             mc.removeUser(utente);
+            request.getSession().invalidate();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        request.setAttribute("accesso", false);
         response.sendRedirect("http://localhost:8080/webAppTest_war/accesso.jsp");
-
     }
 
     @Override

@@ -161,6 +161,7 @@ public class OrderModel {
 				Ordine ordine = new Ordine();
 				ordine.setIdOrdine(resultSet.getInt("ordineID"));
 				ordine.setDataOrdine(resultSet.getString("data"));
+				System.out.println(Stato.valueOf(resultSet.getString("stato")));
 				ordine.setStato(Stato.valueOf(resultSet.getString("stato")));
 				ordine.setPrezzo(resultSet.getInt("prezzo"));
 				ordine.setVia(resultSet.getString("via"));
@@ -233,4 +234,5 @@ public class OrderModel {
 			e.printStackTrace();
 		}
 	}
+
 }

@@ -2,6 +2,7 @@
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="entity.Ordine" %>
 <%@ page import="entity.Prodotto" %>
+<%@ page import="entity.Stato" %>
 <%--
   Created by IntelliJ IDEA.
   User: jhon
@@ -41,6 +42,7 @@
 				<th>Totale</th>
 				<th>Stato</th>
 				<th></th>
+				<th></th>
 			</tr>
 			</thead>
 			<tbody>
@@ -52,16 +54,19 @@
 			}
 			else{
 			//stampa ordini
-				for(int i = 0; i < ordini.size(); i++){
+			for(int i = 0; i < ordini.size(); i++){
+				Stato stato=ordini.get(i).getStato();
 		%>
-				<tr>
-					<td>#<%=ordini.get(i).getIdOrdine()%></td>
-					<td><%=ordini.get(i).getDataOrdine()%></td>
-					<td><%="Italy, " + ordini.get(i).getCitta() + ", " + ordini.get(i).getVia() + " "+ ordini.get(i).getCivico()%></td>
-					<td>&euro; <%=ordini.get(i).getPrezzo()%></td>
-					<td><%=ordini.get(i).getStato().name()%></td>
-					<td><a href="#">Annulla Ordine</a></td>
-				</tr>
+			<tr>
+				<td>#<%=ordini.get(i).getIdOrdine()%></td>
+				<td><%=ordini.get(i).getDataOrdine()%></td>
+				<td><%="Italy, " + ordini.get(i).getCitta() + ", " + ordini.get(i).getVia() + " "+ ordini.get(i).getCivico()%></td>
+				<td>&euro; <%=ordini.get(i).getPrezzo()%></td>
+				<td><%=ordini.get(i).getStato().name()%></td>
+				<%if(stato.name().equals(Stato.inConsegna.name()) || stato.name().equals(Stato.inoltrato.name())){%>
+					<td><a href=<%=response.encodeURL("AnnullaOrdineServlet?ordineID="+ordini.get(i).getIdOrdine())+""%>>Annulla Ordine</a></td>
+				<%}%>
+			</tr>
 		<%
 				}
 			}
