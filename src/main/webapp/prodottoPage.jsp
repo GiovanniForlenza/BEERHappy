@@ -1,6 +1,4 @@
-<%@ page import="entity.Prodotto" %>
-<%@ page import="entity.Carrello" %>
-<%@ page import="control.GestioneCarrelloServlet" %>
+<%@ page import="model.bean.Prodotto" %>
 <%--
   Created by IntelliJ IDEA.
   User: jhon

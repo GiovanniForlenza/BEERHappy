@@ -39,9 +39,6 @@
 				<a class="nav-link" href="ordinePagina.jsp">Ordini</a>
 			</li>
 			<li class="nav-item">
-				<a class="nav-link" href="#">chi siamo</a>
-			</li>
-			<li class="nav-item">
 				<%@ include file="ricerca.jsp"%>
 			</li>
 		</ul>

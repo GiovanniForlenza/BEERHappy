@@ -1,6 +1,6 @@
-<%@ page import="entity.Carrello" %>
+<%@ page import="model.bean.Carrello" %>
 <%@ page import="java.util.ArrayList" %>
-<%@ page import="entity.Prodotto" %><%--
+<%@ page import="model.bean.Prodotto" %><%--
   Created by IntelliJ IDEA.
   User: jhon
   Date: 25/01/23
@@ -44,7 +44,7 @@
 			</tr>
 			</thead>
 	<%
-			if(carrello == null) {
+			if(carrello == null || carrello.getProdotti() == null) {
 	%>
 				<p>il carrello è vuoto</p>
 	<%
@@ -65,7 +65,7 @@
 				+"&birrificio=" + prodotto.getBirrificio() + "&formato=" + prodotto.getFormato()+ "&quantita=" + prodotto.getQuantita())%>">rimuovi</a></td>
 			</tr>
 	<%
-			totale += (Math.round(prodotto.getQuantita() * prodotto.getPrezzo() * 100) / 100);
+				totale += (Math.round(prodotto.getQuantita() * prodotto.getPrezzo() * 100) / 100);
 			}
 
 	%>

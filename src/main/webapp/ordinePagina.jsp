@@ -1,8 +1,7 @@
-<%@ page import="entity.Utente" %>
+<%@ page import="model.bean.Utente" %>
 <%@ page import="java.util.ArrayList" %>
-<%@ page import="entity.Ordine" %>
-<%@ page import="entity.Prodotto" %>
-<%@ page import="entity.Stato" %>
+<%@ page import="model.bean.Ordine" %>
+<%@ page import="model.bean.Stato" %>
 <%--
   Created by IntelliJ IDEA.
   User: jhon
@@ -63,9 +62,36 @@
 				<td><%="Italy, " + ordini.get(i).getCitta() + ", " + ordini.get(i).getVia() + " "+ ordini.get(i).getCivico()%></td>
 				<td>&euro; <%=ordini.get(i).getPrezzo()%></td>
 				<td><%=ordini.get(i).getStato().name()%></td>
-				<%if(stato.name().equals(Stato.inConsegna.name()) || stato.name().equals(Stato.inoltrato.name())){%>
-					<td><a href=<%=response.encodeURL("AnnullaOrdineServlet?ordineID="+ordini.get(i).getIdOrdine())+""%>>Annulla Ordine</a></td>
-				<%}%>
+				<%
+					if(stato.name().equals(Stato.inConsegna.name()) || stato.name().equals(Stato.inoltrato.name())){
+				%>
+
+					<td>
+						<a data-toggle="modal" data-target="#exampleModal">Annulla ordine</a>
+					</td>
+
+					<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+						<div class="modal-dialog" role="document">
+							<div class="modal-content">
+								<div class="modal-header">
+									<h5 class="modal-title" id="exampleModalLabelCard">Annulla ordine</h5>
+									<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+										<span aria-hidden="true">&times;</span>
+									</button>
+								</div>
+								<div class="modal-body">
+									<p class="popup-content">Stai per annullare l'ordine. Ne sei sicuro ?</p>
+								</div>
+								<div class="modal-footer">
+									<a class="btn btn-danger" href=<%=response.encodeURL("AnnullaOrdineServlet?ordineID="+ordini.get(i).getIdOrdine())+""%>>Conferma</a>
+									<button type="button" class="btn btn-secondary" data-dismiss="modal">Annulla</button>
+								</div>
+							</div>
+						</div>
+					</div>
+				<%
+					}
+				%>
 			</tr>
 		<%
 				}

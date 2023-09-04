@@ -7,7 +7,7 @@
           <element id="module-output" name="webAppTest" />
         </element>
       </element>
-      <element id="javaee-facet-resources" facet="webAppTest/web/Web" />
+      <element id="javaee-facet-resources" facet="Beerhappy/web/Web" />
     </root>
   </artifact>
 </component>

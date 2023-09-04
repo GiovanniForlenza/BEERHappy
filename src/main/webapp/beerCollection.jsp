@@ -1,4 +1,4 @@
-<%@ page import="entity.Prodotto" %>
+<%@ page import="model.bean.Prodotto" %>
 <%@ page import="java.util.Collection" %>
 <%@ page import="java.util.Iterator" %><%--
   Created by IntelliJ IDEA.
@@ -34,7 +34,7 @@
 		<!-- Prodotti -->
 		<div class="col-md-4">
 			<div class="card mb-4">
-				<img class="card-img-top" src="<%=birra.get(i).getPathImage()%>" alt="Immagine prodotto">
+				<img class="card-img-top" height="464" src="<%=birra.get(i).getPathImage()%>" alt="Immagine prodotto">
 				<div class="card-body">
 					<h4 class="card-title"><%=prodotto.getNome()%></h4>
 					<p class="card-text"

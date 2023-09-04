@@ -1,5 +1,5 @@
 <%@ page import="java.util.ArrayList" %>
-<%@ page import="entity.*" %>
+<%@ page import="model.bean.*" %>
 <%--
   Created by IntelliJ IDEA.
   User: jhon

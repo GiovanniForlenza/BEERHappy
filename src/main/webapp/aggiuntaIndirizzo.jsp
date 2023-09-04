@@ -20,12 +20,29 @@
 <head>
 	<title>Indirizzo</title>
 </head>
+
+<script type="text/javascript">
+	function controllo(){
+        let via, civico, citta, cap, telefono;
+
+        via = document.getElementById("inputAddress").value
+        civico = document.getElementById("inputCIVICO").value
+        citta = document.getElementById("inputCity").value
+        cap = document.getElementById("inputCap").value
+        telefono = document.getElementById("inputTelefono").value
+
+		if(controlLetteralVIA(via) && controlCIVICO(civico) && controlLetteralCITTA(citta)
+		&& controlCAP(cap) && controlCell(telefono)) {
+            document.modulo.submit();
+		}
+	}
+</script>
 <body>
 
 <%@ include file="navBarStore.jsp"%>
 <div class="container my-5">
 	<h1 class="mb-4">Aggiungi Indirizzo</h1>
-	<form method="post" action="AggiuntaIndirizzoServlet">
+	<form method="post" action="AggiuntaIndirizzoServlet" name="modulo">
 		<div class="form-group">
 			<label for="inputAddress">Indirizzo</label>
 			<input
@@ -38,15 +55,23 @@
 			/>
 		</div>
 		<div class="form-group">
-			<label for="inputState">Civico</label>
+				<span id="messageLetterVia">
+				</span>
+		</div>
+		<div class="form-group">
+			<label for="inputCIVICO">Civico</label>
 			<input
 					type="number"
 					class="form-control"
-					id="inputState"
-					placeholder="Inserisci il numerocivico"
+					id="inputCIVICO"
+					placeholder="Inserisci il numero civico"
 					name="civico"
 					required
 			/>
+		</div>
+		<div class="form-group">
+				<span id="messageCIVICO">
+				</span>
 		</div>
 		<div class="form-group">
 			<label for="inputCity">Città</label>
@@ -60,18 +85,27 @@
 			/>
 		</div>
 		<div class="form-group">
-			<label for="inputZip">CAP</label>
+				<span id="messageLetterCITTA">
+				</span>
+		</div>
+		<div class="form-group">
+			<label for="inputCap">CAP</label>
 			<input
-					type="text"
+					type="number"
 					class="form-control"
-					id="inputZip"
+					id="inputCap"
 					placeholder="Inserisci il tuo CAP"
 					name="cap"
 					required
 			/>
+
 		</div>
 		<div class="form-group">
-			<label for="inputZip">Telefono</label>
+				<span id="messageCAP">
+				</span>
+		</div>
+		<div class="form-group">
+			<label for="inputTelefono">Telefono</label>
 			<input
 					type="text"
 					class="form-control"
@@ -81,9 +115,16 @@
 					required
 			/>
 		</div>
-		<input type="submit" class="btn btn-primary" value="Aggiungi Indirizzo">
+		<div class="form-group">
+				<span id="messageCell">
+				</span>
+		</div>
+		<input type="button" class="btn btn-primary" value="Aggiungi Indirizzo" onclick="controllo()">
+		<!-- <input type="submit" class="btn btn-primary" value="Aggiungi Indirizzo"> -->
 	</form>
 </div>
+
+	<script type="text/javascript" src="javaScript/Controllo.js"></script>
 
 </body>
 </html>

@@ -1,5 +1,5 @@
 <%@ page import="java.util.ArrayList" %>
-<%@ page import="entity.Prodotto" %>
+<%@ page import="model.bean.Prodotto" %>
 <%@ page import="java.util.Collection" %>
 <%@ page import="java.util.Iterator" %><%--
   Created by IntelliJ IDEA.
@@ -37,9 +37,7 @@
 				<li class="nav-item">
 					<a class="nav-link" href="carrello.jsp">Carrello</a>
 				</li>
-				<li class="nav-item">
-					<a class="nav-link" href="#">chi siamo</a>
-				</li>
+
 				<li class="nav-item">
 					<%@ include file="ricerca.jsp"%>
 				</li>

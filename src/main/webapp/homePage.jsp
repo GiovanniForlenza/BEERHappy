@@ -1,3 +1,4 @@
+<%@ page import="model.bean.Prodotto" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 
 <%
@@ -35,7 +36,6 @@
                 if(birra != null){
                 int i = birra.size() - 3;
                 while (i < birra.size()){
-                    System.out.println(birra.get(i).getPathImage());
             %>
             <!-- Prodotto 1 -->
             <div class="col-md-4">

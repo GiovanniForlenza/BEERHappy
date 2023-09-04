@@ -1,9 +1,9 @@
-<%@ page import="entity.UtenteBO" %>
-<%@ page import="entity.Indirizzo" %>
+<%@ page import="model.bean.UtenteBO" %>
+<%@ page import="model.bean.Indirizzo" %>
 <%@ page import="java.util.ArrayList" %>
-<%@ page import="control.RimozioneIndirizzoServlet" %>
-<%@ page import="entity.UtenteBO" %>
-<%@ page import="control.GestioneCatalogoServlet" %>
+<%@ page import="controller.RimozioneIndirizzoServlet" %>
+<%@ page import="model.bean.UtenteBO" %>
+<%@ page import="controller.GestioneCatalogoServlet" %>
 
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
@@ -28,7 +28,22 @@
 <body>
 <div class="d-flex justify-content-center align-items-center" style="height: 100vh;">
     <div class="border p-3 rounded" style="width: 35%;">
-<%@ include file="navBarBO.jsp"%>
+
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="collapse navbar-collapse d-flex content-center" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <p class="navbar-brand">BEerHAPPY</p>
+                    </li>
+                </ul>
+
+                <ul class="navbar-nav ml-auto">
+                    <form action="LogoutServlet" method="GET">
+                        <input type="submit" class="btn btn-secondary" value="Logout">
+                    </form>
+                </ul>
+            </div>
+        </nav>
 <%
     if(ruolo==1){
 %>

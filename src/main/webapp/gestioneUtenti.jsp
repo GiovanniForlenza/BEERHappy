@@ -1,4 +1,4 @@
-<%@ page import="entity.UtenteBO" %>
+<%@ page import="model.bean.UtenteBO" %>
 <%@ page import="java.util.ArrayList" %><%--
   Created by IntelliJ IDEA.
   User: gaeta
@@ -37,10 +37,8 @@
 <body>
 <%@ include file="navBarBO.jsp"%>
 
-
-
 <div class="container">
-	<h1 class="text-center mt-5">Gestione ordini</h1>
+	<h1 class="text-center mt-5">Gestione utenti</h1>
 	<a class="btn btn-success" href="aggiuntaUtente.jsp">Aggiungi utente</a>
 	<table class="table mt-3">
 		<thead>

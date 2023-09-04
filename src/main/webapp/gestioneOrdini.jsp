@@ -1,7 +1,7 @@
-<%@ page import="entity.UtenteBO" %>
-<%@ page import="entity.Ordine" %>
+<%@ page import="model.bean.UtenteBO" %>
+<%@ page import="model.bean.Ordine" %>
 <%@ page import="java.util.ArrayList" %>
-<%@ page import="entity.Stato" %><%--
+<%@ page import="model.bean.Stato" %><%--
   Created by IntelliJ IDEA.
   User: gaeta
   Date: 10/02/2023

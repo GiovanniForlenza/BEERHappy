@@ -1,4 +1,4 @@
-<%@ page import="entity.UtenteBO" %><%--
+<%@ page import="model.bean.UtenteBO" %><%--
   Created by IntelliJ IDEA.
   User: gaeta
   Date: 13/02/2023
@@ -23,6 +23,24 @@
 <html>
 <head>
 	<title>Modifica ruoli</title>
+
+	<script type="text/javascript">
+		function controllo(){
+            let mex = document.getElementById("messageRuolo");
+            let catalogo = document.getElementById("catalogo");
+            let ordini = document.getElementById("ordini");
+
+            if(catalogo.checked || ordini.checked){
+                mex.innerText = "";
+                document.modifica.submit();
+			}
+            else{
+                mex.style.color = "red";
+                mex.innerText = "Selezionare almeno un ruolo per poter procedere";
+			}
+		}
+
+	</script>
 </head>
 <body>
 
@@ -42,7 +60,7 @@
 
 <div class="container">
 	<div class="border p-3 rounded" style="width: 35%;">
-		<form method="post" action="ModificaRuoliUtenteBOServlet">
+		<form method="post" action="ModificaRuoliUtenteBOServlet" name="modifica">
 			<p>E-mail: <label><%=utenteBO.getEmail()%></label></p>
 			<input type="hidden" name="email" value="<%=utenteBO.getEmail()%>">
 			<%if(utenteBO.getRuolo()==1){%>
@@ -53,9 +71,12 @@
 			<p>Ruoli: <label>Gestore catalogo, Gestore ordini</label></p>
 			<%}%>
 			<p>Seleziona ruoli:</p>
-			<p>Gestore catalogo <input type="checkbox" name="ruolo" value="Gestore catalogo"></p> <br>
-			<p>Gestore ordini <input type="checkbox" name="ruolo" value="Gestore ordini"></p> <br>
-			<input class="btn btn-primary" type="submit" value="Salva">
+			<p>Gestore catalogo <input type="checkbox" name="ruolo" id="catalogo" value="Gestore catalogo"></p> <br>
+			<p>Gestore ordini <input type="checkbox" name="ruolo" id="ordini" value="Gestore ordini"></p> <br>
+			<span id="messageRuolo">
+			</span>
+			<!-- <input class="btn btn-primary" type="submit" value="Salva"> -->
+			<input class="btn btn-primary" type="button" value="Salva" onclick="controllo()">
 			<a class="btn btn-secondary" href="gestioneUtenti.jsp">Annulla</a>
 		</form>
 		<form action="EliminazioneUtenteBOServlet" method="post">

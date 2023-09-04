@@ -1,5 +1,5 @@
-<%@ page import="entity.UtenteBO" %>
-<%@ page import="entity.Prodotto" %>
+<%@ page import="model.bean.UtenteBO" %>
+<%@ page import="model.bean.Prodotto" %>
 <%@ page import="java.util.ArrayList" %><%--
   Created by IntelliJ IDEA.
   User: gaeta

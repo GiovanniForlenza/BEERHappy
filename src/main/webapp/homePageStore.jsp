@@ -1,9 +1,6 @@
-<%@ page import="java.util.Collection" %>
-<%@ page import="entity.Utente" %>
-<%@ page import="java.util.List" %>
-<%@ page import="entity.Prodotto" %>
-<%@ page import="java.util.Iterator" %>
-<%@ page import="java.util.ArrayList" %><%--
+<%@ page import="model.bean.Prodotto" %>
+<%@ page import="java.util.ArrayList" %>
+<%--
   Created by IntelliJ IDEA.
   User: jhon
   Date: 02/01/2023
@@ -51,7 +48,6 @@
 					int i = birra.size() - 3;
 					while (i < birra.size()){
 			%>
-			<!-- Prodotto 1 -->
 			<div class="col-md-4">
 				<div class="card mb-4">
 					<img class="card-img-top" src="<%=birra.get(i).getPathImage()%>" alt="Immagine prodotto">

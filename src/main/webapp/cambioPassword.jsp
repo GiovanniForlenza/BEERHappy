@@ -1,4 +1,5 @@
-<%@ page import="entity.Utente" %><%--
+<%@ page import="model.bean.Utente" %>
+<%--
   Created by IntelliJ IDEA.
   User: jhon
   Date: 07/02/23
@@ -17,13 +18,23 @@
 <html>
 <head>
 	<title>CambioPassword</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+	<script type="text/javascript">
+        function controllo(){
+            if(isPassword()){
+                document.modulo.submit();
+			}
+        }
+	</script>
+
 </head>
 <body>
 	<%@ include file="navBarStore.jsp"%>
 
 	<div class="container my-5">
 		<h1 class="mb-4">Modifica Password</h1>
-		<form action="CambioPasswordServlet" method="post">
+		<form action="CambioPasswordServlet" method="POST" name="modulo">
 			<div class="form-group">
 				<label for="old">Password Attuale</label>
 				<input
@@ -38,7 +49,7 @@
 				if(request.getSession().getAttribute("notChack") != null){
 					request.getSession().removeAttribute("notChack");
 			%>
-			<h5 style="color: red">Password ineserita non valida</h5>
+					<h5 style="color: red">Password inserita non valida</h5>
 			<%
 				}
 			%>
@@ -51,9 +62,11 @@
 						id="password"
 						placeholder="Inserisci la tua nuova password"
 						name="password"
+						required
 						onkeyup="check()"
 				/>
 			</div>
+			<span id="messagePassword"></span><br>
 			<div class="form-group">
 				<label for="confirm_password">Conferma Password</label>
 				<input
@@ -62,15 +75,17 @@
 						id="confirm_password"
 						placeholder="Conferma la tua nuova password"
 						name="confirm_password"
+						required
 						onkeyup="check()"
 				/>
 			</div>
 			<span id="message"></span><br>
-			<input type="submit" class="btn btn-primary" id="submit" disabled="disabled" value="Modifica Password">
+			<input type="button" class="btn btn-primary" value="Modifica Password" onclick="controllo()">
 		</form>
 	</div>
 
 	<script type="text/javascript" src="javaScript/ControlloPassword.js"></script>
+	<script type="text/javascript" src="javaScript/Controllo.js"></script>
 
 </body>
 </html>
